@@ -1,0 +1,28 @@
+{
+  "name": "palpo_doc",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "rspress build",
+    "dev": "rspress dev",
+    "format": "prettier --write .",
+    "preview": "rspress preview"
+  },
+  "dependencies": {
+    "@google/genai": "1.10.0",
+    "openai": "^5.10.1",
+    "rsbuild-plugin-open-graph": "^1.0.2",
+    "rspress": "1.45.0",
+    "rspress-plugin-google-analytics": "^0.3.0",
+    "rspress-plugin-mermaid": "^0.3.0",
+    "rspress-plugin-reading-time": "^0.3.0",
+    "zod": "^4.0.5"
+  },
+  "devDependencies": {
+    "@rspress/plugin-last-updated": "^1.45.0",
+    "@rspress/plugin-preview": "^1.45.0",
+    "@types/node": "24.0.14",
+    "prettier": "^3.6.2",
+    "rspress-plugin-font-open-sans": "^1.0.0"
+  }
+}

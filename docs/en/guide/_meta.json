@@ -1,0 +1,14 @@
+[
+  "index",
+  {
+    "type": "divider",
+    "dashed": false
+  },
+  {
+    "type": "dir",
+    "name": "deploying",
+    "label": "deploying",
+    "collapsible": true,
+    "collapsed": false
+  }
+]
