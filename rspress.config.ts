@@ -15,7 +15,7 @@ export default defineConfig({
     title: 'Rspress',
     type: 'website',
     url: siteUrl,
-    image: 'https://salvo.rs/images/logo-text.svg',
+    image: 'https://salvo.rs/images/logo.png',
     description: 'Palpo Docs',
     twitter: {
       site: '@salvo',
