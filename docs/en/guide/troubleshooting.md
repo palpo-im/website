@@ -22,7 +22,7 @@ You can reinvite yourself to the admin room through the following methods:
 argument once to invite yourslf to the admin room on startup
 - Use the Palpo console/CLI to run the `users make_user_admin` command
 - Or specify the `emergency_password` config option to allow you to temporarily
-log into the server account (`@conduit`) from a web client
+log into the server account (`@palpo`) from a web client
 
 ## General potential issues
 
@@ -158,8 +158,8 @@ a string **without quotes** the same format as the `log` config option.
 Example: `!admin debug change-log-level debug`
 
 This can also accept complex filters such as:
-`!admin debug change-log-level info,conduit_service[{dest="example.com"}]=trace,ruma_state_res=trace`
-`!admin debug change-log-level info,conduit_service[{dest="example.com"}]=trace,conduit_service[send{dest="example.org"}]=trace`
+`!admin debug change-log-level info,palpo_service[{dest="example.com"}]=trace,ruma_state_res=trace`
+`!admin debug change-log-level info,palpo_service[{dest="example.com"}]=trace,palpo_service[send{dest="example.org"}]=trace`
 
 And to reset the log level to the one that was set at startup / last config
 load, simply pass the `--reset` flag.

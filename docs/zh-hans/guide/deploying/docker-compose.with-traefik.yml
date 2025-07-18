@@ -20,7 +20,7 @@ services:
       PALPO_ADDRESS: 0.0.0.0
       PALPO_PORT: 6167 # 如果要更改，需要与 traefik 负载均衡器标签匹配
       PALPO_DATABASE_PATH: /var/lib/palpo
-      #PALPO_CONFIG: '/etc/conduit.toml' # 如果您在上面映射了 config toml，请取消注释
+      #PALPO_CONFIG: '/etc/palpo.toml' # 如果您在上面映射了 config toml，请取消注释
       ### 根据需要取消注释并更改值，请注意 palpo 有很多配置选项，因此您也应该查看示例配置
       # 可用级别：error, warn, info, debug, trace - 更多信息请访问：https://docs.rs/env_logger/*/env_logger/#enabling-logging
       # PALPO_LOG: info  # 默认值：“warn,state_res=warn”

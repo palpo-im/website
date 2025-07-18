@@ -14,7 +14,7 @@ settings.
 The config file to use can be specified on the commandline when running
 Palpo by specifying the `-c`, `--config` flag. Alternatively, you can use
 the environment variable `PALPO_CONFIG` to specify the config file to used.
-Conduit's environment variables are supported for backwards compatibility.
+Palpo's environment variables are supported for backwards compatibility.
 
 ## Option commandline flag
 
@@ -60,5 +60,5 @@ environment variable to set is `PALPO_MAX_REQUEST_SIZE`.
 To modify config options not in the `[global]` context such as
 `[global.well_known]`, use the `__` suffix split: `PALPO_WELL_KNOWN__SERVER`
 
-Conduit and conduwuit's environment variables are supported for backwards
+Palpo and conduwuit's environment variables are supported for backwards
 compatibility (e.g. `CONDUIT_SERVER_NAME` or `CONDUWUIT_SERVER_NAME`).

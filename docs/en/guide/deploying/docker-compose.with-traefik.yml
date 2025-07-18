@@ -20,7 +20,7 @@ services:
       PALPO_ADDRESS: 0.0.0.0
       PALPO_PORT: 6167 # you need to match this with the traefik load balancer label if you're want to change it
       PALPO_DATABASE_PATH: /var/lib/palpo
-      #PALPO_CONFIG: '/etc/conduit.toml' # Uncomment if you mapped config toml above
+      #PALPO_CONFIG: '/etc/palpo.toml' # Uncomment if you mapped config toml above
       ### Uncomment and change values as desired, note that palpo has plenty of config options, so you should check out the example example config too
       # Available levels are: error, warn, info, debug, trace - more info at: https://docs.rs/env_logger/*/env_logger/#enabling-logging
       # PALPO_LOG: info  # default is: "warn,state_res=warn"

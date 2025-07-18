@@ -15,7 +15,7 @@
 您可以通过以下方法重新邀请自己加入管理房间：
 - 在启动时使用 Palpo 二进制参数 `--execute "users make_user_admin <username>"` 一次性邀请自己加入管理房间
 - 使用 Palpo 控制台/CLI 运行 `users make_user_admin` 命令
-- 或者指定 `emergency_password` 配置选项，允许您暂时从 Web 客户端登录服务器帐户 (`@conduit`)
+- 或者指定 `emergency_password` 配置选项，允许您暂时从 Web 客户端登录服务器帐户 (`@palpo`)
 
 ## 一般潜在问题
 
@@ -90,8 +90,8 @@ Palpo 支持使用管理命令 `!admin debug change-log-level <log env filter>` 
 示例：`!admin debug change-log-level debug`
 
 这也可以接受复杂的过滤器，例如：
-`!admin debug change-log-level info,conduit_service[{dest="example.com"}]=trace,ruma_state_res=trace`
-`!admin debug change-log-level info,conduit_service[send{dest="example.org"}]=trace`
+`!admin debug change-log-level info,palpo_service[{dest="example.com"}]=trace,ruma_state_res=trace`
+`!admin debug change-log-level info,palpo_service[send{dest="example.org"}]=trace`
 
 要将日志级别重置为启动时/上次配置加载时设置的级别，只需传递 `--reset` 标志。
 
