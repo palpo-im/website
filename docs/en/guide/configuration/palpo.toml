@@ -1,8 +1,6 @@
-# 配置文件
 
-本章介绍配置 Palpo 的配置文件。
 
-```toml
+
 # The Palpo server needs all /_matrix/ requests to be reachable at
 # https://your.server.name/ on port 443 (client-server) and 8448 (federation).
 
@@ -62,5 +60,3 @@ ip_range_denylist = []
 [db]
 url = "postgres://postgres:postgres@127.0.0.1:5432/palpo"
 pool_size = 1
-
-```

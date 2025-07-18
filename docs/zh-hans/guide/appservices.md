@@ -2,7 +2,7 @@
 
 ## 获取帮助
 
-如果您在设置应用服务时遇到任何问题：请在 [#palpo:palpo.chat](https://matrix.to/#/#palpo:palpo.chat) 中提问，或 [在 GitHub 上提交问题](https://github.com/matrix-construct/palpo/issues/new)。
+如果您在设置应用服务时遇到任何问题：请在 [#palpo:palpo.chat](https://matrix.to/#/#palpo:palpo.chat) 中提问，或 [在 GitHub 上提交问题](https://github.com/palpo-im/palpo/issues/new)。
 
 ## 设置应用服务 - 一般说明
 

@@ -7,8 +7,15 @@
   {
     "type": "dir",
     "name": "deploying",
-    "label": "deploying",
+    "label": "部署发布",
     "collapsible": true,
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "configuration",
+    "label": "配置文件",
+    "collapsible": false,
     "collapsed": false
   }
 ]

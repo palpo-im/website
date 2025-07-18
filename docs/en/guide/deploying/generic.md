@@ -3,7 +3,7 @@
 > ### Getting help
 >
 > If you run into any problems while setting up Palpo [open an issue on
-> GitHub](https://github.com/matrix-construct/palpo/issues/new).
+> GitHub](https://github.com/palpo-im/palpo/issues/new).
 
 ## Installing Palpo
 
@@ -13,7 +13,7 @@ You may simply download the binary that fits your machine architecture (x86_64
 or aarch64). Run `uname -m` to see what you need.
 
 Prebuilt fully static musl binaries can be downloaded from the latest tagged
-release [here](https://github.com/matrix-construct/palpo/releases/latest) or
+release [here](https://github.com/palpo-im/palpo/releases/latest) or
 `main` CI branch workflow artifact output. These also include Debian/Ubuntu
 packages.
 
@@ -33,22 +33,7 @@ for performance.
 
 ### Compiling
 
-Alternatively, you may compile the binary yourself. We recommend using
-Nix to build palpo as this has the most
-guaranteed reproducibiltiy and easiest to get a build environment and output
-going. This also allows easy cross-compilation.
-
-You can run the `nix build -L .#static-x86_64-linux-musl-all-features` or
-`nix build -L .#static-aarch64-linux-musl-all-features` commands based
-on architecture to cross-compile the necessary static binary located at
-`result/bin/palpo`. This is reproducible with the static binaries produced
-in our CI.
-
-If wanting to build using standard Rust toolchains, make sure you install:
-- `liburing-dev` on the compiling machine, and `liburing` on the target host
-- LLVM and libclang for RocksDB
-
-You can build Palpo using `cargo build --release --all-features`
+TODO
 
 ## Adding a Palpo user
 

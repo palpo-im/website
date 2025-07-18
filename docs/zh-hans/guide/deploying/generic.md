@@ -2,7 +2,7 @@
 
 > ### 获取帮助
 >
-> 如果您在设置 Palpo 时遇到任何问题，请 [在 GitHub 上提交问题](https://github.com/matrix-construct/palpo/issues/new)。
+> 如果您在设置 Palpo 时遇到任何问题，请 [在 GitHub 上提交问题](https://github.com/palpo-im/palpo/issues/new)。
 
 ## 安装 Palpo
 
@@ -10,7 +10,7 @@
 
 您可以直接下载适合您机器架构（x86_64 或 aarch64）的二进制文件。运行 `uname -m` 查看您需要什么。
 
-预构建的完全静态 musl 二进制文件可以从最新标记的 [发布版本](https://github.com/matrix-construct/palpo/releases/latest) 或 `main` CI 分支工作流 artifact 输出中下载。这些还包括 Debian/Ubuntu 包。
+预构建的完全静态 musl 二进制文件可以从最新标记的 [发布版本](https://github.com/palpo-im/palpo/releases/latest) 或 `main` CI 分支工作流 artifact 输出中下载。这些还包括 Debian/Ubuntu 包。
 
 这些可以直接通过 curl 下载。`ci-bins` 是通过提交哈希/修订的 CI 工作流二进制文件，`releases` 是标记的发布版本。按上次修改时间降序排序以获取最新版本。
 
@@ -20,15 +20,7 @@
 
 ### 编译
 
-或者，您可以自己编译二进制文件。我们建议使用 Nix 来构建 palpo，因为这具有最高的保证可重现性，并且最容易获得构建环境和输出。这也允许轻松进行交叉编译。
-
-您可以根据架构运行 `nix build -L .#static-x86_64-linux-musl-all-features` 或 `nix build -L .#static-aarch64-linux-musl-all-features` 命令，以交叉编译位于 `result/bin/palpo` 的必要静态二进制文件。这与我们 CI 中生成的静态二进制文件是可重现的。
-
-如果想使用标准 Rust 工具链构建，请确保安装：
-- 编译机器上的 `liburing-dev`，以及目标主机上的 `liburing`
-- RocksDB 的 LLVM 和 libclang
-
-您可以使用 `cargo build --release --all-features` 构建 Palpo
+TODO
 
 ## 添加 Palpo 用户
 

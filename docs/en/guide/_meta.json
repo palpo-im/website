@@ -7,8 +7,15 @@
   {
     "type": "dir",
     "name": "deploying",
-    "label": "deploying",
+    "label": "Deploying",
     "collapsible": true,
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "configuration",
+    "label": "Configuration",
+    "collapsible": false,
     "collapsed": false
   }
 ]

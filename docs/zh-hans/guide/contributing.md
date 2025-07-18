@@ -10,7 +10,7 @@
 
 ### 报告 Bug
 
-如果您发现任何 Bug，请通过 [GitHub Issues](https://github.com/matrix-construct/palpo/issues) 提交。
+如果您发现任何 Bug，请通过 [GitHub Issues](https://github.com/palpo-im/palpo/issues) 提交。
 
 在提交 Bug 报告时，请提供尽可能详细的信息，包括：
 
@@ -22,7 +22,7 @@
 
 ### 提交功能请求
 
-如果您有新的功能想法，也请通过 [GitHub Issues](https://github.com/matrix-construct/palpo/issues) 提交。
+如果您有新的功能想法，也请通过 [GitHub Issues](https://github.com/palpo-im/palpo/issues) 提交。
 
 在提交功能请求时，请描述您的想法，并说明它将如何改进项目。
 

@@ -11,13 +11,13 @@ OCI images for palpo are available in the registries listed below.
 
 | Registry        | Image                                                           | Size                          | Notes                  |
 | --------------- | --------------------------------------------------------------- | ----------------------------- | ---------------------- |
-| GitHub Registry | [ghcr.io/matrix-construct/palpo:latest][gh] | ![Image Size][shield-latest]  | Stable latest tagged image.          |
+| GitHub Registry | [ghcr.io/palpo-im/palpo:latest][gh] | ![Image Size][shield-latest]  | Stable latest tagged image.          |
 | Docker Hub      | [docker.io/jevolk/palpo:latest][dh]             | ![Image Size][shield-latest]  | Stable latest tagged image.          |
-| GitHub Registry | [ghcr.io/matrix-construct/palpo:main][gh]   | ![Image Size][shield-main]    | Stable main branch.   |
+| GitHub Registry | [ghcr.io/palpo-im/palpo:main][gh]   | ![Image Size][shield-main]    | Stable main branch.   |
 | Docker Hub      | [docker.io/jevolk/palpo:main][dh]               | ![Image Size][shield-main]    | Stable main branch.   |
 
 [dh]: https://hub.docker.com/r/jevolk/palpo
-[gh]: https://github.com/matrix-construct/palpo/pkgs/container/palpo
+[gh]: https://github.com/palpo-im/palpo/pkgs/container/palpo
 [shield-latest]: https://img.shields.io/docker/image-size/jevolk/palpo/latest
 [shield-main]: https://img.shields.io/docker/image-size/jevolk/palpo/main
 
@@ -90,30 +90,6 @@ docker compose up -d
 ```
 
 > **Note:** Don't forget to modify and adjust the compose file to your needs.
-
-### Nix build
-
-Palpo's Nix images are built using [`buildLayeredImage`][nix-buildlayeredimage].
-This ensures all OCI images are repeatable and reproducible by anyone, keeps the
-images lightweight, and can be built offline.
-
-This also ensures portability of our images because `buildLayeredImage` builds
-OCI images, not Docker images, and works with other container software.
-
-The OCI images are OS-less with only a very minimal environment of the `tini`
-init system, CA certificates, and the palpo binary. This does mean there is
-not a shell, but in theory you can get a shell by adding the necessary layers
-to the layered image. However it's very unlikely you will need a shell for any
-real troubleshooting.
-
-The flake file for the OCI image definition is at [`nix/pkgs/oci-image/default.nix`][oci-image-def].
-
-To build an OCI image using Nix, the following outputs can be built:
-- `nix build -L .#oci-image` (default features, x86_64 glibc)
-- `nix build -L .#oci-image-x86_64-linux-musl` (default features, x86_64 musl)
-- `nix build -L .#oci-image-aarch64-linux-musl` (default features, aarch64 musl)
-- `nix build -L .#oci-image-x86_64-linux-musl-all-features` (all features, x86_64 musl)
-- `nix build -L .#oci-image-aarch64-linux-musl-all-features` (all features, aarch64 musl)
 
 ### Use Traefik as Proxy
 

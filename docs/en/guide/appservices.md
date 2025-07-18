@@ -4,7 +4,7 @@
 
 If you run into any problems while setting up an Appservice: ask us in
 [#palpo:palpo.chat](https://matrix.to/#/#palpo:palpo.chat) or
-[open an issue on GitHub](https://github.com/matrix-construct/palpo/issues/new).
+[open an issue on GitHub](https://github.com/palpo-im/palpo/issues/new).
 
 ## Set up the appservice - general instructions
 
