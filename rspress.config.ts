@@ -15,7 +15,7 @@ export default defineConfig({
     title: 'Rspress',
     type: 'website',
     url: siteUrl,
-    image: 'https://salvo.rs/images/logo.png',
+    image: 'https://salvo.rs/images/logos/palpo.png',
     description: 'Palpo Docs',
     twitter: {
       site: '@salvo',
@@ -71,10 +71,10 @@ export default defineConfig({
       searchSuggestedQueryText: '尝试搜索',
     },
   ],
-  icon: 'docs/public/images/icons/icon.png',
+  icon: 'docs/public/images/icons/palpo.png',
   logo: {
-    light: '/images/icons/icon.png',
-    dark: '/images/icons/icon.png',
+    light: '/images/logos/palpo.png',
+    dark: '/images/logos/palpo.png',
   },
   // locales 为一个对象数组
   themeConfig: {
