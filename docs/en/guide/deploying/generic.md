@@ -24,13 +24,6 @@ modified for the latest.
 These binaries have jemalloc and io_uring statically linked and included with
 them, so no additional dynamic dependencies need to be installed.
 
-For the **best** performance; if using an `x86_64` CPU made in the last ~15 years,
-we recommend using the `-haswell-` optimised binaries. This sets
-`-march=haswell` which is the most compatible and highest performance with
-optimised binaries. The database backend, RocksDB, most benefits from this as it
-will then use hardware accelerated CRC32 hashing/checksumming which is critical
-for performance.
-
 ### Compiling
 
 TODO
@@ -105,7 +98,7 @@ Now we need to create the Palpo's config file in
 **Please take a moment to read the config. You need to change at least the
 server name.**
 
-RocksDB is the only supported database backend.
+PostgresDB is the only supported database backend.
 
 ## Setting the correct file permissions
 

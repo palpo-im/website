@@ -89,53 +89,6 @@ If your DNS server supports it, some users have reported enabling
 `query_over_tcp_only` to force only TCP querying by default has improved DNS
 reliability at a slight performance cost due to TCP overhead.
 
-## RocksDB / database issues
-
-#### Database corruption
-
-If your database is corrupted *and* is failing to start (e.g. checksum
-mismatch), it may be recoverable but careful steps must be taken, and there is
-no guarantee it may be recoverable.
-
-The first thing that can be done is launching Palpo with the
-`rocksdb_repair` config option set to true. This will tell RocksDB to attempt to
-repair itself at launch. If this does not work, disable the option and continue
-reading.
-
-RocksDB has the following recovery modes:
-
-- `TolerateCorruptedTailRecords`
-- `AbsoluteConsistency`
-- `PointInTime`
-- `SkipAnyCorruptedRecord`
-
-By default, Palpo uses `TolerateCorruptedTailRecords` as generally these may
-be due to bad federation and we can re-fetch the correct data over federation.
-The RocksDB default is `PointInTime` which will attempt to restore a "snapshot"
-of the data when it was last known to be good. This data can be either a few
-seconds old, or multiple minutes prior. `PointInTime` may not be suitable for
-default usage due to clients and servers possibly not being able to handle
-sudden "backwards time travels", and `AbsoluteConsistency` may be too strict.
-
-`AbsoluteConsistency` will fail to start the database if any sign of corruption
-is detected. `SkipAnyCorruptedRecord` will skip all forms of corruption unless
-it forbids the database from opening (e.g. too severe). Usage of
-`SkipAnyCorruptedRecord` voids any support as this may cause more damage and/or
-leave your database in a permanently inconsistent state, but it may do something
-if `PointInTime` does not work as a last ditch effort.
-
-With this in mind:
-
-- First start Palpo with the `PointInTime` recovery method. See the [example
-config](configuration/examples.md) for how to do this using
-`rocksdb_recovery_mode`
-- If your database successfully opens, clients are recommended to clear their
-client cache to account for the rollback
-- Leave your Palpo running in `PointInTime` for at least 30-60 minutes so as
-much possible corruption is restored
-- If all goes will, you should be able to restore back to using
-`TolerateCorruptedTailRecords` and you have successfully recovered your database
-
 ## Debugging
 
 Note that users should not really be debugging things. If you find yourself

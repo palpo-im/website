@@ -49,31 +49,6 @@ dnsmasq 可能有效，但它**不**支持 TCP 回退，这在接收大型 DNS �
 
 如果您的 DNS 服务器支持，一些用户报告说启用 `query_over_tcp_only` 以强制默认仅进行 TCP 查询，这提高了 DNS 可靠性，但由于 TCP 开销，性能略有下降。
 
-## RocksDB / 数据库问题
-
-#### 数据库损坏
-
-如果您的数据库损坏*并且*无法启动（例如校验和不匹配），它可能可以恢复，但必须采取谨慎的步骤，并且不能保证可以恢复。
-
-可以做的第一件事是启动 Palpo 时将 `rocksdb_repair` 配置选项设置为 true。这将告诉 RocksDB 在启动时尝试修复自身。如果这不起作用，请禁用该选项并继续阅读。
-
-RocksDB 具有以下恢复模式：
-
-- `TolerateCorruptedTailRecords`
-- `AbsoluteConsistency`
-- `PointInTime`
-- `SkipAnyCorruptedRecord`
-
-默认情况下，Palpo 使用 `TolerateCorruptedTailRecords`，因为通常这些可能是由于错误的联邦造成的，我们可以通过联邦重新获取正确的数据。RocksDB 的默认是 `PointInTime`，它将尝试恢复数据最后已知良好时的“快照”。此数据可能只有几秒钟，也可能提前几分钟。`PointInTime` 可能不适合默认使用，因为客户端和服务器可能无法处理突然的“时间倒流”，而 `AbsoluteConsistency` 可能过于严格。
-
-如果检测到任何损坏迹象，`AbsoluteConsistency` 将无法启动数据库。`SkipAnyCorruptedRecord` 将跳过所有形式的损坏，除非它阻止数据库打开（例如过于严重）。使用 `SkipAnyCorruptedRecord` 会使任何支持无效，因为这可能会造成更大的损害和/或使您的数据库处于永久不一致的状态，但如果 `PointInTime` 作为最后的努力不起作用，它可能会有所帮助。
-
-考虑到这一点：
-
-- 首先使用 `PointInTime` 恢复方法启动 Palpo。有关如何使用 `rocksdb_recovery_mode` 执行此操作，请参阅 [示例配置](configuration/examples.md)
-- 如果您的数据库成功打开，建议客户端清除其客户端缓存以应对回滚
-- 让您的 Palpo 在 `PointInTime` 中运行至少 30-60 分钟，以便尽可能多地恢复损坏
-- 如果一切顺利，您应该能够恢复使用 `TolerateCorruptedTailRecords`，并且您已成功恢复数据库
 
 ## 调试
 
