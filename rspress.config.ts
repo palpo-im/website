@@ -71,10 +71,10 @@ export default defineConfig({
       searchSuggestedQueryText: '尝试搜索',
     },
   ],
-  icon: 'docs/public/images/icons/palpo.png',
+  icon: 'docs/public/images/icons/palpo.svg',
   logo: {
-    light: '/images/logos/palpo.png',
-    dark: '/images/logos/palpo.png',
+    light: '/images/logos/palpo.svg',
+    dark: '/images/logos/palpo.svg',
   },
   // locales 为一个对象数组
   themeConfig: {
