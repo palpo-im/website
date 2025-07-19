@@ -22,7 +22,7 @@ services:
     homeserver:
         ### If you already built the palpo image with 'docker build' or want to use a registry image,
         ### then you are ready to go.
-        image: jevolk/palpo:latest
+        image: chrislearn/palpo:latest
         restart: unless-stopped
         volumes:
             - db:/var/lib/palpo

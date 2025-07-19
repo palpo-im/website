@@ -12,14 +12,14 @@ OCI images for palpo are available in the registries listed below.
 | Registry        | Image                                                           | Size                          | Notes                  |
 | --------------- | --------------------------------------------------------------- | ----------------------------- | ---------------------- |
 | GitHub Registry | [ghcr.io/palpo-im/palpo:latest][gh] | ![Image Size][shield-latest]  | Stable latest tagged image.          |
-| Docker Hub      | [docker.io/jevolk/palpo:latest][dh]             | ![Image Size][shield-latest]  | Stable latest tagged image.          |
+| Docker Hub      | [docker.io/chrislearn/palpo:latest][dh]             | ![Image Size][shield-latest]  | Stable latest tagged image.          |
 | GitHub Registry | [ghcr.io/palpo-im/palpo:main][gh]   | ![Image Size][shield-main]    | Stable main branch.   |
-| Docker Hub      | [docker.io/jevolk/palpo:main][dh]               | ![Image Size][shield-main]    | Stable main branch.   |
+| Docker Hub      | [docker.io/chrislearn/palpo:main][dh]               | ![Image Size][shield-main]    | Stable main branch.   |
 
-[dh]: https://hub.docker.com/r/jevolk/palpo
+[dh]: https://hub.docker.com/r/chrislearn/palpo
 [gh]: https://github.com/palpo-im/palpo/pkgs/container/palpo
-[shield-latest]: https://img.shields.io/docker/image-size/jevolk/palpo/latest
-[shield-main]: https://img.shields.io/docker/image-size/jevolk/palpo/main
+[shield-latest]: https://img.shields.io/docker/image-size/chrislearn/palpo/latest
+[shield-main]: https://img.shields.io/docker/image-size/chrislearn/palpo/main
 
 ### Run
 
@@ -114,4 +114,4 @@ those two files.
 See the [TURN](../turn.md) page.
 
 [nix-buildlayeredimage]: https://ryantm.github.io/nixpkgs/builders/images/dockertools/#ssec-pkgs-dockerTools-buildLayeredImage
-[oci-image-def]: https://github.com/jevolk/palpo/blob/main/nix/pkgs/oci-image/default.nix
+[oci-image-def]: https://github.com/chrislearn/palpo/blob/main/nix/pkgs/oci-image/default.nix

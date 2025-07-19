@@ -22,7 +22,7 @@ services:
     homeserver:
         ### 如果您已经使用 'docker build' 构建了 palpo 镜像，或者想使用注册表镜像，
         ### 那么您就可以开始了。
-        image: jevolk/palpo:latest
+        image: chrislearn/palpo:latest
         restart: unless-stopped
         volumes:
             - db:/var/lib/palpo
