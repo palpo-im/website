@@ -9,7 +9,7 @@ const siteUrl = 'https://salvo.rs/';
 
 export default defineConfig({
   plugins: [pluginFontOpenSans(),ga({
-    id: 'G-CXCYMFTMBG',
+    id: 'G-BYH5STQ7SS',
   },),mermaid(),
   pluginOpenGraph({
     title: 'Rspress',
@@ -87,7 +87,7 @@ export default defineConfig({
       filterNoResultText: 'No matching API found',
     },
     footer: {
-      message: 'MIT Licensed | Copyright © 2019-present Palpo Team',
+      message: 'Apache 2.0 Licensed | Copyright © 2019-present Palpo Team',
     },
     socialLinks: [
       {
@@ -95,16 +95,6 @@ export default defineConfig({
         mode: 'link',
         content: 'https://github.com/palpo-im/palpo',
       },
-      // {
-      //   icon: 'qq',
-      //   mode: 'link',
-      //   content: 'https://qm.qq.com/q/IfBy8ezZEk',
-      // },
-      // {
-      //   icon: 'discord',
-      //   mode: 'link',
-      //   content: 'https://discord.gg/xNpR8XjC',
-      // },
     ],
   },
 });
