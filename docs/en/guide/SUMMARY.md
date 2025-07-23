@@ -4,7 +4,6 @@
 - [Configuration](configuration.md)
   - [Examples](configuration/examples.md)
 - [Deploying](deploying.md)
-  - [Generic](deploying/generic.md)
   - [NixOS](deploying/nixos.md)
   - [Docker](deploying/docker.md)
   - [Kubernetes](deploying/kubernetes.md)
