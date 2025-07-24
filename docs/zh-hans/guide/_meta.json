@@ -6,8 +6,8 @@
   },
   {
     "type": "dir",
-    "name": "deploying",
-    "label": "部署发布",
+    "name": "installation",
+    "label": "安装部署",
     "collapsible": true,
     "collapsed": false
   },
