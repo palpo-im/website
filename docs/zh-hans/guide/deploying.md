@@ -1,3 +1,12 @@
 # 部署
 
-本章介绍部署 Palpo 的各种方法。当前文档尚不完善，仅仅提供 Docker 部署的说明。
+本章介绍部署 Palpo 的各种方法
+
+
+## Docker
+
+
+## Debian/Ubuntu
+
+
+## Windows
