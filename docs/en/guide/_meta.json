@@ -6,8 +6,8 @@
   },
   {
     "type": "dir",
-    "name": "deploying",
-    "label": "Deploying",
+    "name": "installation",
+    "label": "Installation",
     "collapsible": true,
     "collapsed": false
   },
@@ -15,6 +15,20 @@
     "type": "dir",
     "name": "configuration",
     "label": "Configuration",
+    "collapsible": false,
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "administration",
+    "label": "Administration",
+    "collapsible": false,
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "development",
+    "label": "Development",
     "collapsible": false,
     "collapsed": false
   }
