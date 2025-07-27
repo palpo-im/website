@@ -1,0 +1,7 @@
+# 移动贡献指南到根目录
+mv docs/zh-hans/guide/development/contributing.md docs/zh-hans/guide/contributing.md
+mv docs/en/guide/development/contributing.md docs/en/guide/contributing.md
+
+# 删除空的开发指南目录
+rm -rf docs/zh-hans/guide/development/
+rm -rf docs/en/guide/development/
