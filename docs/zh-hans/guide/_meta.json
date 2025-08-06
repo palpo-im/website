@@ -1,8 +1,7 @@
 [
   "index",
   {
-    "type": "divider",
-    "dashed": false
+    "type": "divider", 
   },
   {
     "type": "dir",
@@ -15,6 +14,20 @@
     "type": "dir",
     "name": "configuration",
     "label": "配置文件",
+    "collapsible": false,
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "administration",
+    "label": "Administration",
+    "collapsible": false,
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "development",
+    "label": "Development",
     "collapsible": false,
     "collapsed": false
   }

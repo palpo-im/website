@@ -1,0 +1,39 @@
+services:
+  postgres:
+    hostname: postgres
+    image: postgres:17
+    restart: always
+    volumes:
+      - ./data/pgsql:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_USER: palpo
+      POSTGRES_DATABASE: palpo
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U palpo"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - internal
+
+  palpo:
+    image: ghcr.io/palpo-im/palpo:latest
+    ports:
+      - 8008:8008
+      - 8448:8448
+    environment:
+      PALPO_CONFIG: '/var/palpo/palpo.toml'
+    volumes:
+      - $PWD/palpo.toml:/var/palpo/palpo.toml
+      - $PWD/data/media:/var/palpo/media
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - internal
+    restart: unless-stopped
+
+networks:
+  internal:
+    attachable: true

@@ -22,15 +22,3 @@ services:
       #- "traefik.http.routers.to-matrix-wellknown.tls=true"
       #- "traefik.http.routers.to-matrix-wellknown.tls.certresolver=letsencrypt"
       #- "traefik.http.routers.to-matrix-wellknown.middlewares=cors-headers@docker"
-
-  ### 如果您在 docker-compose.yml 中取消注释了 Element-Web App，请取消注释此项
-  # element-web:
-  #     labels:
-  #         - "traefik.enable=true"
-  #         - "traefik.docker.network=proxy"  # 将此更改为您的 Traefik docker 代理网络的名称
-
-  #         - "traefik.http.routers.to-element-web.rule=Host(`<SUBDOMAIN>.<DOMAIN>`)"  # 更改为 Element-Web 托管的地址
-  #         - "traefik.http.routers.to-element-web.tls=true"
-  #         - "traefik.http.routers.to-element-web.tls.certresolver=letsencrypt"
-
-# vim: ts=2:sw=2:expandtab

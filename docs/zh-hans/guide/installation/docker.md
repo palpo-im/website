@@ -1,5 +1,23 @@
 # 使用 Docker 部署
 
+Docker 可以让 Palpo 的安装变得简单，推荐使用 Docker 方式安装部署 Palpo. 如果你的电脑上还没有安装 Docker, 可以从 [Docker](https://www.docker.com/) 网站下载对应系统的安装文件。
+
+
+## 使用预制模板配置
+
+首先下载 [palpo.toml](palpo.toml) 配置文件，然后根据需要下载下面的 Docker compose 配置文件，将他们放在同一个文件夹下面。
+
+[palpo.toml](palpo.toml) 仅仅只有一些必要配置项，
+
+### [compose.yml](compose.yml)
+
+仅仅配置了 Postgres 数据库和 Palpo 服务器程序。你需要修改里面的 `POSTGRES_PASSWORD` 之后启动
+
+| [compose.for-traefik.yml](compose.for-traefik.yml) | [ghcr.io/palpo-im/palpo:latest][gh] | ![Image Size][shield-latest] | 稳定的最新标记镜像。 |
+| [compose.for-traefik.yml](compose.for-traefik.yml) | [ghcr.io/palpo-im/palpo:latest][gh] | ![Image Size][shield-latest] | 稳定的最新标记镜像。 |
+| [compose.for-traefik.yml](compose.for-traefik.yml) | [ghcr.io/palpo-im/palpo:latest][gh] | ![Image Size][shield-latest] | 稳定的最新标记镜像。 |
+| [compose.for-traefik.yml](compose.for-traefik.yml) | [ghcr.io/palpo-im/palpo:latest][gh] | ![Image Size][shield-latest] | 稳定的最新标记镜像。 |
+
 ## Docker
 
 要使用 Docker 运行 palpo，您可以自己构建镜像或从注册表拉取。

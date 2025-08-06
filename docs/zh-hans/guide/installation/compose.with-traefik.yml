@@ -12,55 +12,11 @@ services:
     networks:
       - proxy
     environment:
-      PALPO_SERVER_NAME: your.server.name.example # 编辑此处
-      PALPO_TRUSTED_SERVERS: '["matrix.org"]'
-      PALPO_ALLOW_REGISTRATION: 'false' # 设置安全的注册令牌后，您可以启用此项
-      PALPO_REGISTRATION_TOKEN: "" # 这是一个可用于在服务器上注册的令牌
-      #PALPO_REGISTRATION_TOKEN_FILE: "" # 或者，您可以配置令牌文件的路径以供读取
-      PALPO_ADDRESS: 0.0.0.0
-      PALPO_PORT: 6167 # 如果要更改，需要与 traefik 负载均衡器标签匹配
-      PALPO_DATABASE_PATH: /var/lib/palpo
-      #PALPO_CONFIG: '/etc/palpo.toml' # 如果您在上面映射了 config toml，请取消注释
-      ### 根据需要取消注释并更改值，请注意 palpo 有很多配置选项，因此您也应该查看示例配置
-      # 可用级别：error, warn, info, debug, trace - 更多信息请访问：https://docs.rs/env_logger/*/env_logger/#enabling-logging
-      # PALPO_LOG: info  # 默认值：“warn,state_res=warn”
-      # PALPO_ALLOW_ENCRYPTION: 'true'
-      # PALPO_ALLOW_FEDERATION: 'true'
-      # PALPO_ALLOW_CHECK_FOR_UPDATES: 'true'
-      # PALPO_ALLOW_INCOMING_PRESENCE: true
-      # PALPO_ALLOW_OUTGOING_PRESENCE: true
-      # PALPO_ALLOW_LOCAL_PRESENCE: true
-      # PALPO_WORKERS: 10
-      # PALPO_MAX_REQUEST_SIZE: 20000000  # 字节，约 20 MB
-      # PALPO_NEW_USER_DISPLAYNAME_SUFFIX = "🏳<200d>⚧"
-
-      # 我们需要某种方式来提供客户端和服务器的 .well-known json。最简单的方法是通过 PALPO_WELL_KNOWN
-      # 变量/配置选项，有多种方法可以做到这一点，例如在 palpo.toml 文件中，以及在单独的
-      # 反向代理中，但由于您没有反向代理并遵循本指南，因此包含此示例
-      PALPO_WELL_KNOWN: |
-        {
-          client=https://your.server.name.example,
-          server=your.server.name.example:443
-        }
-    #cpuset: "0-4" # 取消注释以限制到特定的 CPU 内核
+      PALPO_CONFIG: '/var/palpo/palpo.toml'
     ulimits: # palpo 使用相当多的文件描述符，在某些系统上默认为 1024，因此您可以告诉 docker 增加它
       nofile:
         soft: 1048567
         hard: 1048567
-
-    ### 如果您想使用自己的 Element-Web App，请取消注释。
-    ### 注意：您需要为 Element 提供一个 config.json，并且您还需要第二个
-    ###       用于 Element 和 palpo 之间通信的域名或子域名
-    ### 配置文档：https://github.com/vector-im/element-web/blob/develop/docs/config.md
-    # element-web:
-    #     image: vectorim/element-web:latest
-    #     restart: unless-stopped
-    #     volumes:
-    #         - ./element_config.json:/app/config.json
-    #     networks:
-    #         - proxy
-    #     depends_on:
-    #         - homeserver
 
   traefik:
     image: "traefik:latest"
