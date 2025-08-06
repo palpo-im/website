@@ -1,7 +1,7 @@
 # palpo - Traefik 反向代理标签
 
 services:
-  homeserver:
+  palpo:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"  # 将此更改为您的 Traefik docker 代理网络的名称
