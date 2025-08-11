@@ -77,4 +77,4 @@ docker run -d -p 8448:8448 -p 8008:8008 \
 
 ## 语音通信
 
-请参阅 [TURN](../turn.md) 页面。
+请参阅 [TURN](../configuration/turn.md) 页面。
