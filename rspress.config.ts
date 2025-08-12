@@ -5,26 +5,25 @@ import ga from 'rspress-plugin-google-analytics';
 import mermaid from 'rspress-plugin-mermaid';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 
-const siteUrl = 'https://salvo.rs/';
+const siteUrl = 'https://palpo.im/';
 
 export default defineConfig({
-  plugins: [pluginFontOpenSans(),ga({
+  plugins: [pluginFontOpenSans(), ga({
     id: 'G-BYH5STQ7SS',
-  },),mermaid(),
+  },), mermaid(),
   pluginOpenGraph({
     title: 'Rspress',
     type: 'website',
     url: siteUrl,
-    image: 'https://salvo.rs/images/logos/palpo.svg',
+    image: 'https://palpo.im/images/logos/palpo.svg',
     description: 'Palpo Docs',
     twitter: {
       site: '@salvo',
       card: 'summary_large_image',
     },
   }),
-
-],
-  root: path.join(__dirname, 'docs'),
+  ],
+  root: 'docs',
   title: 'Palpo',
   lang: 'en',
   // locales 为一个对象数组
@@ -33,11 +32,11 @@ export default defineConfig({
       lang: 'en',
       // 导航栏切换语言的标签
       label: 'English',
-      title: 'salvo docs',
+      title: 'palpo docs',
       description: 'Palpo - A matrix server implementation in Rust',
       editLink: {
         docRepoBaseUrl:
-          'https://github.com/salvo-rs/website/tree/main/docs',
+          'https://github.com/palpo-im/website/tree/main/docs',
         text: '📝 Edit this page on GitHub',
       },
       outlineTitle: 'On this page',
@@ -57,7 +56,7 @@ export default defineConfig({
       description: 'Palpo - 一个用 Rust 编写的 Matrix 服务器实现',
       editLink: {
         docRepoBaseUrl:
-          'https://github.com/salvo-rs/website/tree/main/docs',
+          'https://github.com/palpo-im/website/tree/main/docs',
         text: '📝 在 GitHub 上编辑此页',
       },
       outlineTitle: '在本页上',
@@ -71,7 +70,7 @@ export default defineConfig({
       searchSuggestedQueryText: '尝试搜索',
     },
   ],
-  icon: 'docs/public/images/icons/palpo.png',
+  icon: '/images/icons/palpo.png',
   logo: {
     light: '/images/logos/palpo.svg',
     dark: '/images/logos/palpo.svg',

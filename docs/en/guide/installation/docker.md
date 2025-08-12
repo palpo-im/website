@@ -1,117 +1,80 @@
-# Install Using Docker
+# 使用 Docker 部署
 
-## Docker
+Docker 可以让 Palpo 的安装变得简单，推荐使用 Docker 方式安装部署 Palpo. 如果你的电脑上还没有安装 Docker, 可以从 [Docker](https://www.docker.com/) 网站下载对应系统的安装文件。
 
-To run palpo with Docker you can either build the image yourself or pull it
-from a registry.
 
-### Use a Registry
+## 使用预制模板配置
 
-OCI images for palpo are available in the registries listed below.
+首先下载 [palpo.toml](/installation/palpo.toml?raw) 配置文件，[palpo.toml](/installation/palpo.toml?raw) 仅仅只有一些必要配置项，请确保在启动服务器前已经修改为正确的值。
 
-| Registry        | Image                                                           | Size                          | Notes                  |
-| --------------- | --------------------------------------------------------------- | ----------------------------- | ---------------------- |
-| GitHub Registry | [ghcr.io/palpo-im/palpo:latest][gh] | ![Image Size][shield-latest]  | Stable latest tagged image.          |
-| Docker Hub      | [docker.io/ghcr.io/palpo-im/palpo:latest][dh]             | ![Image Size][shield-latest]  | Stable latest tagged image.          |
-| GitHub Registry | [ghcr.io/palpo-im/palpo:main][gh]   | ![Image Size][shield-main]    | Stable main branch.   |
-| Docker Hub      | [docker.io/chrislearn/palpo:main][dh]               | ![Image Size][shield-main]    | Stable main branch.   |
+然后根据需要下载下面的 Docker compose 配置文件，将他们放在同一个文件夹下面。
 
-[dh]: https://hub.docker.com/r/chrislearn/palpo
-[gh]: https://github.com/palpo-im/palpo/pkgs/container/palpo
-[shield-latest]: https://img.shields.io/docker/image-size/chrislearn/palpo/latest
-[shield-main]: https://img.shields.io/docker/image-size/chrislearn/palpo/main
+- [compose.yml (下载)](/installation/compose.yml)
 
-### Run
+    仅仅配置了 Postgres 数据库和 Palpo 服务器程序。你需要修改配置里面的 `POSTGRES_PASSWORD` 之后启动。
 
-When you have the image you can simply run it with
+- [compose.with-caddy.yml (下载)](/installation/compose.with-caddy.yml)
 
-```bash
-docker run -d -p 8448:6167 \
-    -v db:/var/lib/palpo/ \
-    -e PALPO_SERVER_NAME="your.server.name" \
-    -e PALPO_ALLOW_REGISTRATION=false \
-    --name palpo $LINK
-```
+    如果您想要一个开箱即用的 `caddy-docker-proxy` 设置，请使用次配置，此配置添加了 [Caddy](https://caddyserver.com/) 作为反向代理服务器。使用时需将所有 `example.com` 占位符替换为您自己的域名。
+    你还需要在启动前创建 `caddy` 网络：
 
-or you can use [docker compose](#docker-compose).
+    ```bash
+    docker network create caddy
+    ```
 
-The `-d` flag lets the container run in detached mode. You may supply an
-optional `palpo.toml` config file, the example config can be found
-[here](../configuration/examples.md). You can pass in different env vars to
-change config values on the fly. You can even configure palpo completely by
-using env vars. For an overview of possible values, please take a look at the
-[`docker-compose.yml`](docker-compose.yml) file.
+- [compose.with-traefik.yml (下载)](/installation/compose.with-traefik.yml?raw)
 
-If you just want to test palpo for a short time, you can use the `--rm`
-flag, which will clean up everything related to your container after you stop
-it.
+    如果您没有设置了 `traefik` 实例，请使用此配置, 此配置添加了使用 [Traefik](https://traefik.io/) 作为反向代理服务器。
 
-### Docker compose
+- [compose.for-traefik.yml (下载)](./compose.for-traefik.yml)
 
-If the `docker run` command is not for you or your setup, you can also use one
-of the provided `docker-compose` files.
+    如果您已经设置了 `traefik` 实例，请使用此配置, 此配置添加了使用现有 [Traefik](https://traefik.io/) 作为反向代理服务器。
 
-Depending on your proxy setup, you can use one of the following files;
 
-- If you already have a `traefik` instance set up, use
-[`docker-compose.for-traefik.yml`](docker-compose.for-traefik.yml)
-- If you don't have a `traefik` instance set up and would like to use it, use
-[`docker-compose.with-traefik.yml`](docker-compose.with-traefik.yml)
-- If you want a setup that works out of the box with `caddy-docker-proxy`, use
-[`docker-compose.with-caddy.yml`](docker-compose.with-caddy.yml) and replace all
-`example.com` placeholders with your own domain
-- For any other reverse proxy, use [`docker-compose.yml`](docker-compose.yml)
+> **注意：** 不要忘记根据您的需求修改和调整 `compose.yml` 和 `palpo.toml` 文件。
 
-When picking the traefik-related compose file, rename it so it matches
-`docker-compose.yml`, and rename the override file to
-`docker-compose.override.yml`. Edit the latter with the values you want for your
-server.
-
-When picking the `caddy-docker-proxy` compose file, it's important to first
-create the `caddy` network before spinning up the containers:
-
-```bash
-docker network create caddy
-```
-
-After that, you can rename it so it matches `docker-compose.yml` and spin up the
-containers!
-
-Additional info about deploying palpo can be found [here](generic.md).
-
-### Run
-
-If you already have built the image or want to use one from the registries, you
-can just start the container and everything else in the compose file in detached
-mode with:
+将下载的 compose.*.yml 文件改名为 compose.yml，然后运行下面的命令启动服务器：
 
 ```bash
 docker compose up -d
 ```
 
-> **Note:** Don't forget to modify and adjust the compose file to your needs.
+打开浏览器，输入你设置的服务地址，如果一切设置正确，则页面会显示：`Hello Palpo!`。
+r
+恭喜你，服务器已经正常工作。你可以选择任意你喜欢的 Matrix 客户端 (比如：[Element](https://app.element.io/), [Cinny](https://app.cinny.in/), [Robrix](https://github.com/project-robius/robrix)) 连接当前服务器。
 
-### Use Traefik as Proxy
+你可以从 Matrix 网站找到更多的[客户端列表](https://matrix.org/ecosystem/clients/)。
 
-As a container user, you probably know about Traefik. It is a easy to use
-reverse proxy for making containerized app and services available through the
-web. With the two provided files,
-[`docker-compose.for-traefik.yml`](docker-compose.for-traefik.yml) (or
-[`docker-compose.with-traefik.yml`](docker-compose.with-traefik.yml)) and
-[`docker-compose.override.yml`](docker-compose.override.yml), it is equally easy
-to deploy and use palpo, with a little caveat. If you already took a look at
-the files, then you should have seen the `well-known` service, and that is the
-little caveat. Traefik is simply a proxy and loadbalancer and is not able to
-serve any kind of content, but for palpo to federate, we need to either
-expose ports `443` and `8448` or serve two endpoints `.well-known/matrix/client`
-and `.well-known/matrix/server`.
 
-With the service `well-known` we use a single `nginx` container that will serve
-those two files.
+## 直接使用镜像
 
-## Voice communication
+如果你想直接从 Palpo 的 OCI 镜像运行 Palpo, 可在以下注册表中找到。
 
-See the [TURN](../turn.md) page.
+| 注册表 | 镜像 | 大小 | 备注 |
+|---|---|---|---|
+| GitHub Registry | [ghcr.io/palpo-im/palpo:latest][gh] | ![Image Size][shield-latest] | 稳定的最新标记镜像。 |
+| Docker Hub | [docker.io/ghcr.io/palpo-im/palpo:latest][dh] | ![Image Size][shield-latest] | 稳定的最新标记镜像。 |
 
-[nix-buildlayeredimage]: https://ryantm.github.io/nixpkgs/builders/images/dockertools/#ssec-pkgs-dockerTools-buildLayeredImage
-[oci-image-def]: https://github.com/chrislearn/palpo/blob/main/nix/pkgs/oci-image/default.nix
+[dh]: https://hub.docker.com/r/chrislearn/palpo
+[gh]: https://github.com/palpo-im/palpo/pkgs/container/palpo
+[shield-latest]: https://img.shields.io/docker/image-size/chrislearn/palpo/latest
+
+拥有镜像后，您只需运行以下命令即可：
+
+```bash
+docker run -d -p 8448:8448 -p 8008:8008 \
+    - palpo.toml:/var/palpo/palpo.toml \
+    -v data/media:/var/palpo/media \
+    --name palpo
+```
+
+或者您可以使用 [docker compose](#docker-compose)。
+
+`-d` 标志让容器在分离模式下运行。您可以提供一个可选的 `palpo.toml` 配置文件，示例配置可以在 [这里](../palpo.toml) 找到。
+
+如果您只想短期测试 palpo，可以使用 `--rm` 标志，它会在您停止容器后清理所有与容器相关的内容。
+
+
+## 语音通信
+
+请参阅 [TURN](../configuration/turn.md) 页面。

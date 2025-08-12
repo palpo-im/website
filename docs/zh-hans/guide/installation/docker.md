@@ -5,15 +5,15 @@ Docker 可以让 Palpo 的安装变得简单，推荐使用 Docker 方式安装�
 
 ## 使用预制模板配置
 
-首先下载 [palpo.toml](palpo.toml) 配置文件，[palpo.toml](palpo.toml) 仅仅只有一些必要配置项，请确保在启动服务器前已经修改为正确的值。
+首先下载 [palpo.toml][palpo_toml] 配置文件，[palpo.toml][palpo_toml] 仅仅只有一些必要配置项，请确保在启动服务器前已经修改为正确的值。
 
 然后根据需要下载下面的 Docker compose 配置文件，将他们放在同一个文件夹下面。
 
-- [compose.yml (下载)](./compose.yml)
+- [compose.yml](https://github.com/palpo-im/palpo/blob/main/deploy/docker/compose.yml)
 
     仅仅配置了 Postgres 数据库和 Palpo 服务器程序。你需要修改配置里面的 `POSTGRES_PASSWORD` 之后启动。
 
-- [compose.with-caddy.yml (下载)](./compose.with-caddy.yml)
+- [compose.with-caddy.yml](https://github.com/palpo-im/palpo/blob/main/deploy/docker/compose.with-caddy.yml)
 
     如果您想要一个开箱即用的 `caddy-docker-proxy` 设置，请使用次配置，此配置添加了 [Caddy](https://caddyserver.com/) 作为反向代理服务器。使用时需将所有 `example.com` 占位符替换为您自己的域名。
     你还需要在启动前创建 `caddy` 网络：
@@ -22,11 +22,11 @@ Docker 可以让 Palpo 的安装变得简单，推荐使用 Docker 方式安装�
     docker network create caddy
     ```
 
-- [compose.with-traefik.yml (下载)](/installation/compose.with-traefik.yml?raw)
+- [compose.with-traefik.yml](https://github.com/palpo-im/palpo/blob/main/deploy/docker/compose.with-traefik.yml)
 
     如果您没有设置了 `traefik` 实例，请使用此配置, 此配置添加了使用 [Traefik](https://traefik.io/) 作为反向代理服务器。
 
-- [compose.for-traefik.yml (下载)](./compose.for-traefik.yml)
+- [compose.for-traefik.yml](https://github.com/palpo-im/palpo/blob/main/deploy/docker/compose.for-traefik.yml)
 
     如果您已经设置了 `traefik` 实例，请使用此配置, 此配置添加了使用现有 [Traefik](https://traefik.io/) 作为反向代理服务器。
 
@@ -68,7 +68,7 @@ docker run -d -p 8448:8448 -p 8008:8008 \
     --name palpo
 ```
 
-或者您可以使用 [docker compose](#docker-compose)。
+或者您可以使用 `docker compose`。
 
 `-d` 标志让容器在分离模式下运行。您可以提供一个可选的 `palpo.toml` 配置文件，示例配置可以在 [这里](../palpo.toml) 找到。
 
@@ -78,3 +78,6 @@ docker run -d -p 8448:8448 -p 8008:8008 \
 ## 语音通信
 
 请参阅 [TURN](../configuration/turn.md) 页面。
+
+
+[palpo_toml]: https://github.com/palpo-im/palpo/blob/main/deploy/docker/palpo.toml
