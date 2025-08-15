@@ -1,4 +1,4 @@
-# 设置 TURN/STURN
+# 设置 TURN
 
 为了进行或接收呼叫，需要一个 TURN 服务器。Palpo 建议为此目的使用 [Coturn](https://github.com/coturn/coturn)，它也可用作 Docker 镜像。
 

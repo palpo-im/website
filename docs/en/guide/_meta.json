@@ -26,6 +26,10 @@
     "collapsed": false
   },
   {
+    "type": "divider",
+    "dashed": false
+  },
+  {
     "type": "dir",
     "name": "development",
     "label": "Development",

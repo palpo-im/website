@@ -1,38 +1,38 @@
-# PostgreSQL Installation
+# PostgreSQL 安装
 
-This section covers how to install PostgreSQL on different operating systems and using Docker Compose.
+本节介绍如何在不同操作系统上安装 PostgreSQL 以及使用 Docker Compose。
 
-## Linux Installation
+## Linux 安装
 
 ### Ubuntu/Debian
 
 ```bash
-# Update package list
+# 更新包列表
 sudo apt update
 
-# Install PostgreSQL
+# 安装 PostgreSQL
 sudo apt install postgresql postgresql-contrib
 
-# Start and enable PostgreSQL service
+# 启动并启用 PostgreSQL 服务
 sudo systemctl start postgresql
 sudo systemctl enable postgresql
 
-# Switch to postgres user and create database
+# 切换到 postgres 用户并创建数据库
 sudo -u postgres psql
 ```
 
 ### CentOS/RHEL/Fedora
 
 ```bash
-# Install PostgreSQL (CentOS/RHEL)
+# 安装 PostgreSQL (CentOS/RHEL)
 sudo yum install postgresql-server postgresql-contrib
-# or for Fedora
+# 或者对于 Fedora
 sudo dnf install postgresql-server postgresql-contrib
 
-# Initialize database
+# 初始化数据库
 sudo postgresql-setup initdb
 
-# Start and enable PostgreSQL service
+# 启动并启用 PostgreSQL 服务
 sudo systemctl start postgresql
 sudo systemctl enable postgresql
 ```
@@ -40,61 +40,61 @@ sudo systemctl enable postgresql
 ### Arch Linux
 
 ```bash
-# Install PostgreSQL
+# 安装 PostgreSQL
 sudo pacman -S postgresql
 
-# Initialize database cluster
+# 初始化数据库集群
 sudo -u postgres initdb -D /var/lib/postgres/data
 
-# Start and enable PostgreSQL service
+# 启动并启用 PostgreSQL 服务
 sudo systemctl start postgresql
 sudo systemctl enable postgresql
 ```
 
-## macOS Installation
+## macOS 安装
 
-### Using Homebrew
+### 使用 Homebrew
 
 ```bash
-# Install PostgreSQL
+# 安装 PostgreSQL
 brew install postgresql
 
-# Start PostgreSQL service
+# 启动 PostgreSQL 服务
 brew services start postgresql
 
-# Create a database
+# 创建数据库
 createdb mydatabase
 ```
 
-### Using PostgreSQL.app
+### 使用 PostgreSQL.app
 
-1. Download PostgreSQL.app from [postgresapp.com](https://postgresapp.com/)
-2. Drag the app to your Applications folder
-3. Open the app and click "Initialize" to create a new server
-4. Add `/Applications/Postgres.app/Contents/Versions/latest/bin` to your PATH
+1. 从 [postgresapp.com](https://postgresapp.com/) 下载 PostgreSQL.app
+2. 将应用程序拖到应用程序文件夹
+3. 打开应用程序并点击"Initialize"创建新服务器
+4. 将 `/Applications/Postgres.app/Contents/Versions/latest/bin` 添加到 PATH
 
-## Windows Installation
+### Windows 安装
 
-### Using Official Installer
+#### 使用官方安装程序
 
-1. Download the PostgreSQL installer from [postgresql.org](https://www.postgresql.org/download/windows/)
-2. Run the installer as administrator
-3. Follow the installation wizard:
-   - Choose installation directory
-   - Select components (PostgreSQL Server, pgAdmin, Command Line Tools)
-   - Set data directory
-   - Set superuser password
-   - Set port (default: 5432)
-   - Set locale
-4. Complete the installation
+1. 从 [postgresql.org](https://www.postgresql.org/download/windows/) 下载 PostgreSQL 安装程序
+2. 以管理员身份运行安装程序
+3. 按照安装向导操作：
+   - 选择安装目录
+   - 选择组件（PostgreSQL 服务器、pgAdmin、命令行工具）
+   - 设置数据目录
+   - 设置超级用户密码
+   - 设置端口（默认：5432）
+   - 设置区域设置
+4. 完成安装
 
-## Docker Compose Installation
+## Docker Compose 安装
 
-For a quick and portable PostgreSQL setup, you can use Docker Compose:
+对于快速和便携的 PostgreSQL 设置，您可以使用 Docker Compose：
 
-### Basic Docker Compose Setup
+### 基本 Docker Compose 设置
 
-Create a `docker-compose.yml` file:
+创建 `docker-compose.yml` 文件：
 
 ```yaml
 version: '3.8'
@@ -125,9 +125,9 @@ networks:
     driver: bridge
 ```
 
-### Advanced Docker Compose with pgAdmin
+### 包含 pgAdmin 的高级 Docker Compose
 
-For database management, you can also include pgAdmin:
+对于数据库管理，您还可以包含 pgAdmin：
 
 ```yaml
 version: '3.8'
@@ -174,30 +174,30 @@ networks:
     driver: bridge
 ```
 
-### Running Docker Compose
+### 运行 Docker Compose
 
 ```bash
-# Start the services
+# 启动服务
 docker-compose up -d
 
-# Check service status
+# 检查服务状态
 docker-compose ps
 
-# View logs
+# 查看日志
 docker-compose logs postgres
 
-# Stop the services
+# 停止服务
 docker-compose down
 
-# Stop and remove volumes (⚠️ This will delete all data)
+# 停止并删除卷（⚠️ 这将删除所有数据）
 docker-compose down -v
 ```
 
-## Post-Installation Setup
+## 安装后设置
 
-After installing PostgreSQL, you'll need to:
+安装 PostgreSQL 后，您需要：
 
-1. **Create a database for palpo**:
+1. **为 palpo 创建数据库**：
 
 ```sql
 CREATE DATABASE palpo;
@@ -205,12 +205,12 @@ CREATE USER palpo_user WITH PASSWORD 'your_secure_password';
 GRANT ALL PRIVILEGES ON DATABASE palpo TO palpo_user;
 ```
 
-1. **Configure connection settings** in your palpo application configuration file with the appropriate database URL:
+1. **在 palpo 应用程序配置文件中配置连接设置**，使用适当的数据库 URL：
 
 ```env
 postgresql://palpo_user:your_secure_password@localhost:5432/palpo
 ```
 
-1. **Test the connection** to ensure everything is working correctly.
+1. **测试连接**以确保一切正常工作。
 
-With PostgreSQL installed and configured, you're ready to set up palpo. Make sure to update your application's database configuration with the correct connection details before proceeding with the application setup.
+安装和配置 PostgreSQL 后，您就可以设置 palpo 了。在继续应用程序设置之前，请确保使用正确的连接详细信息更新应用程序的数据库配置。

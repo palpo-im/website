@@ -1,1 +1,0 @@
-<!-- Original content was a broken link to CONTRIBUTING.md -->

@@ -1,4 +1,4 @@
-# Maintaining your Palpo setup
+# Maintaining Palpo
 
 ## Moderation
 

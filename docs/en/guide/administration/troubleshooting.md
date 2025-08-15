@@ -1,4 +1,4 @@
-# Troubleshooting Palpo
+# Troubleshooting
 
 > ## Docker users ⚠️
 >
