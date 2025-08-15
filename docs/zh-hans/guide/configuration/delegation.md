@@ -1,36 +1,22 @@
-# Delegation of incoming federation traffic
+# 流量的委托
 
-In the following documentation, we use the term `server_name` to refer to that setting
-in your homeserver configuration file. It appears at the ends of user ids, and tells
-other homeservers where they can find your server.
+在以下文档中，我们使用 `server_name` 指 homeserver 配置文件中的该设置。它出现在用户 ID 的结尾，并告诉其他 homeserver 如何找到你的服务器。
 
-By default, other homeservers will expect to be able to reach yours via
-your `server_name`, on port 8448. For example, if you set your `server_name`
-to `example.com` (so that your user names look like `@user:example.com`),
-other servers will try to connect to yours at `https://example.com:8448/`.
+默认情况下，其他 homeserver 会尝试通过你的 `server_name`，在 8448 端口访问你的服务器。例如，如果你将 `server_name` 设置为 `example.com`（这样你的用户名看起来像 `@user:example.com`），其他服务器会尝试连接 `https://example.com:8448/`。
 
-Delegation is a Matrix feature allowing a homeserver admin to retain a
-`server_name` of `example.com` so that user IDs, room aliases, etc continue
-to look like `*:example.com`, whilst having federation traffic routed
-to a different server and/or port (e.g. `synapse.example.com:443`).
+委托（Delegation）是 Matrix 的一个特性，允许 homeserver 管理员保留 `example.com` 作为 `server_name`，这样用户 ID、房间别名等依然是 `*:example.com`，但联邦流量可以被路由到不同的服务器和/或端口（如 `synapse.example.com:443`）。
 
-## .well-known delegation
+## .well-known 委托
 
-To use this method, you need to be able to configure the server at
-`https://<server_name>` to serve a file at
-`https://<server_name>/.well-known/matrix/server`.  There are two ways to do this, shown below.
+要使用此方法，你需要能够配置 `https://<server_name>` 服务器，在 `https://<server_name>/.well-known/matrix/server` 路径下提供一个文件。下面有两种方式可以实现。
 
-Note that the `.well-known` file is hosted on the default port for `https` (port 443).
+注意：`.well-known` 文件必须托管在 HTTPS 默认端口（443）上。
 
-### External server
+### 外部服务器
 
-For maximum flexibility, you need to configure an external server such as nginx, Apache
-or HAProxy to serve the `https://<server_name>/.well-known/matrix/server` file. Setting
-up such a server is out of the scope of this documentation, but note that it is often
-possible to configure your [reverse proxy](reverse_proxy.md) for this.
+为了最大灵活性，你可以配置 nginx、Apache 或 HAProxy 等外部服务器来提供 `https://<server_name>/.well-known/matrix/server` 文件。如何搭建此类服务器超出了本文档范围，但通常可以在你的[反向代理](reverse_proxy.md)中配置。
 
-The URL `https://<server_name>/.well-known/matrix/server` should be configured
-return a JSON structure containing the key `m.server` like this:
+`https://<server_name>/.well-known/matrix/server` 应返回如下包含 `m.server` 键的 JSON 结构：
 
 ```json
 {
@@ -38,9 +24,7 @@ return a JSON structure containing the key `m.server` like this:
 }
 ```
 
-In our example (where we want federation traffic to be routed to
-`https://synapse.example.com`, on port 443), this would mean that
-`https://example.com/.well-known/matrix/server` should return:
+例如（我们希望联邦流量路由到 `https://synapse.example.com` 的 443 端口），那么 `https://example.com/.well-known/matrix/server` 应返回：
 
 ```json
 {
@@ -48,64 +32,36 @@ In our example (where we want federation traffic to be routed to
 }
 ```
 
-Note, specifying a port is optional. If no port is specified, then it defaults
-to 8448.
+注意，端口号可选。如果未指定端口，则默认为 8448。
 
-### Serving a `.well-known/matrix/server` file with Synapse
+### 使用 Synapse 提供 `.well-known/matrix/server` 文件
 
-If you are able to set up your domain so that `https://<server_name>` is routed to
-Synapse (i.e., the only change needed is to direct federation traffic to port 443
-instead of port 8448), then it is possible to configure Synapse to serve a suitable
-`.well-known/matrix/server` file. To do so, add the following to your `homeserver.yaml`
-file:
+如果你能将 `https://<server_name>` 路由到 Synapse（即只需将联邦流量从 8448 改为 443 端口），可以通过配置 Synapse 来自动提供合适的 `.well-known/matrix/server` 文件。只需在 `homeserver.yaml` 文件中添加：
 
 ```yaml
 serve_server_wellknown: true
 ```
 
-**Note**: this *only* works if `https://<server_name>` is routed to Synapse, so is
-generally not suitable if Synapse is hosted at a subdomain such as
-`https://synapse.example.com`.
+**注意**：此方法仅在 `https://<server_name>` 路由到 Synapse 时有效，因此如果 Synapse 部署在子域（如 `https://synapse.example.com`）则不适用。
 
-## SRV DNS record delegation
+## SRV DNS 记录委托
 
-It is also possible to do delegation using a SRV DNS record. However, that is generally
-not recommended, as it can be difficult to configure the TLS certificates correctly in
-this case, and it offers little advantage over `.well-known` delegation.
+也可以通过 SRV DNS 记录实现委托。但一般不推荐这种方式，因为 TLS 证书配置较为复杂，且相比 `.well-known` 委托没有明显优势。
 
-Please keep in mind that server delegation is a function of server-server communication,
-and as such using SRV DNS records will not cover use cases involving client-server comms.
-This means setting global client settings (such as a Jitsi endpoint, or disabling
-creating new rooms as encrypted by default, etc) will still require that you serve a file
-from the `https://<server_name>/.well-known/` endpoints defined in the spec! If you are
-considering using SRV DNS delegation to avoid serving files from this endpoint, consider
-the impact that you will not be able to change those client-based default values globally,
-and will be relegated to the featureset of the configuration of each individual client.
+请注意，服务器委托是服务器间通信的功能，因此使用 SRV DNS 记录无法覆盖客户端-服务器通信的场景。这意味着全局客户端设置（如 Jitsi 端点、默认新房间加密等）仍需通过 `https://<server_name>/.well-known/` 路径下的文件实现！如果你想用 SRV DNS 委托来避免提供该文件，请注意你将无法全局更改这些客户端默认值，只能在每个客户端单独配置。
 
-However, if you really need it, you can find some documentation on what such a
-record should look like and how Synapse will use it in [the Matrix
-specification](https://matrix.org/docs/spec/server_server/latest#resolving-server-names).
+如确有需要，可参考 [Matrix 规范](https://matrix.org/docs/spec/server_server/latest#resolving-server-names) 获取 SRV 记录格式及 Synapse 的使用方式。
 
-## Delegation FAQ
+## 委托常见问题
 
-### When do I need delegation?
+### 什么时候需要委托？
 
-If your homeserver's APIs are accessible on the default federation port (8448)
-and the domain your `server_name` points to, you do not need any delegation.
+如果你的 homeserver API 能通过 `server_name` 指向的域名和默认联邦端口（8448）访问，则无需任何委托。
 
-For instance, if you registered `example.com` and pointed its DNS A record at a
-fresh server, you could install Synapse on that host, giving it a `server_name`
-of `example.com`, and once a reverse proxy has been set up to proxy all requests
-sent to the port `8448` and serve TLS certificates for `example.com`, you
-wouldn't need any delegation set up.
+例如，你注册了 `example.com` 并将其 DNS A 记录指向一台新服务器，在该主机上安装 Synapse，`server_name` 设为 `example.com`，并配置反向代理将所有 8448 端口请求转发并为 `example.com` 提供 TLS 证书，则无需额外委托配置。
 
-**However**, if your homeserver's APIs aren't accessible on port 8448 and on the
-domain `server_name` points to, you will need to let other servers know how to
-find it using delegation.
+**但如果** 你的 homeserver API 不能通过 `server_name` 指向的域名和 8448 端口访问，则需要通过委托让其他服务器知道如何找到你的 homeserver。
 
-### Should I use a reverse proxy for federation traffic?
+### 联邦流量是否应使用反向代理？
 
-Generally, using a reverse proxy for both the federation and client traffic is a good
-idea, since it saves handling TLS traffic in Synapse. See
-[the reverse proxy documentation](reverse_proxy.md) for information on setting up a
-reverse proxy.
+通常，联邦和客户端流量都使用反向代理是个好主意，这样可以让 Synapse 不必直接处理 TLS 流量。关于如何设置反向代理，请参阅[反向代理文档](reverse_proxy.md)。
