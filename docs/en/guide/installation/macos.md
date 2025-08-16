@@ -59,7 +59,7 @@ Edit `palpo.toml` to match your environment and database settings. At minimum, y
 
 Replace `your.domain.com` and `your_secure_password` with your actual domain and password.
 
-For more advanced configuration options, see the [settings page](../configuration/index.md).
+For more advanced configuration options, see the [configuration page](../configuration/index.md).
 
 
 
