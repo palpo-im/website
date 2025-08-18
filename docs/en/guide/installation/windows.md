@@ -60,7 +60,7 @@ Start Palpo from the command line:
 palpo.exe
 ```
 
-## Set Up as a Windows Service (Autostart on Boot)
+## Setup as a Windows Service (Autostart on Boot)
 
 To run Palpo automatically on system startup, you can use the built-in `sc` command or a service manager like NSSM (the Non-Sucking Service Manager).
 

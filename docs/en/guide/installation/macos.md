@@ -71,7 +71,7 @@ Start Palpo from the command line:
 ./palpo
 ```
 
-## 5. Set Up as a Launchd Service (Autostart on Boot)
+## 5. Setup as a Launchd Service (Autostart on Boot)
 
 To run Palpo automatically on system startup, you can create a launchd service:
 
