@@ -1,30 +1,30 @@
 # Administration
 
-## Moderation
+Palpo supports management and auditing through command-line tools. In the future, administrator APIs and UI interfaces are planned.
 
-Palpo has moderation through admin room commands. Admin API and UI is planned.
+## Launching the Management Console
 
-Palpo has moderation admin commands for:
+You can start the interactive command-line console by running the following command in the directory where the palpo executable is located:
 
-- managing room aliases (`!admin rooms alias`)
-- managing room directory (`!admin rooms directory`)
-- managing room banning/blocking and user removal (`!admin rooms moderation`)
-- managing user accounts (`!admin users`)
-- fetching `/.well-known/matrix/support` from servers (`!admin federation`)
-- blocking incoming federation for certain rooms (not the same as room banning)
-(`!admin federation`)
-- deleting media (see [the media section](#media))
-
-Any commands with `-list` in them will require a codeblock in the message with
-each object being newline delimited. An example of doing this is:
-
-````
-!admin rooms moderation ban-list-of-rooms
+```bash
+palpo --config palpo.toml --server false --console
 ```
-!roomid1:server.name
-#badroomalias1:server.name
-!roomid2:server.name
-!roomid3:server.name
-#badroomalias2:server.name
-```
-````
+
+Here, `--config palpo.toml` specifies the configuration file to use. If you are using the default `palpo.toml` in the current directory, you can omit this option.
+
+`--server false` means the server will not start, and `--console` launches the interactive command-line console.
+
+You can run `palpo --help` to see detailed usage instructions.
+
+**Note:** On Windows, the executable is named `palpo.exe`.
+
+Inside the interactive console, you can use the `help` command to view available management commands.
+
+Palpo supports the following management commands:
+
+- `appservie`: Manage Appservie-related tasks
+- `user`: Manage local user-related tasks
+- `room`: Manage room-related tasks
+- `federation`: Manage Federation-related tasks
+- `server`: Manage server-related tasks
+- `media`: Manage media-related tasks
