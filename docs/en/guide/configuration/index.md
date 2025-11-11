@@ -12,7 +12,7 @@ If the following mandatory items are not configured, the system will not run cor
 
 ```toml
 # The domain name or server name used for external access to the server
-server_name = "matrix.palpo.im"
+server_name = "test.palpo.im"
 # The local address the server listens on
 listen_addr = "0.0.0.0:8008"
 
