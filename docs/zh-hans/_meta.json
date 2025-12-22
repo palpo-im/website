@@ -3,10 +3,10 @@
     "text": "使用指南",
     "link": "/guide/",
     "activeMatch": "/guide/"
-  },
-  {
-    "text": "资助项目",
-    "link": "/donate/",
-    "activeMatch": "/donate/"
-  }
+  }//,
+  // {
+  //   "text": "资助项目",
+  //   "link": "/donate/",
+  //   "activeMatch": "/donate/"
+  // }
 ]
