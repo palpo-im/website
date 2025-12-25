@@ -207,7 +207,7 @@ GRANT ALL PRIVILEGES ON DATABASE palpo TO palpo_user;
 
 1. **在 palpo 应用程序配置文件中配置连接设置**，使用适当的数据库 URL：
 
-```env
+```
 postgresql://palpo_user:your_secure_password@localhost:5432/palpo
 ```
 

@@ -33,9 +33,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      rsbuild-plugin-google-analytics:
-        specifier: ^1.0.4
-        version: 1.0.4(@rsbuild/core@1.6.15)
       rsbuild-plugin-open-graph:
         specifier: ^1.1.0
         version: 1.1.0(@rsbuild/core@1.6.15)
@@ -1450,14 +1447,6 @@ packages:
   rimraf@5.0.10:
     resolution: {integrity: sha512-l0OE8wL34P4nJH/H2ffoaniAokM2qSmrtXHmlpvYr5AVVX8msAyW0l8NVJFDxlSK4u3Uh/f41cQheDVdnYijwQ==}
     hasBin: true
-
-  rsbuild-plugin-google-analytics@1.0.4:
-    resolution: {integrity: sha512-K7KkgIUJWtoBpcCLBDLnBXezvQWdue5LCDO4NDvSDe/TEFxOlKb8wG6dDtp/A+CwbnZRVeNOZ9cB6vNg/y/Suw==}
-    peerDependencies:
-      '@rsbuild/core': 1.x
-    peerDependenciesMeta:
-      '@rsbuild/core':
-        optional: true
 
   rsbuild-plugin-open-graph@1.1.0:
     resolution: {integrity: sha512-ETrmQxhs/hW7xFzDGb6CIiZ1tVOrsrGPDgPTC/49bQ+sK75y6LZ3/CvcqPNxMwdnI3Ba79l62FIFvR0uC+UISw==}
@@ -3634,10 +3623,6 @@ snapshots:
   rimraf@5.0.10:
     dependencies:
       glob: 10.5.0
-
-  rsbuild-plugin-google-analytics@1.0.4(@rsbuild/core@1.6.15):
-    optionalDependencies:
-      '@rsbuild/core': 1.6.15
 
   rsbuild-plugin-open-graph@1.1.0(@rsbuild/core@1.6.15):
     optionalDependencies:

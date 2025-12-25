@@ -1,111 +1,68 @@
-# Delegation of Incoming Traffic
+# Traffic Delegation
 
-In the following documentation, we use the term `server_name` to refer to that setting
-in your homeserver configuration file. It appears at the ends of user ids, and tells
-other homeservers where they can find your server.
+In the following documentation, we use `server_name` to refer to this setting in the homeserver configuration file. It appears at the end of user IDs and informs other homeservers how to locate your server.
 
-By default, other homeservers will expect to be able to reach yours via
-your `server_name`, on port 8448. For example, if you set your `server_name`
-to `example.com` (so that your user names look like `@user:example.com`),
-other servers will try to connect to yours at `https://example.com:8448/`.
+By default, other homeservers will attempt to reach your server via your `server_name` on port 8448. For example, if you set `server_name` to `example.com` (so that your usernames appear as `@user:example.com`), other servers will try to connect to `https://example.com:8448/`.
 
-Delegation is a Matrix feature allowing a homeserver admin to retain a
-`server_name` of `example.com` so that user IDs, room aliases, etc continue
-to look like `*:example.com`, whilst having federation traffic routed
-to a different server and/or port (e.g. `palpo.example.com:443`).
+Delegation is a Matrix feature that allows homeserver administrators to retain `example.com` as the `server_name`, ensuring that user IDs, room aliases, etc., remain as `*:example.com`, while federation traffic can be routed to a different server and/or port (e.g., `synapse.example.com:443`).
 
-## .well-known delegation
+## .well-known Delegation
 
-To use this method, you need to be able to configure the server at
-`https://<server_name>` to serve a file at
-`https://<server_name>/.well-known/matrix/server`.  There are two ways to do this, shown below.
+To use this method, you must be able to configure the `https://<server_name>` server to serve a file at the path `https://<server_name>/.well-known/matrix/server`. There are two ways to achieve this.
 
-Note that the `.well-known` file is hosted on the default port for `https` (port 443).
+Note: The `.well-known` file must be hosted on the default HTTPS port (443).
 
-### External server
+### External Server
 
-For maximum flexibility, you need to configure an external server such as nginx, Apache
-or HAProxy to serve the `https://<server_name>/.well-known/matrix/server` file. Setting
-up such a server is out of the scope of this documentation, but note that it is often
-possible to configure your [reverse proxy](reverse_proxy.md) for this.
+For maximum flexibility, you can configure an external server such as nginx, Apache, or HAProxy to serve the `https://<server_name>/.well-known/matrix/server` file. Setting up such a server is beyond the scope of this document, but it can typically be configured within your [reverse proxy](reverse_proxy.md).
 
-The URL `https://<server_name>/.well-known/matrix/server` should be configured
-return a JSON structure containing the key `m.server` like this:
+`https://<server_name>/.well-known/matrix/server` should return a JSON structure containing the `m.server` key, as shown below:
 
 ```json
 {
-    "m.server": "<palpo.server.name>[:<yourport>]"
+    "m.server": "<synapse.server.name>[:<yourport>]"
 }
 ```
 
-In our example (where we want federation traffic to be routed to
-`https://palpo.example.com`, on port 443), this would mean that
-`https://example.com/.well-known/matrix/server` should return:
+For example (if we want federation traffic to be routed to `https://synapse.example.com` on port 443), then `https://example.com/.well-known/matrix/server` should return:
 
 ```json
 {
-    "m.server": "palpo.example.com:443"
+    "m.server": "synapse.example.com:443"
 }
 ```
 
-Note, specifying a port is optional. If no port is specified, then it defaults
-to 8448.
+Note that the port number is optional. If no port is specified, it defaults to 8448.
 
-### Serving a `.well-known/matrix/server` file with Palpo
+### Using Synapse to Serve the `.well-known/matrix/server` File
 
-If you are able to set up your domain so that `https://<server_name>` is routed to
-Palpo (i.e., the only change needed is to direct federation traffic to port 443
-instead of port 8448), then it is possible to configure Palpo to serve a suitable
-`.well-known/matrix/server` file. To do so, add the following to your `homeserver.yaml`
-file:
+If you can route `https://<server_name>` to Synapse (i.e., you only need to change federation traffic from port 8448 to 443), you can configure Synapse to automatically serve the appropriate `.well-known/matrix/server` file. Simply add the following to your `homeserver.yaml` file:
 
 ```yaml
 serve_server_wellknown: true
 ```
 
-**Note**: this *only* works if `https://<server_name>` is routed to Palpo, so is
-generally not suitable if Palpo is hosted at a subdomain such as
-`https://palpo.example.com`.
+**Note**: This method only works if `https://<server_name>` is routed to Synapse, so it is not applicable if Synapse is deployed on a subdomain (e.g., `https://synapse.example.com`).
 
-## SRV DNS record delegation
+## SRV DNS Record Delegation
 
-It is also possible to do delegation using a SRV DNS record. However, that is generally
-not recommended, as it can be difficult to configure the TLS certificates correctly in
-this case, and it offers little advantage over `.well-known` delegation.
+Delegation can also be achieved via SRV DNS records. However, this method is generally not recommended due to the complexity of TLS certificate configuration and the lack of significant advantages over `.well-known` delegation.
 
-Please keep in mind that server delegation is a function of server-server communication,
-and as such using SRV DNS records will not cover use cases involving client-server comms.
-This means setting global client settings (such as a Jitsi endpoint, or disabling
-creating new rooms as encrypted by default, etc) will still require that you serve a file
-from the `https://<server_name>/.well-known/` endpoints defined in the spec! If you are
-considering using SRV DNS delegation to avoid serving files from this endpoint, consider
-the impact that you will not be able to change those client-based default values globally,
-and will be relegated to the featureset of the configuration of each individual client.
+Please note that server delegation is a feature for server-to-server communication, so using SRV DNS records cannot cover client-server communication scenarios. This means that global client settings (such as Jitsi endpoints, default room encryption, etc.) still need to be implemented via files under the `https://<server_name>/.well-known/` path! If you intend to use SRV DNS delegation to avoid serving this file, be aware that you will not be able to change these client defaults globally and will need to configure them individually per client.
 
-However, if you really need it, you can find some documentation on what such a
-record should look like and how Palpo will use it in [the Matrix
-specification](https://matrix.org/docs/spec/server_server/latest#resolving-server-names).
+If necessary, refer to the [Matrix specification](https://matrix.org/docs/spec/server_server/latest#resolving-server-names) for the SRV record format and how Synapse uses it.
 
 ## Delegation FAQ
 
-### When do I need delegation?
+### When is delegation needed?
 
-If your homeserver's APIs are accessible on the default federation port (8448)
-and the domain your `server_name` points to, you do not need any delegation.
+If your homeserver API is accessible via the domain pointed to by `server_name` on the default federation port (8448), no delegation is required.
 
-For instance, if you registered `example.com` and pointed its DNS A record at a
-fresh server, you could install Palpo on that host, giving it a `server_name`
-of `example.com`, and once a reverse proxy has been set up to proxy all requests
-sent to the port `8448` and serve TLS certificates for `example.com`, you
-wouldn't need any delegation set up.
+For example, if you register `example.com`, point its DNS A record to a new server, install Synapse on that host, set `server_name` to `example.com`, and configure a reverse proxy to forward all requests on port 8448 and provide TLS certificates for `example.com`, no additional delegation configuration is needed.
 
-**However**, if your homeserver's APIs aren't accessible on port 8448 and on the
-domain `server_name` points to, you will need to let other servers know how to
-find it using delegation.
+**However**, if your homeserver API is not accessible via the domain pointed to by `server_name` on port 8448, you will need to use delegation to let other servers know how to find your homeserver.
 
-### Should I use a reverse proxy for federation traffic?
+### Should federation traffic use a reverse proxy?
 
-Generally, using a reverse proxy for both the federation and client traffic is a good
-idea, since it saves handling TLS traffic in Palpo. See
-[the reverse proxy documentation](reverse_proxy.md) for information on setting up a
-reverse proxy.
+Generally, it is a good idea to use a reverse proxy for both federation and client traffic, as it allows Synapse to avoid handling TLS traffic directly. For instructions on setting up a reverse proxy, refer to the [reverse proxy documentation](reverse_proxy.md).
+{/* 本行由工具自动生成,原文哈希值:f9913b9e92e9dbce5cb38ae5e8d7cac9 */}

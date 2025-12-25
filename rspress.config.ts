@@ -1,15 +1,10 @@
 import { defineConfig } from '@rspress/core';
-import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
-import ga from 'rspress-plugin-google-analytics';
-import mermaid from 'rspress-plugin-mermaid';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 
 const siteUrl = 'https://palpo.im/';
 
 export default defineConfig({
-  plugins: [pluginFontOpenSans(), ga({
-    id: 'G-BYH5STQ7SS',
-  },), mermaid(),
+  plugins: [
   pluginOpenGraph({
     title: 'Palpo - A matrix server implementation in Rust',
     type: 'website',
@@ -25,11 +20,9 @@ export default defineConfig({
   root: 'docs',
   title: 'Palpo',
   lang: 'en',
-  // locales 为一个对象数组
   locales: [
     {
       lang: 'en',
-      // 导航栏切换语言的标签
       label: 'English',
       title: 'Palpo - A matrix server implementation in Rust',
       description: 'Palpo - A matrix server implementation in Rust',
@@ -95,5 +88,13 @@ export default defineConfig({
       },
     ],
   },
+  markdown: {
+    mermaid: true,
+  },
+  themePlugins: {
+    ga: {
+      id: 'G-BYH5STQ7SS',
+    }
+  }
 });
 

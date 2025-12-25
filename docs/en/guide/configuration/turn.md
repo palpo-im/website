@@ -1,104 +1,91 @@
-# Using a Turn Server
+# Using TURN Servers
 
 # Overview
 
-This document explains how to enable VoIP relaying on your homeserver with
-TURN.
+This document describes how to enable VoIP relaying (TURN) on a homeserver.
 
-The palpo Matrix homeserver supports integration with TURN server via the
-[TURN server REST API](<https://tools.ietf.org/html/draft-uberti-behave-turn-rest-00>). This
-allows the homeserver to generate credentials that are valid for use on the
-TURN server through the use of a secret shared between the homeserver and the
-TURN server.
+The palpo Matrix homeserver supports integration with TURN servers via the [TURN server REST API](https://tools.ietf.org/html/draft-uberti-behave-turn-rest-00). This allows the homeserver to generate usable TURN server credentials using a secret key shared with the TURN server.
 
-This documentation provides coturn server configuration.
+This document uses the coturn server as an example for configuration instructions.
 
-## Requirements
+## Prerequisites
 
-For TURN relaying to work, the TURN service must be hosted on a server/endpoint with a public IP.
+For TURN relaying to function correctly, the TURN service must be deployed on a server/endpoint with a public IP address.
 
-Hosting TURN behind NAT requires port forwarding and for the NAT gateway to have a public IP.
-However, even with appropriate configuration, NAT is known to cause issues and to often not work.
+If TURN is deployed behind NAT, port forwarding is required, and the NAT gateway must have a public IP. Even if configured correctly, NAT can cause issues and is generally not recommended.
 
-Afterwards, the homeserver needs some further configuration.
+Additionally, the homeserver requires further configuration.
 
-## Config Palpo
+## Configuring Palpo
 
-Your homeserver configuration file has section `[turn]` for turn server configuation.
+Your homeserver configuration file has a `[turn]` section for TURN server configuration.
 
-As an example, here is the relevant section of the config file for `matrix.org`. The
-`turn_uris` are appropriate for TURN servers listening on the default ports, with no TLS.
+For example, the following is a relevant configuration snippet from `matrix.org`. The `turn_uris` are for a TURN server listening on the default port without TLS.
 
-  ```toml
-  [turn]
-  shared_secret = "n0t4ctuAllymatr1Xd0TorgSshar3d5ecret4obvIousreAsons"
-  user_lifetime = 86400000
-  allow_guests = true
-  uris = ["turn:turn.matrix.org?transport=udp", "turn:turn.matrix.org?transport=tcp"]
+```toml
+[turn]
+shared_secret = "n0t4ctuAllymatr1Xd0TorgSshar3d5ecret4obvIousreAsons"
+user_lifetime = 86400000
+allow_guests = true
+uris = ["turn:turn.matrix.org?transport=udp", "turn:turn.matrix.org?transport=tcp"]
+```
+
+After updating the homeserver configuration, restart palpo:
+
+- If using synctl:
+  ```sh
+  synctl restart
+  ```
+- If using systemd:
+  ```sh
+  systemctl restart matrix-palpo.service
+  ```
+- If using docker compose:
+  ```sh
+  docker compose restart
   ```
 
-After updating the homeserver configuration, you must restart palpo:
+Then reload the client (or wait up to an hour for settings to refresh automatically).
 
-  * If you use synctl:
-    ```sh
-    # Depending on how Palpo is installed, synctl may already be on
-    # your PATH. If not, you may need to activate a virtual environment.
-    synctl restart
-    ```
-  * If you use systemd:
-    ```sh
-    systemctl restart matrix-palpo.service
-    ```
-  * If you use docker compose:
-    ```sh
-    docker compose restart
-    ```
-... and then reload any clients (or wait an hour for them to refresh their
-settings).
+## Installing and Configuring Coturn
 
-## Install and Setup Coturn
+Coturn is a free, open-source TURN/STUN server implementation. A TURN server acts as a NAT traversal server and gateway for VoIP media traffic.
 
-coturn is a free open source implementation of TURN and STUN Server. The TURN Server is a VoIP media traffic NAT traversal server and gateway.
+### Initial Installation
 
-### Initial installation
+The TURN daemon `coturn` can be installed in various ways, such as via package manager or from source.
 
-The TURN daemon `coturn` is available from a variety of sources such as native package managers, or installation from source.
+#### Debian/Ubuntu
 
-#### Debian and Ubuntu based distributions
-
-Just install the debian package:
+Install the Debian package directly:
 
 ```sh
 sudo apt install coturn
 ```
 
-This will install and start a systemd service called `coturn`.
+This installs and starts a systemd service named `coturn`.
 
-#### Source installation
+#### Installing from Source
 
-1. Download the [latest release](https://github.com/coturn/coturn/releases/latest) from github.  Unpack it and `cd` into the directory.
-
-1. Configure it:
+1. Download the source code from the [latest release page on GitHub](https://github.com/coturn/coturn/releases/latest), extract it, and enter the directory.
+2. Configure the build:
 
     ```sh
     ./configure
     ```
 
-    You may need to install `libevent2`: if so, you should do so in
-    the way recommended by your operating system. You can ignore
-    warnings about lack of database support: a database is unnecessary
-    for this purpose.
+    If `libevent2` is required, install it as recommended for your system. Database support can be ignored.
 
-1. Build and install it:
+3. Compile and install:
 
     ```sh
     make
     sudo make install
     ```
 
-#### Docker compose installation
+#### Docker Compose Installation
 
-Create a `compose.yml` file, add coturn configuation:
+Create a `compose.yml` file and add the coturn configuration:
 
 ```yaml
 coturn:
@@ -106,62 +93,47 @@ coturn:
   network_mode: "host"
 ```
 
-then run
+Then run:
 
 ```bash
 docker compose up -d
 ```
-More install details and options can be found [here](https://github.com/coturn/coturn/blob/master/docker/coturn/README.md).
+
+For more installation details, refer to the [official documentation](https://github.com/coturn/coturn/blob/master/docker/coturn/README.md).
 
 ### Configuration
 
-1.  Create or edit the config file in `/etc/turnserver.conf`. The relevant
-    lines, with example values, are:
+1. Edit `/etc/turnserver.conf`. The main configurations are as follows:
 
     ```
     use-auth-secret
-    static-auth-secret=[your secret key here]
+    static-auth-secret=[Your Secret Key]
     realm=turn.myserver.org
     ```
 
-    See `turnserver.conf` for explanations of the options. One way to generate
-    the `static-auth-secret` is with `pwgen`:
+    The `static-auth-secret` can be generated using `pwgen`:
 
     ```sh
     pwgen -s 64 1
     ```
 
-    A `realm` must be specified, but its value is somewhat arbitrary. (It is
-    sent to clients as part of the authentication flow.) It is conventional to
-    set it to be your server name.
+    The `realm` must be specified and is typically set to your server name.
 
-1.  You will most likely want to configure `coturn` to write logs somewhere. The
-    easiest way is normally to send them to the syslog:
+2. It is recommended to configure coturn to output logs to syslog:
 
     ```sh
     syslog
     ```
 
-    (in which case, the logs will be available via `journalctl -u coturn` on a
-    systemd system). Alternatively, `coturn` can be configured to write to a
-    logfile - check the example config file supplied with `coturn`.
+    Alternatively, configure it to write to a log file. See the coturn example configuration for details.
 
-1.  Consider your security settings. TURN lets users request a relay which will
-    connect to arbitrary IP addresses and ports. The following configuration is
-    suggested as a minimum starting point:
+3. For security recommendations, a minimal configuration includes:
 
     ```
-    # VoIP traffic is all UDP. There is no reason to let users connect to arbitrary TCP endpoints via the relay.
     no-tcp-relay
-
-    # don't let the relay ever try to connect to private IP address ranges within your network (if any)
-    # given the turn server is likely behind your firewall, remember to include any privileged public IPs too.
     denied-peer-ip=10.0.0.0-10.255.255.255
     denied-peer-ip=192.168.0.0-192.168.255.255
     denied-peer-ip=172.16.0.0-172.31.255.255
-
-    # recommended additional local peers to block, to mitigate external access to internal services.
-    # https://www.rtcsec.com/article/slack-webrtc-turn-compromise-and-bug-bounty/#how-to-fix-an-open-turn-relay-to-address-this-vulnerability
     no-multicast-peers
     denied-peer-ip=0.0.0.0-0.255.255.255
     denied-peer-ip=100.64.0.0-100.127.255.255
@@ -174,201 +146,80 @@ More install details and options can be found [here](https://github.com/coturn/c
     denied-peer-ip=198.51.100.0-198.51.100.255
     denied-peer-ip=203.0.113.0-203.0.113.255
     denied-peer-ip=240.0.0.0-255.255.255.255
-
-    # special case the turn server itself so that client->TURN->TURN->client flows work
-    # this should be one of the turn server's listening IPs
     allowed-peer-ip=10.0.0.1
-
-    # consider whether you want to limit the quota of relayed streams per user (or total) to avoid risk of DoS.
-    user-quota=12 # 4 streams per video call, so 12 streams = 3 simultaneous relayed calls per user.
+    user-quota=12
     total-quota=1200
     ```
 
-1.  Also consider supporting TLS/DTLS. To do this, add the following settings
-    to `turnserver.conf`:
+4. To support TLS/DTLS, add the following configuration:
 
     ```
-    # TLS certificates, including intermediate certs.
-    # For Let's Encrypt certificates, use `fullchain.pem` here.
     cert=/path/to/fullchain.pem
-
-    # TLS private key file
     pkey=/path/to/privkey.pem
-
-    # Ensure the configuration lines that disable TLS/DTLS are commented-out or removed
     #no-tls
     #no-dtls
     ```
 
-    In this case, replace the `turn:` schemes in the `turn_uris` settings below
-    with `turns:`.
+    If using Let's Encrypt certificates, note that Element Android/iOS may not support them; ZeroSSL is recommended.
 
-    We recommend that you only try to set up TLS/DTLS once you have set up a
-    basic installation and got it working.
+5. The firewall must allow TURN ports (default 3478, 5349, and UDP relay ports 49152-65535).
 
-    NB: If your TLS certificate was provided by Let's Encrypt, TLS/DTLS will
-    not work with any Matrix client that uses Chromium's WebRTC library. This
-    currently includes Element Android & iOS; for more details, see their
-    [respective](https://github.com/element-hq/element-android/issues/1533)
-    [issues](https://github.com/element-hq/element-ios/issues/2712) as well as the underlying
-    [WebRTC issue](https://bugs.chromium.org/p/webrtc/issues/detail?id=11710).
-    Consider using a ZeroSSL certificate for your TURN server as a working alternative.
-
-1.  Ensure your firewall allows traffic into the TURN server on the ports
-    you've configured it to listen on (By default: 3478 and 5349 for TURN
-    traffic (remember to allow both TCP and UDP traffic), and ports 49152-65535
-    for the UDP relay.)
-
-1.  If your TURN server is behind NAT, the NAT gateway must have an external,
-    publicly-reachable IP address. You must configure `coturn` to advertise that
-    address to connecting clients:
+6. If TURN is behind NAT, configure `external-ip`:
 
     ```
-    external-ip=EXTERNAL_NAT_IPv4_ADDRESS
+    external-ip=Public IP Address
     ```
 
-    You may optionally limit the TURN server to listen only on the local
-    address that is mapped by NAT to the external address:
+    Optional: Restrict listening to the local IP:
 
     ```
-    listening-ip=INTERNAL_TURNSERVER_IPv4_ADDRESS
+    listening-ip=Internal IP Address
     ```
 
-    If your NAT gateway is reachable over both IPv4 and IPv6, you may
-    configure `coturn` to advertise each available address:
+    When IPv6 is supported, configure IPv4 and IPv6 separately.
 
-    ```
-    external-ip=EXTERNAL_NAT_IPv4_ADDRESS
-    external-ip=EXTERNAL_NAT_IPv6_ADDRESS
-    ```
+7. Restart the TURN server:
 
-    When advertising an external IPv6 address, ensure that the firewall and
-    network settings of the system running your TURN server are configured to
-    accept IPv6 traffic, and that the TURN server is listening on the local
-    IPv6 address that is mapped by NAT to the external IPv6 address.
+    - For Debian package or systemd:
 
-1.  (Re)start the turn server:
-
-    * If you used the Debian package (or have set up a systemd unit yourself):
       ```sh
       sudo systemctl restart coturn
       ```
 
-    * If you built from source:
+    - For source installation:
 
       ```sh
       /usr/local/bin/turnserver -o
       ```
 
-
 ## Troubleshooting
 
-The normal symptoms of a misconfigured TURN server are that calls between
-devices on different networks ring, but get stuck at "call
-connecting". Unfortunately, troubleshooting this can be tricky.
+Common symptom: Calls between different networks get stuck on "Connecting." Troubleshooting suggestions:
 
-Here are a few things to try:
+- Check if the firewall allows TURN ports (3478, 5349, and UDP relay ports 49152-65535).
+- Try enabling only non-encrypted TCP/UDP listening (WebRTC media streams are always encrypted).
+- Some WebRTC implementations (e.g., Chrome) have poor IPv6 support; consider removing AAAA records and using IPv4 only.
+- In NAT scenarios, ensure port forwarding and `external-ip` configuration are correct.
+- Enable `verbose` logging in coturn or debug logging in eturnal.
+- On the browser side, use `chrome://webrtc-internals/` or Firefox's about:webrtc to view connection logs.
+- Test Matrix TURN configuration using <https://test.voip.librepush.net/> or test the TURN server with <https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/>.
+- Generate test usernames/passwords using the following shell command:
 
- * Check that you have opened your firewall to allow TCP and UDP traffic to the
-   TURN ports (normally 3478 and 5349).
-
- * Check that you have opened your firewall to allow UDP traffic to the UDP
-   relay ports (49152-65535 by default).
-
- * Try disabling TLS/DTLS listeners and enable only its (unencrypted)
-   TCP/UDP listeners. (This will only leave signaling traffic unencrypted;
-   voice & video WebRTC traffic is always encrypted.)
-
- * Some WebRTC implementations (notably, that of Google Chrome) appear to get
-   confused by TURN servers which are reachable over IPv6 (this appears to be
-   an unexpected side-effect of its handling of multiple IP addresses as
-   defined by
-   [`draft-ietf-rtcweb-ip-handling`](https://tools.ietf.org/html/draft-ietf-rtcweb-ip-handling-12)).
-
-   Try removing any AAAA records for your TURN server, so that it is only
-   reachable over IPv4.
-
- * If your TURN server is behind NAT:
-
-    * double-check that your NAT gateway is correctly forwarding all TURN
-      ports (normally 3478 & 5349 for TCP & UDP TURN traffic, and 49152-65535 for the UDP
-      relay) to the NAT-internal address of your TURN server. If advertising
-      both IPv4 and IPv6 external addresses via the `external-ip` option, ensure
-      that the NAT is forwarding both IPv4 and IPv6 traffic to the IPv4 and IPv6
-      internal addresses of your TURN server. When in doubt, remove AAAA records
-      for your TURN server and specify only an IPv4 address as your `external-ip`.
-
-    * ensure that your TURN server uses the NAT gateway as its default route.
-
- * Enable more verbose logging, in `coturn` via the `verbose` setting:
-
-   ```
-   verbose
-   ```
-
-    or with `eturnal` with the shell command `eturnalctl loglevel debug` or in the configuration file (the service needs to [reload](https://eturnal.net/documentation/#Operation) for it to become effective):
-
-    ```yaml
-        ## Logging configuration:
-            log_level: debug
+    ```sh
+    secret=staticAuthSecretHere
+    u=$((`date +%s` + 3600)):test
+    p=$(echo -n $u | openssl dgst -hmac $secret -sha1 -binary | base64)
+    echo -e "username: $u\npassword: $p"
     ```
 
-   ... and then see if there are any clues in its logs.
+- Temporarily configure static username/password in coturn:
 
- * If you are using a browser-based client under Chrome, check
-   `chrome://webrtc-internals/` for insights into the internals of the
-   negotiation. On Firefox, check the "Connection Log" on `about:webrtc`.
+    ```
+    lt-cred-mech
+    user=username:password
+    ```
 
-   (Understanding the output is beyond the scope of this document!)
+    After modifying the configuration, restart coturn. Remember to revert to the original configuration after testing.
 
- * You can test your Matrix homeserver TURN setup with <https://test.voip.librepush.net/>.
-   Note that this test is not fully reliable yet, so don't be discouraged if
-   the test fails.
-   [Here](https://github.com/matrix-org/voip-tester) is the github repo of the
-   source of the tester, where you can file bug reports.
-
- * There is a WebRTC test tool at
-   <https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/>. To
-   use it, you will need a username/password for your TURN server. You can
-   either:
-
-    * look for the `GET /_matrix/client/r0/voip/turnServer` request made by a
-      matrix client to your homeserver in your browser's network inspector. In
-      the response you should see `username` and `password`. Or:
-
-    * Use the following shell commands for `coturn`:
-
-      ```sh
-      secret=staticAuthSecretHere
-
-      u=$((`date +%s` + 3600)):test
-      p=$(echo -n $u | openssl dgst -hmac $secret -sha1 -binary | base64)
-      echo -e "username: $u\npassword: $p"
-      ```
-
-      or for `eturnal`
-
-      ```sh
-      eturnalctl credentials
-      ```
-
-
-    * Or (**coturn only**): Temporarily configure `coturn` to accept a static
-      username/password. To do this, comment out `use-auth-secret` and
-      `static-auth-secret` and add the following:
-
-      ```
-      lt-cred-mech
-      user=username:password
-      ```
-
-      **Note**: these settings will not take effect unless `use-auth-secret`
-      and `static-auth-secret` are disabled.
-
-      Restart coturn after changing the configuration file.
-
-      Remember to restore the original settings to go back to testing with
-      Matrix clients!
-
-   If the TURN server is working correctly, you should see at least one `relay`
-   entry in the results.
+If TURN is configured correctly, the test results should include at least one `relay` entry.
+{/* 本行由工具自动生成,原文哈希值:d7e5c1620cc9f3e43657950742e7996c */}

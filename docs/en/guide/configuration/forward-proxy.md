@@ -1,74 +1,60 @@
-# Using a Forward/Outbound Proxy
+# Using Forward/Outbound Proxies
 
-You can use Palpo with a forward or outbound proxy. An example of when
-this is necessary is in corporate environments behind a DMZ (demilitarized zone).
-Palpo supports routing outbound HTTP(S) requests via a proxy. Only HTTP(S)
-proxy is supported, not SOCKS proxy or anything else.
+You can configure Palpo to work with forward or outbound proxies. This is often required in corporate environments (e.g., DMZ networks).  
+Palpo supports routing outbound HTTP(S) requests through a proxy. Only HTTP(S) proxies are supported; SOCKS or other proxy types are not supported.
 
-## Configure
+## Configuration
 
-The `http_proxy`, `https_proxy`, `no_proxy` environment variables are used to
-specify proxy settings. The environment variable is not case sensitive.
-- `http_proxy`: Proxy server to use for HTTP requests.
-- `https_proxy`: Proxy server to use for HTTPS requests.
-- `no_proxy`: Comma-separated list of hosts, IP addresses, or IP ranges in CIDR
-  format which should not use the proxy. Palpo will directly connect to these hosts.
+Proxy settings can be specified using the environment variables `http_proxy`, `https_proxy`, and `no_proxy`. Environment variable names are case-insensitive.  
+- `http_proxy`: Proxy server for HTTP requests.  
+- `https_proxy`: Proxy server for HTTPS requests.  
+- `no_proxy`: Comma-separated list of hosts, IP addresses, or IP ranges in CIDR notation that should be accessed directly, bypassing the proxy.
 
-The `http_proxy` and `https_proxy` environment variables have the form: `[scheme://][<username>:<password>@]<host>[:<port>]`
-- Supported schemes are `http://` and `https://`. The default scheme is `http://`
-  for compatibility reasons; it is recommended to set a scheme. If scheme is set
-  to `https://` the connection uses TLS between Palpo and the proxy.
+The format for `http_proxy` and `https_proxy` is: `[scheme://][<username>:<password>@]<host>[:<port>]`  
+- Supported schemes are `http://` and `https://`. The default scheme is `http://` (for compatibility), but it is recommended to explicitly specify the scheme. If the scheme is `https://`, the connection between Palpo and the proxy will use TLS.
 
-  **NOTE**: Palpo validates the certificates. If the certificate is not
-  valid, then the connection is dropped.
-- Default port if not given is `1080`.
-- Username and password are optional and will be used to authenticate against
-  the proxy.
+  **Note**: Palpo validates certificates. If a certificate is invalid, the connection will be rejected.  
+- The default port is `1080` (if not specified).  
+- Username and password are optional and used for proxy authentication.
 
-**Examples**
-- HTTP_PROXY=http://USERNAME:PASSWORD@10.0.1.1:8080/
-- HTTPS_PROXY=http://USERNAME:PASSWORD@proxy.example.com:8080/
-- NO_PROXY=master.hostname.example.com,10.1.0.0/16,172.30.0.0/16
+**Examples**  
+- HTTP_PROXY=http://USERNAME:PASSWORD@10.0.1.1:8080/  
+- HTTPS_PROXY=http://USERNAME:PASSWORD@proxy.example.com:8080/  
+- NO_PROXY=master.hostname.example.com,10.1.0.0/16,172.30.0.0/16  
 
-**NOTE**:
-Palpo does not apply the IP blacklist to connections through the proxy (since
-the DNS resolution is done by the proxy). It is expected that the proxy or firewall
-will apply blacklisting of IP addresses.
+**Note**:  
+Palpo does not apply IP blacklisting to connections made through a proxy (since DNS resolution is performed by the proxy). IP blacklisting should typically be handled by the proxy or firewall.
 
-## Connection types
+## Connection Types
 
-The proxy will be **used** for:
+The following scenarios **will use** the proxy:  
+- Push  
+- URL previews  
+- Remote statistics (phone-home stats)  
+- Recaptcha verification  
+- CAS authentication verification  
+- OpenID Connect  
+- Outbound federation  
+- Federation (checking public key revocation)  
+- Fetching public keys from other servers  
+- Downloading remote media  
 
-- push
-- url previews
-- phone-home stats
-- recaptcha validation
-- CAS auth validation
-- OpenID Connect
-- Outbound federation
-- Federation (checking public key revocation)
-- Fetching public keys of other servers
-- Downloading remote media
-
-It will **not be used** for:
-
-- Application Services
-- Identity servers
-- In worker configurations
-  - connections between workers
-  - connections from workers to Redis
+The following scenarios **will not use** the proxy:  
+- Application Services  
+- Identity servers  
+- In worker configurations:  
+  - Connections between workers  
+  - Connections from workers to Redis  
 
 ## Troubleshooting
 
-If a proxy server is used with TLS (HTTPS) and no connections are established,
-it is most likely due to the proxy's certificates. To test this, the validation
-in Palpo can be deactivated.
+If the proxy server uses TLS (HTTPS) and a connection cannot be established, it is often due to proxy certificate issues. You can temporarily disable Palpo's certificate validation for testing purposes.
 
-**NOTE**: This has an impact on security and is for testing purposes only!
+**Note**: This operation carries security risks and should only be used for testing!  
 
-To deactivate the certificate validation, the following setting must be added to
-your [homeserver.yaml](../usage/configuration/homeserver_sample_config.md).
+To disable certificate validation, add the following configuration to [homeserver.yaml](../usage/configuration/homeserver_sample_config.md):  
 
 ```yaml
 use_insecure_ssl_client_just_for_testing_do_not_use: true
 ```
+{/* 本行由工具自动生成,原文哈希值:5039ede5608dfc76617e373ae7e4ee65 */}

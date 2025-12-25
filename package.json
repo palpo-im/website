@@ -19,7 +19,6 @@
     "@rspress/plugin-preview": "^2.0.0-rc.3",
     "@types/node": "24.2.1",
     "prettier": "^3.6.2",
-    "rsbuild-plugin-google-analytics": "^1.0.4",
     "rsbuild-plugin-open-graph": "^1.1.0"
   }
 }

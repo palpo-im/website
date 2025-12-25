@@ -1,40 +1,38 @@
-# Install on macOS
+# Installing on macOS
 
-## Install PostgreSQL
+## Installing PostgreSQL
 
-Follow the instructions in the [PostgreSQL installation guide](./postgres.md) to install and set up PostgreSQL for your system.
+Please refer to the [PostgreSQL Installation Guide](./postgres.md) to install and configure PostgreSQL.
 
-
-You can install PostgreSQL on macOS using Homebrew:
+You can install PostgreSQL via Homebrew:
 
 ```bash
 brew install postgresql
 ```
 
-After installing PostgreSQL, create a database user and database for Palpo:
+After installation, create a database user and database for Palpo:
 
 ```bash
-# Switch to the postgres user
+# Start the postgresql service
 brew services start postgresql
 psql postgres
 
-# In the psql shell, run:
+# Execute in the psql shell:
 CREATE USER palpo WITH PASSWORD 'your_secure_password';
 CREATE DATABASE palpo OWNER palpo;
 ```
 
-Replace `'your_secure_password'` with a strong password. This will create a PostgreSQL user named `palpo` and a database named `palpo`, with the user as the owner.
+Replace `'your_secure_password'` with a strong password. This will create a PostgreSQL user and database named `palpo`, and set the user as the database owner.
 
+## Downloading Palpo Distribution
 
-## Download Palpo Release
-
-Go to the official GitHub releases page:
+Visit the official GitHub releases page:
 
 [https://github.com/palpo-im/palpo/releases](https://github.com/palpo-im/palpo/releases)
 
-Download the latest macOS release (e.g., `palpo-x.y.z-macos.zip`). Extract the downloaded archive.
+Download the latest macOS version (e.g., `palpo-x.y.z-macos.zip`) and extract it.
 
-## Configure Palpo
+## Configuring Palpo
 
 Copy the example configuration file and rename it:
 
@@ -42,28 +40,26 @@ Copy the example configuration file and rename it:
 cp palpo-example.toml palpo.toml
 ```
 
-Edit `palpo.toml` to match your environment and database settings. At minimum, you must:
+Edit `palpo.toml` according to your environment and database settings. At minimum, you need to:
 
-- Set `server_name` to your desired domain name, for example:
+- Set `server_name` to your desired domain, for example:
 
-	```toml
-	server_name = "your.domain.com"
-	```
+    ```toml
+    server_name = "your.domain.com"
+    ```
 
-- Set the database URL in the `[db]` section to match the database, user, and password you created above. For example:
+- Set the database URL in the `[db]` section to match the database, user, and password you created above, for example:
 
-	```toml
-	[db]
-	url = "postgresql://palpo:your_secure_password@localhost:5432/palpo"
-	```
+    ```toml
+    [db]
+    url = "postgresql://palpo:your_secure_password@localhost:5432/palpo"
+    ```
 
 Replace `your.domain.com` and `your_secure_password` with your actual domain and password.
 
-For more advanced configuration options, see the [configuration page](../configuration/index.md).
+For more advanced configurations, please refer to the [Configuration Page](../configuration/index.md).
 
-
-
-## Run Palpo
+## Running Palpo
 
 Start Palpo from the command line:
 
@@ -71,39 +67,40 @@ Start Palpo from the command line:
 ./palpo
 ```
 
-## 5. Setup as a Launchd Service (Autostart on Boot)
+## Setting Up as a Launchd Service (Auto-start on Boot)
 
-To run Palpo automatically on system startup, you can create a launchd service:
+To automatically start Palpo on boot, you can create a launchd service:
 
 1. Create a plist file at `~/Library/LaunchAgents/im.palpo.palpo.plist` with the following content:
 
-	```xml
-	<?xml version="1.0" encoding="UTF-8"?>
-	<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-	<plist version="1.0">
-	<dict>
-		<key>Label</key>
-		<string>im.palpo.palpo</string>
-		<key>ProgramArguments</key>
-		<array>
-			<string>/path/to/palpo</string>
-		</array>
-		<key>WorkingDirectory</key>
-		<string>/path/to</string>
-		<key>RunAtLoad</key>
-		<true/>
-		<key>KeepAlive</key>
-		<true/>
-	</dict>
-	</plist>
-	```
+    ```xml
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+    <plist version="1.0">
+    <dict>
+        <key>Label</key>
+        <string>im.palpo.palpo</string>
+        <key>ProgramArguments</key>
+        <array>
+            <string>/path/to/palpo</string>
+        </array>
+        <key>WorkingDirectory</key>
+        <string>/path/to</string>
+        <key>RunAtLoad</key>
+        <true/>
+        <key>KeepAlive</key>
+        <true/>
+    </dict>
+    </plist>
+    ```
 
-	Replace `/path/to/palpo` and `/path/to` with the actual path to your Palpo binary and its directory.
+    Replace `/path/to/palpo` and `/path/to` with the actual paths to the Palpo executable and its directory.
 
 2. Load the service:
 
-	```bash
-	launchctl load ~/Library/LaunchAgents/im.palpo.palpo.plist
-	```
+    ```bash
+    launchctl load ~/Library/LaunchAgents/im.palpo.palpo.plist
+    ```
 
-Palpo will now start automatically on login.
+Palpo will now start automatically upon login.
+{/* 本行由工具自动生成,原文哈希值:74ae6f66a9f43b899d7aa61cf4e2a720 */}

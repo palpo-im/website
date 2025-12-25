@@ -1,6 +1,6 @@
 # PostgreSQL Installation
 
-This section covers how to install PostgreSQL on different operating systems and using Docker Compose.
+This section explains how to install PostgreSQL on different operating systems and using Docker Compose.
 
 ## Linux Installation
 
@@ -26,7 +26,7 @@ sudo -u postgres psql
 ```bash
 # Install PostgreSQL (CentOS/RHEL)
 sudo yum install postgresql-server postgresql-contrib
-# or for Fedora
+# Or for Fedora
 sudo dnf install postgresql-server postgresql-contrib
 
 # Initialize database
@@ -62,39 +62,39 @@ brew install postgresql
 # Start PostgreSQL service
 brew services start postgresql
 
-# Create a database
+# Create database
 createdb mydatabase
 ```
 
 ### Using PostgreSQL.app
 
 1. Download PostgreSQL.app from [postgresapp.com](https://postgresapp.com/)
-2. Drag the app to your Applications folder
+2. Drag the application to your Applications folder
 3. Open the app and click "Initialize" to create a new server
 4. Add `/Applications/Postgres.app/Contents/Versions/latest/bin` to your PATH
 
-## Windows Installation
+### Windows Installation
 
-### Using Official Installer
+#### Using Official Installer
 
-1. Download the PostgreSQL installer from [postgresql.org](https://www.postgresql.org/download/windows/)
+1. Download PostgreSQL installer from [postgresql.org](https://www.postgresql.org/download/windows/)
 2. Run the installer as administrator
 3. Follow the installation wizard:
-   - Choose installation directory
-   - Select components (PostgreSQL Server, pgAdmin, Command Line Tools)
+   - Select installation directory
+   - Choose components (PostgreSQL server, pgAdmin, command line tools)
    - Set data directory
    - Set superuser password
    - Set port (default: 5432)
    - Set locale
-4. Complete the installation
+4. Complete installation
 
 ## Docker Compose Installation
 
-For a quick and portable PostgreSQL setup, you can use Docker Compose:
+For quick and portable PostgreSQL setup, you can use Docker Compose:
 
 ### Basic Docker Compose Setup
 
-Create a `docker-compose.yml` file:
+Create `docker-compose.yml` file:
 
 ```yaml
 version: '3.8'
@@ -177,7 +177,7 @@ networks:
 ### Running Docker Compose
 
 ```bash
-# Start the services
+# Start services
 docker-compose up -d
 
 # Check service status
@@ -186,7 +186,7 @@ docker-compose ps
 # View logs
 docker-compose logs postgres
 
-# Stop the services
+# Stop services
 docker-compose down
 
 # Stop and remove volumes (⚠️ This will delete all data)
@@ -195,9 +195,9 @@ docker-compose down -v
 
 ## Post-Installation Setup
 
-After installing PostgreSQL, you'll need to:
+After installing PostgreSQL, you need to:
 
-1. **Create a database for palpo**:
+1. **Create database for palpo**:
 
 ```sql
 CREATE DATABASE palpo;
@@ -205,12 +205,13 @@ CREATE USER palpo_user WITH PASSWORD 'your_secure_password';
 GRANT ALL PRIVILEGES ON DATABASE palpo TO palpo_user;
 ```
 
-1. **Configure connection settings** in your palpo application configuration file with the appropriate database URL:
+2. **Configure connection settings in palpo application configuration file** using appropriate database URL:
 
-```env
+```
 postgresql://palpo_user:your_secure_password@localhost:5432/palpo
 ```
 
-1. **Test the connection** to ensure everything is working correctly.
+3. **Test connection** to ensure everything works properly.
 
-With PostgreSQL installed and configured, you're ready to set up palpo. Make sure to update your application's database configuration with the correct connection details before proceeding with the application setup.
+After installing and configuring PostgreSQL, you're ready to set up palpo. Make sure to update your application's database configuration with the correct connection details before proceeding with application setup.
+{/* 本行由工具自动生成,原文哈希值:a517ef902d1e82c158060f7e5f040af7 */}

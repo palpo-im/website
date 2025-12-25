@@ -1,38 +1,33 @@
 [
   "index",
   {
-    "type": "divider",
-    "dashed": false
+    "type": "divider"
   },
   {
     "type": "dir",
     "name": "installation",
-    "label": "Installation",
+    "label": "安装部署",
     "collapsible": true,
     "collapsed": false
   },
   {
     "type": "dir",
     "name": "configuration",
-    "label": "Configuration",
+    "label": "配置文件",
     "collapsible": false,
     "collapsed": false
   },
   {
     "type": "dir",
     "name": "administration",
-    "label": "Administration",
+    "label": "管理",
     "collapsible": false,
     "collapsed": false
   },
   {
-    "type": "divider",
-    "dashed": false
-  },
-  {
     "type": "dir",
     "name": "development",
-    "label": "Development",
+    "label": "开发",
     "collapsible": false,
     "collapsed": false
   }
