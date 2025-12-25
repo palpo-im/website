@@ -55,10 +55,6 @@ r
 | GitHub Registry | [ghcr.io/palpo-im/palpo:latest][gh] | ![Image Size][shield-latest] | 稳定的最新标记镜像。 |
 | Docker Hub | [docker.io/ghcr.io/palpo-im/palpo:latest][dh] | ![Image Size][shield-latest] | 稳定的最新标记镜像。 |
 
-[dh]: https://hub.docker.com/r/chrislearn/palpo
-[gh]: https://github.com/palpo-im/palpo/pkgs/container/palpo
-[shield-latest]: https://img.shields.io/docker/image-size/chrislearn/palpo/latest
-
 拥有镜像后，您只需运行以下命令即可：
 
 ```bash
@@ -70,14 +66,11 @@ docker run -d -p 8448:8448 -p 8008:8008 \
 
 或者您可以使用 `docker compose`。
 
-`-d` 标志让容器在分离模式下运行。您可以提供一个可选的 `palpo.toml` 配置文件，示例配置可以在 [这里](../palpo.toml) 找到。
+`-d` 标志让容器在分离模式下运行。您可以提供一个可选的 `palpo.toml` 配置文件，示例配置可以在 [这里](palpo_toml) 找到。
 
 如果您只想短期测试 palpo，可以使用 `--rm` 标志，它会在您停止容器后清理所有与容器相关的内容。
 
-
-## 语音通信
-
-请参阅 [TURN](../configuration/turn.md) 页面。
-
-
 [palpo_toml]: https://github.com/palpo-im/palpo/blob/main/deploy/docker/palpo.toml
+[dh]: https://hub.docker.com/r/chrislearn/palpo
+[gh]: https://github.com/palpo-im/palpo/pkgs/container/palpo
+[shield-latest]: https://img.shields.io/docker/image-size/chrislearn/palpo/latest
