@@ -4,19 +4,19 @@ Palpo offical website base on [Rspress](https://rspress.dev/).
 
 ## Environment Preparation
 
-This project uses [Bun](https://bun.sh/) as the package manager and runtime environment. Before you begin, make sure Bun is installed:
+This project uses [pnpm](https://pnpm.io/) as the package manager. Before you begin, make sure pnpm is installed:
 
 ```bash
-# Install Bun
-curl -fsSL https://bun.sh/install | bash
+# Install pnpm
+npm install -g pnpm
 ```
 
 ## Install dependencies
 
-Use Bun to install project dependencies:
+Use pnpm to install project dependencies:
 
 ```bash
-bun install
+pnpm install
 ```
 
 ## Project structure
@@ -31,19 +31,19 @@ This project contains the following main directories:
 Start the development server:
 
 ```bash
-bun run dev
+pnpm run dev
 ```
 
 Build the production version:
 
 ```bash
-bun run build
+pnpm run build
 ```
 
 Preview the production build locally:
 
 ```bash
-bun run preview
+pnpm run preview
 ```
 
 ## Contribution Guide

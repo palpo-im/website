@@ -1,5 +1,4 @@
-import * as path from 'node:path';
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
 import ga from 'rspress-plugin-google-analytics';
 import mermaid from 'rspress-plugin-mermaid';
@@ -12,15 +11,15 @@ export default defineConfig({
     id: 'G-BYH5STQ7SS',
   },), mermaid(),
   pluginOpenGraph({
-    title: 'Rspress',
+    title: 'Palpo - A matrix server implementation in Rust',
     type: 'website',
     url: siteUrl,
     image: 'https://palpo.im/images/logos/palpo.svg',
-    description: 'Palpo Docs',
-    twitter: {
-      site: '@salvo',
-      card: 'summary_large_image',
-    },
+    description: 'Palpo - A matrix server implementation in Rust',
+    // twitter: {
+    //   site: '@palpo',
+    //   card: 'summary_large_image',
+    // },
   }),
   ],
   root: 'docs',
@@ -32,7 +31,7 @@ export default defineConfig({
       lang: 'en',
       // 导航栏切换语言的标签
       label: 'English',
-      title: 'palpo docs',
+      title: 'Palpo - A matrix server implementation in Rust',
       description: 'Palpo - A matrix server implementation in Rust',
       editLink: {
         docRepoBaseUrl:
@@ -52,7 +51,7 @@ export default defineConfig({
     {
       lang: 'zh-hans',
       label: '简体中文',
-      title: 'Palpo',
+      title: 'Palpo - 一个用 Rust 编写的 Matrix 服务器实现',
       description: 'Palpo - 一个用 Rust 编写的 Matrix 服务器实现',
       editLink: {
         docRepoBaseUrl:
