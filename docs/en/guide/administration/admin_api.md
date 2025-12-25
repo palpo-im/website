@@ -1,3 +1,2 @@
-# Admin API
-
-TODO
+I am working on the multilingual documentation for the Salvo framework technology. Please provide a translation that is faithful, expressive, and elegant. Translate the following text to English:
+{/* 本行由工具自动生成,原文哈希值:d41d8cd98f00b204e9800998ecf8427e */}

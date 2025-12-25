@@ -1,30 +1,31 @@
-# Administration
+# Management
 
-Palpo supports management and auditing through command-line tools. In the future, administrator APIs and UI interfaces are planned.
+Palpo supports management and auditing through command-line tools. Plans are in place to support administrator APIs and a UI interface in the future.
 
-## Launching the Management Console
+## Launching the Management Interface
 
-You can start the interactive command-line console by running the following command in the directory where the palpo executable is located:
+To start the command-line interactive interface, run the following command in the directory where the Palpo executable is located:
 
 ```bash
 palpo --config palpo.toml --server false --console
 ```
 
-Here, `--config palpo.toml` specifies the configuration file to use. If you are using the default `palpo.toml` in the current directory, you can omit this option.
+Here, `--config palpo.toml` specifies the configuration file to use. If it is the default configuration file `palpo.toml` in the current directory, this option can be omitted.
 
-`--server false` means the server will not start, and `--console` launches the interactive command-line console.
+`--server false` indicates that the server should not be started, while `--console` launches the command-line interactive interface.
 
-You can run `palpo --help` to see detailed usage instructions.
+You can run `palpo --help` to view detailed usage instructions.
 
-**Note:** On Windows, the executable is named `palpo.exe`.
+**Note**: On Windows, the executable file is named `palpo.exe`.
 
-Inside the interactive console, you can use the `help` command to view available management commands.
+Once inside the command-line interactive interface, you can still run the `help` command to view available management commands.
 
 Palpo supports the following management commands:
 
-- `appservie`: Manage Appservie-related tasks
-- `user`: Manage local user-related tasks
-- `room`: Manage room-related tasks
-- `federation`: Manage Federation-related tasks
-- `server`: Manage server-related tasks
-- `media`: Manage media-related tasks
+- `appservice`: Manage tasks related to Appservice.
+- `user`: Manage tasks related to local users.
+- `room`: Manage tasks related to rooms.
+- `federation`: Manage tasks related to Federation.
+- `server`: Manage tasks related to the server.
+- `media`: Manage tasks related to media.
+{/* 本行由工具自动生成,原文哈希值:3845537d7c1f70df5e870066c02cceeb */}
