@@ -14,7 +14,7 @@
 
 ### 外部服务器
 
-为了最大灵活性，你可以配置 nginx、Apache 或 HAProxy 等外部服务器来提供 `https://<server_name>/.well-known/matrix/server` 文件。如何搭建此类服务器超出了本文档范围，但通常可以在你的[反向代理](reverse_proxy.md)中配置。
+为了最大灵活性，你可以配置 nginx、Apache 或 HAProxy 等外部服务器来提供 `https://<server_name>/.well-known/matrix/server` 文件。如何搭建此类服务器超出了本文档范围，但通常可以在你的[反向代理](reverse-proxy.md)中配置。
 
 `https://<server_name>/.well-known/matrix/server` 应返回如下包含 `m.server` 键的 JSON 结构：
 
@@ -64,4 +64,4 @@ serve_server_wellknown: true
 
 ### 联邦流量是否应使用反向代理？
 
-通常，联邦和客户端流量都使用反向代理是个好主意，这样可以让 Synapse 不必直接处理 TLS 流量。关于如何设置反向代理，请参阅[反向代理文档](reverse_proxy.md)。
+通常，联邦和客户端流量都使用反向代理是个好主意，这样可以让 Synapse 不必直接处理 TLS 流量。关于如何设置反向代理，请参阅[反向代理文档](reverse-proxy.md)。

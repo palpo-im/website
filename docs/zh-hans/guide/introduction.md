@@ -15,7 +15,7 @@ Matrix 是一个开放的网络，用于安全、去中心化的实时通信。�
 
 ## 如何部署您自己的 Palpo？
 
-- [部署选项](deploying.md)
+- [部署选项](installation.md)
 
 如果您想将应用服务连接到 Palpo，请参阅 [应用服务文档](appservices.md)。
 

@@ -1,18 +1,18 @@
 # Quick Start
 
-Follow these steps to bring a Palpo homeserver online quickly. Each section links to the detailed guides so you can dive deeper whenever you need more context.
+If you are deploying Palpo for the first time, follow the steps below to set up a functional Matrix server in minutes. This guide references other sections of the documentation for deeper exploration when needed.
 
 ## Prerequisites
 
-- A 64-bit Linux, macOS, or Windows host with at least 2 vCPUs and 4 GB RAM.
-- PostgreSQL 14 or newer. See the [PostgreSQL guide](./installation/postgres.md) for installation options.
-- A publicly reachable domain name and, optionally, a reverse proxy such as Caddy, Traefik, or Nginx.
-- Docker (recommended) or a shell environment capable of running the Palpo binary.
+- A 64-bit Linux, macOS, or Windows server with at least 2 vCPUs and 4 GB RAM recommended.
+- PostgreSQL 14 or later. See the [PostgreSQL Guide](./installation/postgres.md) for installation instructions.
+- A publicly accessible domain name, and optionally a reverse proxy (Caddy, Traefik, Nginx, etc.).
+- Docker installed (recommended) or a shell environment capable of running the Palpo executable.
 
-## 1. Prepare PostgreSQL
+## 1. Initialize the Database
 
-1. Install PostgreSQL following the instructions for your platform in the [installation overview](./installation/index.md).
-2. Create a dedicated Palpo database user and database:
+1. Install PostgreSQL for your platform by following the system-specific guides in the [Installation section](./installation/index.md).
+2. Create a dedicated database user and database for Palpo:
 
    ```bash
    sudo -u postgres psql <<'SQL'
@@ -21,65 +21,66 @@ Follow these steps to bring a Palpo homeserver online quickly. Each section link
    SQL
    ```
 
-   Replace `change_me` with a strong password. If you use the official Docker Compose templates, the database service and credentials are defined in the Compose file instead.
+   Replace `change_me` with a strong password. If using the official Docker Compose template, this step can be completed directly via environment variables in the Compose file.
 
-## 2. Pick a Deployment Option
+## 2. Choose a Deployment Method
 
-### Docker Compose (recommended)
+### Docker Compose (Recommended)
 
-1. Download the sample [`palpo.toml`](https://github.com/palpo-im/palpo/blob/main/deploy/docker/palpo.toml).
-2. Choose one of the [Compose templates](https://github.com/palpo-im/palpo/tree/main/deploy/docker) (base, Caddy, Traefik, etc.) and rename `compose.*.yml` to `compose.yml`.
-3. Update `POSTGRES_PASSWORD`, domain placeholders, and create any required Docker networks for your proxy.
-4. Start the stack:
+1. Download the example configuration [`palpo.toml`](https://github.com/palpo-im/palpo/blob/main/deploy/docker/palpo.toml).
+2. Select a [Compose template](https://github.com/palpo-im/palpo/tree/main/deploy/docker) (basic, Caddy, Traefik, etc.) as needed, and rename `compose.*.yml` to `compose.yml`.
+3. Modify placeholders such as `POSTGRES_PASSWORD` and domain name, and create the Docker network for the proxy if required.
+4. Start the services:
 
    ```bash
    docker compose up -d
    ```
 
-For complete instructions see [Installing with Docker](./installation/docker.md).
+For more details, refer to [Docker Deployment](./installation/docker.md).
 
-### Run the Binary Directly
+### Direct Binary Execution
 
-1. Download a release archive for your platform from [GitHub Releases](https://github.com/palpo-im/palpo/releases) and extract it.
-2. Copy the example configuration and edit it:
+1. Download the appropriate archive for your system from [GitHub Releases](https://github.com/palpo-im/palpo/releases).
+2. Extract the archive, copy the example configuration, and edit it:
 
    ```bash
    cp palpo-example.toml palpo.toml
    ```
 
-3. Follow the platform-specific documentation ([Linux](./installation/linux.md), [macOS](./installation/macos.md), [Windows](./installation/windows.md)) to install dependencies and, if needed, configure systemd/launchd/services.
+3. Follow the system-specific guides ([Linux](./installation/linux.md), [macOS](./installation/macos.md), [Windows](./installation/windows.md)) to install dependencies and configure systemd/launchd/services.
 
-## 3. Initialize the Configuration
+## 3. Initialize Configuration
 
-Edit `palpo.toml` and make sure you set at least:
+Open `palpo.toml` and configure at least the following settings:
 
-- `server_name`: your primary domain, for example `example.com`.
-- `[db].url`: a valid PostgreSQL connection string such as `postgresql://palpo:change_me@localhost:5432/palpo`.
-- The `listen` blocks: confirm ports 8008/8448, `x_forwarded`, and `bind_addresses` match your network layout.
+- `server_name`: Set to your primary domain, e.g., `example.com`.
+- `[db].url`: Provide the correct PostgreSQL connection string, e.g., `postgresql://palpo:change_me@localhost:5432/palpo`.
+- `listen` section: Ensure ports 8008/8448 and settings like `x_forwarded` and `bind_addresses` match your deployment topology.
 
-Advanced options (registration policy, media storage, reverse proxy, TURN, etc.) live in the [configuration section](./configuration/index.md).
+For additional options (registration policies, media directory, reverse proxy, TURN, etc.), see the [Configuration section](./configuration/index.md).
 
 ## 4. Start Palpo
 
-- Docker: run `docker compose up -d` or `docker compose restart palpo` after editing configs.
-- Binary: from the Palpo directory execute:
+- Docker: Run `docker compose up -d` or, after modifying the configuration, execute `docker compose restart palpo`.
+- Local binary: In the directory containing the Palpo executable, run:
 
   ```bash
   ./palpo --config palpo.toml
   ```
 
-Once you see `Server started` in the logs, Palpo is serving on ports 8008/8448.
+When you see `Server started` in the logs, the service is listening on ports 8008/8448.
 
-## 5. Verify & Next Steps
+## 5. Verify and Next Steps
 
-1. Hit `https://your.domain/_matrix/client/versions`; you should receive JSON that includes `palpo`, or simply visit `https://your.domain` and confirm the “Hello Palpo!” splash screen.
-2. Use a Matrix client that understands registration tokens (Element Web is a good default) to connect to your homeserver and create the first administrator account.
-3. Join the `#admins` room or run `palpo --console` to execute management commands, mint new registration tokens, or moderate rooms. See the [administration guide](./administration/index.md) for details.
+1. Visit `https://your.domain/_matrix/client/versions`. It should return JSON containing `palpo`, or directly visit `https://your.domain` to confirm you see “Hello Palpo!”.
+2. Use a client that supports registration tokens (e.g., Element Web) to connect to your server and create the first administrator account.
+3. Execute administrative commands in the `#admins` room or via `palpo --console` to generate more registration tokens or manage rooms. For details, see the [Administration Guide](./administration/index.md).
 
-After the basics are in place, continue with:
+After completing the basic deployment, it is recommended to:
 
-- [Delegation & reverse proxy setup](./configuration/delegation.md).
-- [TURN configuration](./configuration/turn.md) to unlock voice/video.
-- The [development docs](./development/index.md) if you plan to contribute.
+- Configure [reverse proxy and delegation](./configuration/delegation.md) for production environments.
+- Set up [TURN service](./configuration/turn.md) to enable voice calls.
+- Browse the [Development section](./development/index.md) to learn how to contribute.
 
-You now have a working Palpo homeserver and can start inviting users.
+You now have a functional Palpo server ready to invite users and start communicating.
+{/* 本行由工具自动生成,原文哈希值:d2d1763f7f988904c6851e070f837b11 */}

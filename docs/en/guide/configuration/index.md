@@ -1,23 +1,23 @@
 # Configuration File
 
-This chapter introduces the detailed settings for configuring Palpo's configuration file.
+This chapter details the configuration settings for Palpo.
 
-Palpo supports using `yaml`, `toml`, and `json` as configuration file formats. You can choose according to your preference. The `toml` format is recommended.
+Palpo supports using `yaml`, `toml`, and `json` as configuration file formats. You can choose based on your preference, with `toml` being the recommended format.
 
-By default, the system loads the `palpo.toml` file located in the same directory as the Palpo executable. You can change the path of the configuration file to be loaded by setting the environment variable `PALPO_CONFIG`.
+By default, the system loads the `palpo.toml` file located in the same directory as the Palpo executable. You can change the configuration file path by setting the environment variable `PALPO_CONFIG`.
 
 ## Required Configuration Items
 
-The following required configuration items must be set; otherwise, the system will not function correctly.
+The following items must be configured; otherwise, the system will not run correctly.
 
 ```toml
-# The domain name or server name used for external access to the server
+# Domain name or server name used for external access
 server_name = "test.palpo.im"
-# The local address the server listens on
+# Local address the server listens on
 listen_addr = "0.0.0.0:8008"
 
 [db]
-# Postgres database server information
+# PostgreSQL database server information
 url = "postgres://palpo:changeme@postgres:5432/palpo"
 ```
 
@@ -25,7 +25,7 @@ If you do not have a configuration file, you can copy the `palpo-example.toml` f
 
 ## Common Configuration Items
 
-### Storage Files
+### Storage Path
 
 You can set the default folder for storing application-related data using `space_path`.
 
@@ -35,7 +35,7 @@ space_path = "./data"
 
 ### Configuring TLS Certificates
 
-You can configure TLS certificates using `[tls]`. If this item is not set, TLS is disabled by default. If set, `enable` defaults to `true`. You can also set `enable` to `false` to temporarily disable TLS without deleting or commenting out the configuration.
+TLS certificates can be configured using the `[tls]` section. If this section is not set, TLS is disabled by default. If set, `enable` defaults to `true`. You can also set `enable` to `false` to temporarily disable TLS without deleting or commenting out the configuration.
 
 ```toml
 [tls]
@@ -44,7 +44,7 @@ cert = "/path/to/cert.crt"
 key = "/path/to/priv.key"
 ```
 
-### Configuring Turn Server
+### Configuring TURN Server
 
 ### Management Configuration
 
@@ -56,7 +56,7 @@ TODO
 
 ### Compression Configuration
 
-You can enable HTTP compression support through the `[compression]` settings. Compression methods such as `zstd`, `zip`, and `brotli` are supported, all disabled by default. You can enable them with configurations similar to the following:
+HTTP compression support can be enabled via the `[compression]` section. Supported compression methods include `zstd`, `zip`, and `brotli`, all of which are disabled by default. You can enable them with a configuration similar to the following:
 
 ```toml
 [compression]
@@ -65,5 +65,5 @@ enable_zip = true
 enable_brotli = true
 ```
 
-### The Server Name and User ID Domain Do Not Match
-{/* 本行由工具自动生成,原文哈希值:9d94ea2083877f5d24c7f5f0ec895d04 */}
+### Server Name and User ID Domain Mismatch
+{/* 本行由工具自动生成,原文哈希值:3ced4d576d67e7de7b159a7c4e54fb4e */}

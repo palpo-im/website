@@ -14,7 +14,7 @@ Note: The `.well-known` file must be hosted on the default HTTPS port (443).
 
 ### External Server
 
-For maximum flexibility, you can configure an external server such as nginx, Apache, or HAProxy to serve the `https://<server_name>/.well-known/matrix/server` file. Setting up such a server is beyond the scope of this document, but it can typically be configured within your [reverse proxy](reverse_proxy.md).
+For maximum flexibility, you can configure an external server such as nginx, Apache, or HAProxy to serve the `https://<server_name>/.well-known/matrix/server` file. Setting up such a server is beyond the scope of this document, but it can typically be configured within your [reverse proxy](reverse-proxy.md).
 
 `https://<server_name>/.well-known/matrix/server` should return a JSON structure containing the `m.server` key, as shown below:
 
@@ -64,5 +64,5 @@ For example, if you register `example.com`, point its DNS A record to a new serv
 
 ### Should federation traffic use a reverse proxy?
 
-Generally, it is a good idea to use a reverse proxy for both federation and client traffic, as it allows Synapse to avoid handling TLS traffic directly. For instructions on setting up a reverse proxy, refer to the [reverse proxy documentation](reverse_proxy.md).
+Generally, it is a good idea to use a reverse proxy for both federation and client traffic, as it allows Synapse to avoid handling TLS traffic directly. For instructions on setting up a reverse proxy, refer to the [reverse proxy documentation](reverse-proxy.md).
 {/* 本行由工具自动生成,原文哈希值:f9913b9e92e9dbce5cb38ae5e8d7cac9 */}

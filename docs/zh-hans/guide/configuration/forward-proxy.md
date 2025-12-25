@@ -53,9 +53,3 @@ Palpo 不会对通过代理的连接应用 IP 黑名单（因为 DNS 解析由�
 如果代理服务器使用 TLS（HTTPS）且无法建立连接，通常是代理证书问题。可临时关闭 Palpo 的证书校验进行测试。
 
 **注意**：此操作有安全风险，仅供测试！
-
-要关闭证书校验，在 [homeserver.yaml](../usage/configuration/homeserver_sample_config.md) 中添加如下配置：
-
-```yaml
-use_insecure_ssl_client_just_for_testing_do_not_use: true
-```
