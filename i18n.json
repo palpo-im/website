@@ -2,10 +2,10 @@
   "deploying": {
     "en": "Deploying",
     "zh-hans": "部署"
-  },
-  "donate": {
-    "en": "Donate",
-    "zh-hans": "资助项目"
-  }
+  }//,
+  // "donate": {
+  //   "en": "Donate",
+  //   "zh-hans": "资助项目"
+  // }
 }
 
