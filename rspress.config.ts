@@ -88,6 +88,7 @@ export default defineConfig({
       },
     ],
   },
+  llms: true,
   markdown: {
     mermaid: true,
   },
