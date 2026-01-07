@@ -59,7 +59,26 @@
 
 更多可选项（注册策略、媒体目录、反向代理、TURN 等）详见 [配置章节](./configuration/index.md)。
 
-## 4. 启动 Palpo
+## 4. 初始化数据库结构（运行迁移）
+
+Palpo 不会自动建表，启动前需要运行一次迁移：
+
+- 非 Docker 环境：
+
+  ```bash
+  export DATABASE_URL="postgres://palpo:change_me@localhost:5432/palpo"
+  diesel migration run --migration-dir crates/data/migrations
+  ```
+
+- Docker（如需手动执行）：
+
+  ```bash
+  docker compose exec palpo diesel migration run --migration-dir /app/crates/data/migrations
+  ```
+
+更多迁移命令见[开发指南](./development/index.md)。
+
+## 5. 启动 Palpo
 
 - Docker：运行 `docker compose up -d` 或在修改配置后执行 `docker compose restart palpo`。
 - 本地二进制：在 Palpo 可执行文件所在目录运行：
@@ -70,7 +89,7 @@
 
 日志中看到 `Server started` 表示服务已经监听在 8008/8448 端口。
 
-## 5. 验证与下一步
+## 6. 验证与下一步
 
 1. 访问 `https://your.domain/_matrix/client/versions`，应返回包含 `palpo` 的 JSON，或直接访问 `https://your.domain` 确认看到 “Hello Palpo!”。
 2. 使用支持注册令牌的客户端（例如 Element Web）连接你的服务器，创建首个管理员帐户。

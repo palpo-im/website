@@ -106,7 +106,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_DB: palpo
-      POSTGRES_USER: palpo_user
+      POSTGRES_USER: palpo
       POSTGRES_PASSWORD: your_secure_password
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
@@ -139,7 +139,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_DB: palpo
-      POSTGRES_USER: palpo_user
+      POSTGRES_USER: palpo
       POSTGRES_PASSWORD: your_secure_password
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
@@ -201,14 +201,14 @@ After installing PostgreSQL, you need to:
 
 ```sql
 CREATE DATABASE palpo;
-CREATE USER palpo_user WITH PASSWORD 'your_secure_password';
-GRANT ALL PRIVILEGES ON DATABASE palpo TO palpo_user;
+CREATE USER palpo WITH PASSWORD 'your_secure_password';
+GRANT ALL PRIVILEGES ON DATABASE palpo TO palpo;
 ```
 
 2. **Configure connection settings in palpo application configuration file** using appropriate database URL:
 
 ```
-postgresql://palpo_user:your_secure_password@localhost:5432/palpo
+postgresql://palpo:your_secure_password@localhost:5432/palpo
 ```
 
 3. **Test connection** to ensure everything works properly.

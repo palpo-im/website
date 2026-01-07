@@ -31,7 +31,37 @@ Next, download the Docker Compose configuration files below as needed and place 
 
 > **Note:** Do not forget to modify and adjust the `compose.yml` and `palpo.toml` files according to your needs.
 
-Rename the downloaded compose.*.yml file to compose.yml, then run the following command to start the server:
+Rename the downloaded compose.*.yml file to compose.yml.
+
+## Initialize Database Schema
+
+Before starting Palpo for the first time, you need to run database migrations to create the necessary database tables. There are two ways to do this:
+
+### Method 1: Use a temporary container to run migrations (Recommended)
+
+First, start the database service:
+
+```bash
+docker compose up -d postgres
+```
+
+After the database is fully started, run the migrations:
+
+```bash
+docker compose run --rm palpo diesel migration run --migration-dir /app/crates/data/migrations
+```
+
+### Method 2: Run inside the Palpo container
+
+If the Palpo container is already running (although it may not work properly due to missing tables), you can run migrations inside the container:
+
+```bash
+docker compose exec palpo diesel migration run --migration-dir /app/crates/data/migrations
+```
+
+## Start Services
+
+After completing the migrations, start all services:
 
 ```bash
 docker compose up -d

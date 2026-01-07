@@ -52,6 +52,36 @@ cp palpo-example.toml palpo.toml
 
 更多高级配置请参见 [设置页面](../configuration/index.md)。
 
+## 初始化数据库结构
+
+Palpo 不会自动创建数据库表,在首次启动前需要运行数据库迁移。你需要先安装 `diesel_cli` 工具:
+
+```bash
+# 安装 diesel_cli (仅需 PostgreSQL 支持)
+cargo install diesel_cli --no-default-features --features postgres
+```
+
+然后在 Palpo 可执行文件所在目录运行迁移:
+
+```bash
+# 设置数据库连接 URL
+export DATABASE_URL="postgresql://palpo:your_secure_password@localhost:5432/palpo"
+
+# 运行迁移
+diesel migration run --migration-dir crates/data/migrations
+```
+
+如果你没有源代码中的 `crates/data/migrations` 目录,可以从 GitHub 下载:
+
+```bash
+# 克隆 migrations 目录
+git clone --depth=1 --filter=blob:none --sparse https://github.com/palpo-im/palpo.git
+cd palpo
+git sparse-checkout set crates/data/migrations
+```
+
+或者从 [GitHub 仓库](https://github.com/palpo-im/palpo/tree/main/crates/data/migrations) 直接下载 migrations 文件夹。
+
 ## 运行 Palpo
 
 在命令行启动 Palpo：
