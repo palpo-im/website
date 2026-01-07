@@ -52,6 +52,36 @@ Replace `your.domain.com` and `your_secure_password` with your actual domain and
 
 For more advanced configuration, please refer to the [Configuration Page](../configuration/index.md).
 
+## Initialize Database Schema
+
+Palpo does not automatically create database tables. You need to run database migrations before the first startup. First, install the `diesel_cli` tool:
+
+```powershell
+# Install diesel_cli (PostgreSQL support only)
+cargo install diesel_cli --no-default-features --features postgres
+```
+
+Then run migrations in the directory containing the Palpo executable:
+
+```powershell
+# Set the database connection URL
+$env:DATABASE_URL="postgresql://palpo:your_secure_password@localhost:5432/palpo"
+
+# Run migrations
+diesel migration run --migration-dir crates/data/migrations
+```
+
+If you don't have the `crates/data/migrations` directory from the source code, you can download it from GitHub:
+
+```powershell
+# Clone the migrations directory
+git clone --depth=1 --filter=blob:none --sparse https://github.com/palpo-im/palpo.git
+cd palpo
+git sparse-checkout set crates/data/migrations
+```
+
+Alternatively, download the migrations folder directly from the [GitHub repository](https://github.com/palpo-im/palpo/tree/main/crates/data/migrations).
+
 ## Running Palpo
 
 Start Palpo from the command line:

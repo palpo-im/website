@@ -106,7 +106,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_DB: palpo
-      POSTGRES_USER: palpo_user
+      POSTGRES_USER: palpo
       POSTGRES_PASSWORD: your_secure_password
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
@@ -139,7 +139,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_DB: palpo
-      POSTGRES_USER: palpo_user
+      POSTGRES_USER: palpo
       POSTGRES_PASSWORD: your_secure_password
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
@@ -201,16 +201,16 @@ docker-compose down -v
 
 ```sql
 CREATE DATABASE palpo;
-CREATE USER palpo_user WITH PASSWORD 'your_secure_password';
-GRANT ALL PRIVILEGES ON DATABASE palpo TO palpo_user;
+CREATE USER palpo WITH PASSWORD 'your_secure_password';
+GRANT ALL PRIVILEGES ON DATABASE palpo TO palpo;
 ```
 
-1. **在 palpo 应用程序配置文件中配置连接设置**，使用适当的数据库 URL：
+2. **在 palpo 应用程序配置文件中配置连接设置**，使用适当的数据库 URL：
 
 ```
-postgresql://palpo_user:your_secure_password@localhost:5432/palpo
+postgresql://palpo:your_secure_password@localhost:5432/palpo
 ```
 
-1. **测试连接**以确保一切正常工作。
+3. **测试连接**以确保一切正常工作。
 
 安装和配置 PostgreSQL 后，您就可以设置 palpo 了。在继续应用程序设置之前，请确保使用正确的连接详细信息更新应用程序的数据库配置。

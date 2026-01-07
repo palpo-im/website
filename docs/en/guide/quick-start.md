@@ -59,7 +59,26 @@ Open `palpo.toml` and configure at least the following settings:
 
 For additional options (registration policies, media directory, reverse proxy, TURN, etc.), see the [Configuration section](./configuration/index.md).
 
-## 4. Start Palpo
+## 4. Initialize Database Schema (run migrations)
+
+Palpo does not create tables automatically. Run migrations once before starting:
+
+- Non-Docker:
+
+  ```bash
+  export DATABASE_URL="postgres://palpo:change_me@localhost:5432/palpo"
+  diesel migration run --migration-dir crates/data/migrations
+  ```
+
+- Docker (manual run if needed):
+
+  ```bash
+  docker compose exec palpo diesel migration run --migration-dir /app/crates/data/migrations
+  ```
+
+For more migration commands, see the [Development Guide](./development/index.md).
+
+## 5. Start Palpo
 
 - Docker: Run `docker compose up -d` or, after modifying the configuration, execute `docker compose restart palpo`.
 - Local binary: In the directory containing the Palpo executable, run:
@@ -70,7 +89,7 @@ For additional options (registration policies, media directory, reverse proxy, T
 
 When you see `Server started` in the logs, the service is listening on ports 8008/8448.
 
-## 5. Verify and Next Steps
+## 6. Verify and Next Steps
 
 1. Visit `https://your.domain/_matrix/client/versions`. It should return JSON containing `palpo`, or directly visit `https://your.domain` to confirm you see “Hello Palpo!”.
 2. Use a client that supports registration tokens (e.g., Element Web) to connect to your server and create the first administrator account.
@@ -83,4 +102,3 @@ After completing the basic deployment, it is recommended to:
 - Browse the [Development section](./development/index.md) to learn how to contribute.
 
 You now have a functional Palpo server ready to invite users and start communicating.
-{/* 本行由工具自动生成,原文哈希值:d2d1763f7f988904c6851e070f837b11 */}
