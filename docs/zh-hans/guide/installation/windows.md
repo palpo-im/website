@@ -6,7 +6,7 @@
 
 安装完成后，为 Palpo 创建数据库用户和数据库：
 
-1. 从开始菜单打开 "SQL Shell (psql)"，或在终端运行 `psql`。
+1. 从开始菜单打开 "SQL Shell (psql)"，或在终端运行 `psql -U postgres`。按照提示输入安装过程中配置的密码。如果遇到"命令无法找到"类似的报错提示，请查询Windows的环境变量PATH中是否包括了PostgreSQL的安装路径。
 2. 在 psql shell 中执行：
 
     ```sql

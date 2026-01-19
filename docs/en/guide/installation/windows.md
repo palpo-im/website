@@ -6,7 +6,7 @@ Please refer to the [PostgreSQL Installation Guide](./postgres.md) to install an
 
 After installation, create a database user and database for Palpo:
 
-1. Open "SQL Shell (psql)" from the Start Menu, or run `psql` in the terminal.
+1. Open "SQL Shell (psql)" from the Start Menu, or run `psql -U postgres` in the terminal.Enter the password configured during installation as prompted. If you encounter an error message like "command not found," please check if the installation path of PostgreSQL is included in the Windows environment variable PATH.
 2. Execute the following in the psql shell:
 
     ```sql
