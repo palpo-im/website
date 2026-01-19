@@ -45,10 +45,11 @@ Edit `palpo.toml` according to your environment and database settings. At minimu
 
     ```toml
     [db]
-    url = "postgresql://palpo:your_secure_password@localhost:5432/palpo"
+    url = "postgresql://palpo:your_secure_password@your.domain.com:5432/palpo"
     ```
 
 Replace `your.domain.com` and `your_secure_password` with your actual domain and password.
+Use `localhost` as the domain name for local testing.
 
 For more advanced configuration, please refer to the [Configuration Page](../configuration/index.md).
 
