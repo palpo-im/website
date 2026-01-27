@@ -71,6 +71,6 @@ docker run -d -p 8448:8448 -p 8008:8008 \
 如果您只想短期测试 palpo，可以使用 `--rm` 标志，它会在您停止容器后清理所有与容器相关的内容。
 
 [palpo_toml]: https://github.com/palpo-im/palpo/blob/main/deploy/docker/palpo.toml
-[dh]: https://hub.docker.com/r/chrislearn/palpo
+[dh]: https://hub.docker.com/r/palpo/palpo
 [gh]: https://github.com/palpo-im/palpo/pkgs/container/palpo
-[shield-latest]: https://img.shields.io/docker/image-size/chrislearn/palpo/latest
+[shield-latest]: https://img.shields.io/docker/image-size/palpo/palpo/latest

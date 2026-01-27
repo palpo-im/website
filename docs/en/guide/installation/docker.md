@@ -68,7 +68,7 @@ The `-d` flag runs the container in detached mode. You can provide an optional `
 If you only want to test Palpo temporarily, you can use the `--rm` flag, which will clean up all container-related content after you stop the container.
 
 [palpo_toml]: https://github.com/palpo-im/palpo/blob/main/deploy/docker/palpo.toml
-[dh]: https://hub.docker.com/r/chrislearn/palpo
+[dh]: https://hub.docker.com/r/palpo/palpo
 [gh]: https://github.com/palpo-im/palpo/pkgs/container/palpo
-[shield-latest]: https://img.shields.io/docker/image-size/chrislearn/palpo/latest
+[shield-latest]: https://img.shields.io/docker/image-size/palpo/palpo/latest
 {/* 本行由工具自动生成,原文哈希值:0eff992f80c99c7b28dfeb1f555f6dd4 */}
