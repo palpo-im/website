@@ -73,9 +73,9 @@ Once you have the image, you can simply run the following command:
 
 ```bash
 docker run -d -p 8448:8448 -p 8008:8008 \
-    - palpo.toml:/var/palpo/palpo.toml \
-    -v data/media:/var/palpo/media \
-    --name palpo
+    -v palpo.toml:/var/palpo/palpo.toml \
+    -v ./data/media:/var/palpo/media \
+    --name palpo palpo/palpo:latest
 ```
 
 Alternatively, you can use `docker compose`.
