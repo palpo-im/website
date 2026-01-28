@@ -59,7 +59,7 @@ docker compose up -d
 >```
 
 打开浏览器，输入你设置的服务地址，如果一切设置正确，则页面会显示：`Hello Palpo!`。
-r
+
 恭喜你，服务器已经正常工作。你可以选择任意你喜欢的 Matrix 客户端 (比如：[Element](https://app.element.io/), [Cinny](https://app.cinny.in/), [Robrix](https://github.com/project-robius/robrix)) 连接当前服务器。
 
 你可以从 Matrix 网站找到更多的[客户端列表](https://matrix.org/ecosystem/clients/)。
