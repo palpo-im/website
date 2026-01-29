@@ -1,0 +1,83 @@
+---
+title: 项目
+---
+# 项目
+
+Palpo 生态系统由多个开源项目组成，共同提供完整的 Matrix 通信解决方案。
+
+## Palpo
+
+**使用 Rust 构建的下一代 Matrix 家庭服务器**
+
+Palpo 是一个高性能的 Matrix 家庭服务器，通过开放标准协议实现去中心化的实时通信。它允许用户发送加密消息、进行通话，并与其他聊天平台桥接。
+
+### 主要特性
+
+- **端到端加密消息** 确保对话安全
+- **联邦架构** 消除单点故障
+- **互操作性** 支持与 Slack、Discord 和 IRC 等平台桥接
+- **VoIP 和视频通话** 功能
+- **丰富的消息功能** 包括反应、话题和文件共享
+- **最小内存占用** 相比其他实现方案
+
+### 技术栈
+
+- **语言**：Rust
+- **Web 框架**：Salvo（高吞吐量异步 I/O）
+- **数据库**：PostgreSQL 16+
+- **系统要求**：Rust 1.89+、Linux/macOS/Windows (WSL2)
+
+[在 GitHub 上查看](https://github.com/palpo-im/palpo)
+
+---
+
+## Netrix
+
+**基于 Matrix 开放协议构建的去中心化企业协作平台**
+
+Netrix 是一个跨平台 Matrix 客户端，为组织提供自托管通信基础设施，同时保持数据主权。它使用创新的 Makepad UI 框架构建，在所有平台上提供原生性能。
+
+### 主要特性
+
+- **去中心化基础设施** 允许企业自托管服务器
+- **端到端加密** 确保通信安全
+- **跨平台支持** 覆盖 Windows、macOS、Linux、Android 和 iOS
+- **Matrix 协议兼容** 支持与其他 Matrix 客户端互操作
+- **原生性能** 使用 Makepad 的 GPU 加速渲染
+
+### 技术栈
+
+- **语言**：Rust
+- **UI 框架**：Makepad
+- **开发框架**：Robius
+- **协议**：Matrix
+
+[在 GitHub 上查看](https://github.com/palpo-im/netrix)
+
+---
+
+## Palpo Admin
+
+**强大的 Matrix Palpo 家庭服务器管理控制台**
+
+Palpo Admin 是 Matrix 家庭服务器管理控制台的维护分支，包含用于全面服务器管理的附加功能。使用现代 React 和 TypeScript 构建。
+
+### 主要特性
+
+- **用户和房间管理** 直观的界面
+- **媒体处理** 支持认证访问
+- **批量用户注册** 通过 CSV 导入
+- **OIDC 认证** 集成
+- **账户暂停支持** (MSC3823)
+- **服务器状态监控** 和通知
+- **公开和空房间过滤器**
+- **账户数据管理**
+
+### 技术栈
+
+- **前端框架**：React
+- **构建工具**：Vite
+- **语言**：TypeScript
+- **容器**：Docker
+
+[在 GitHub 上查看](https://github.com/palpo-im/palpo-admin)
