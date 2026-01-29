@@ -1,0 +1,83 @@
+---
+title: Projects
+---
+# Projects
+
+The Palpo ecosystem consists of multiple open-source projects working together to provide a complete Matrix communication solution.
+
+## Palpo
+
+**A next-generation Matrix homeserver implementation built with Rust**
+
+Palpo is a high-performance Matrix homeserver that enables decentralized, real-time communication through an open standard protocol. It allows users to send encrypted messages, make calls, and bridge with other chat platforms.
+
+### Key Features
+
+- **End-to-end encrypted messaging** for secure conversations
+- **Federated architecture** eliminating single points of failure
+- **Interoperability** with platforms like Slack, Discord, and IRC
+- **VoIP and video calling** capabilities
+- **Rich messaging** including reactions, threads, and file sharing
+- **Minimal memory footprint** compared to alternative implementations
+
+### Technology Stack
+
+- **Language**: Rust
+- **Web Framework**: Salvo (high-throughput async I/O)
+- **Database**: PostgreSQL 16+
+- **Requirements**: Rust 1.89+, Linux/macOS/Windows (WSL2)
+
+[View on GitHub](https://github.com/palpo-im/palpo)
+
+---
+
+## Netrix
+
+**A decentralized enterprise collaboration platform built on the Matrix open protocol**
+
+Netrix is a cross-platform Matrix client that provides organizations with self-hosted communication infrastructure while maintaining data sovereignty. It's built using the innovative Makepad UI framework for native performance across all platforms.
+
+### Key Features
+
+- **Decentralized infrastructure** allowing enterprises to self-host servers
+- **End-to-end encryption** for secure communications
+- **Cross-platform support** spanning Windows, macOS, Linux, Android, and iOS
+- **Matrix protocol compatibility** enabling interoperability with other Matrix clients
+- **Native performance** with Makepad's GPU-accelerated rendering
+
+### Technology Stack
+
+- **Language**: Rust
+- **UI Framework**: Makepad
+- **Development Framework**: Robius
+- **Protocol**: Matrix
+
+[View on GitHub](https://github.com/palpo-im/netrix)
+
+---
+
+## Palpo Admin
+
+**A powerful admin console for Matrix Palpo homeservers**
+
+Palpo Admin is a maintained fork of the admin console for Matrix homeservers, including additional features for comprehensive server management. Built with modern React and TypeScript.
+
+### Key Features
+
+- **User and room management** with intuitive interface
+- **Media handling** with authenticated access support
+- **Bulk user registration** via CSV import
+- **OIDC authentication** integration
+- **Account suspension support** (MSC3823)
+- **Server status monitoring** and notifications
+- **Public and empty room filters**
+- **Account data management**
+
+### Technology Stack
+
+- **Frontend Framework**: React
+- **Build Tool**: Vite
+- **Language**: TypeScript
+- **Container**: Docker
+
+[View on GitHub](https://github.com/palpo-im/palpo-admin)
