@@ -23,6 +23,13 @@ url = "postgres://palpo:changeme@postgres:5432/palpo"
 
 If you do not have a configuration file, you can copy the `palpo-example.toml` file from the project root directory and modify it according to your needs.
 
+If using a proxy or for local testing, make sure to configure the `well_known` client configuration:
+
+```toml
+[well_known]
+client = "hostname:port"
+```
+
 ## Common Configuration Items
 
 ### Storage Path

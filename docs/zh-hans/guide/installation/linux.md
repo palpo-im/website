@@ -45,10 +45,18 @@ cp palpo-example.toml palpo.toml
 
     ```toml
     [db]
-    url = "postgresql://palpo:your_secure_password@localhost:5432/palpo"
+    url = "postgresql://palpo:your_secure_password@localhost`:5432/palpo"
     ```
 
 将 `your.domain.com` 和 `your_secure_password` 替换为实际的域名和密码。
+
+若在本地测试，将 `server_name` 设置为 `localhost:端口号`，例如 `localhost:8008`。同时配置 `well_known` 部分以指定客户端连接地址：
+
+```toml
+[well_known]
+client = "http://127.0.0.1:8008"
+```
+若使用代理服务，务必配置正确的 `client`，确保外部可以访问。
 
 更多高级配置请参见 [设置页面](../configuration/index.md)。
 
