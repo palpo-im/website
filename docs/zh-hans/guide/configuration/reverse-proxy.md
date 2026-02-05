@@ -17,7 +17,23 @@
 
 需要更新 HTTP 配置，以便 Palpo 在反向代理后面正确记录客户端 IP 地址并生成重定向 URL。
 
-在端口 8008 部分homeserver.yaml进行设置，并考虑将服务器设置为仅监听本地主机上的流量。（使用容器化的 Synapse 时请勿更改为此 ，因为这会阻止其响应代理流量。）x_forwarded: truebind_addresses: ['127.0.0.1']bind_addresses127.0.0.1
+在您的 `palpo.toml` 配置文件中进行如下设置：
 
-或者，您还可以进行设置， request_id_header 以便服务器提取并重新使用反向代理正在使用的相同请求 ID 格式。
+```toml
+# 服务器侦听的本地地址
+# 使用 127.0.0.1 只接受来自本地的连接（使用反向代理时推荐）
+listen_addr = "127.0.0.1:8008"
+```
+
+使用反向代理时，您还应该配置 `[well_known]` 部分，以确保客户端和联邦服务器能够正确发现您的 homeserver：
+
+```toml
+[well_known]
+# 客户端将使用的 URL（您的公开地址）
+client = "https://matrix.example.com"
+# 联邦地址（其他 Matrix 服务器）
+server = "matrix.example.com:443"
+```
+
+注意：如果您在容器中运行 Palpo，请将 `listen_addr` 保持为 `0.0.0.0:8008`，以允许反向代理在容器网络内访问 Palpo。
 

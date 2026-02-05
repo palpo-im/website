@@ -24,8 +24,8 @@ palpo Matrix homeserver 支持通过 [TURN server REST API](<https://tools.ietf.
 
 ```toml
 [turn]
-shared_secret = "n0t4ctuAllymatr1Xd0TorgSshar3d5ecret4obvIousreAsons"
-user_lifetime = 86400000
+secret = "n0t4ctuAllymatr1Xd0TorgSshar3d5ecret4obvIousreAsons"
+ttl = 86400
 allow_guests = true
 uris = ["turn:turn.matrix.org?transport=udp", "turn:turn.matrix.org?transport=tcp"]
 ```

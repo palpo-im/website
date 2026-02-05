@@ -34,15 +34,18 @@
 
 注意，端口号可选。如果未指定端口，则默认为 8448。
 
-### 使用 Synapse 提供 `.well-known/matrix/server` 文件
+### 使用 Palpo 提供 `.well-known/matrix/server` 文件
 
-如果你能将 `https://<server_name>` 路由到 Synapse（即只需将联邦流量从 8448 改为 443 端口），可以通过配置 Synapse 来自动提供合适的 `.well-known/matrix/server` 文件。只需在 `homeserver.yaml` 文件中添加：
+如果你能将 `https://<server_name>` 路由到 Palpo（即只需将联邦流量从 8448 改为 443 端口），可以通过配置 Palpo 来自动提供合适的 `.well-known/matrix/server` 文件。只需在 `palpo.toml` 文件中配置 `[well_known]` 部分：
 
-```yaml
-serve_server_wellknown: true
+```toml
+[well_known]
+# 联邦的服务器发现端点
+# 格式: "hostname:port"
+server = "matrix.example.com:443"
 ```
 
-**注意**：此方法仅在 `https://<server_name>` 路由到 Synapse 时有效，因此如果 Synapse 部署在子域（如 `https://synapse.example.com`）则不适用。
+**注意**：此方法仅在 `https://<server_name>` 路由到 Palpo 时有效，因此如果 Palpo 部署在子域（如 `https://palpo.example.com`）则不适用。
 
 ## SRV DNS 记录委托
 
@@ -50,7 +53,7 @@ serve_server_wellknown: true
 
 请注意，服务器委托是服务器间通信的功能，因此使用 SRV DNS 记录无法覆盖客户端-服务器通信的场景。这意味着全局客户端设置（如 Jitsi 端点、默认新房间加密等）仍需通过 `https://<server_name>/.well-known/` 路径下的文件实现！如果你想用 SRV DNS 委托来避免提供该文件，请注意你将无法全局更改这些客户端默认值，只能在每个客户端单独配置。
 
-如确有需要，可参考 [Matrix 规范](https://matrix.org/docs/spec/server_server/latest#resolving-server-names) 获取 SRV 记录格式及 Synapse 的使用方式。
+如确有需要，可参考 [Matrix 规范](https://matrix.org/docs/spec/server_server/latest#resolving-server-names) 获取 SRV 记录格式及 Matrix 服务器的使用方式。
 
 ## 委托常见问题
 
