@@ -1,1 +1,1 @@
-["reverse-proxy", "delegation", "turn"]
+["reverse-proxy", "delegation", "turn", "ldap", "oidc", "jwt"]
