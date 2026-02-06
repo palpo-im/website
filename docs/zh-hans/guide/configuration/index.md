@@ -21,6 +21,13 @@ listen_addr = "0.0.0.0:8008"
 url = "postgres://palpo:changeme@postgres:5432/palpo"
 ```
 
+如果使用了代理，或用于本地测试，请务必配置`well_known`的 client 配置：
+
+```toml
+[well_known]
+client = "hostname:port"
+```
+
 如果你没有配置文件，你可以复制项目根目录下的 `palpo-example.toml` 文件按照你自己需求修改此配置文件。
 
 

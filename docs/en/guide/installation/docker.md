@@ -37,6 +37,23 @@ Rename the downloaded compose.*.yml file to compose.yml, then run the following 
 docker compose up -d
 ```
 
+> **Note:** You may encounter the error `Error response from daemon: Get "https://registry-1.docker.io/v2/": unauthorized: incorrect username or password`. Follow these 2 steps to resolve it:
+>
+> Step 1: Generate a GitHub Token
+> Visit GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
+Check the `read:packages` permission.
+>
+> Step 2: Login to ghcr.io
+>```bash
+>export CR_PAT=your_github_token
+>echo $CR_PAT | docker login ghcr.io -u your_github_username --password-stdin
+>```
+> and then to compose up again:
+>
+>```bash
+>docker compose up -d
+>```
+
 Open your browser and enter the service address you set. If everything is configured correctly, the page will display: `Hello Palpo!`.
 
 Congratulations, the server is now working properly. You can choose any Matrix client you prefer (e.g., [Element](https://app.element.io/), [Cinny](https://app.cinny.in/), [Robrix](https://github.com/project-robius/robrix)) to connect to the current server.
@@ -56,9 +73,9 @@ Once you have the image, you can simply run the following command:
 
 ```bash
 docker run -d -p 8448:8448 -p 8008:8008 \
-    - palpo.toml:/var/palpo/palpo.toml \
-    -v data/media:/var/palpo/media \
-    --name palpo
+    -v palpo.toml:/var/palpo/palpo.toml \
+    -v ./data/media:/var/palpo/media \
+    --name palpo palpo/palpo:latest
 ```
 
 Alternatively, you can use `docker compose`.
