@@ -70,7 +70,7 @@ TODO
 ```toml
 [compression]
 enable_zstd = true
-enable_zip = true
+enable_gzip = true
 enable_brotli = true
 ```
 

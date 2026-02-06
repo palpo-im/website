@@ -32,15 +32,18 @@ For example, if you need to route federation traffic to `https://synapse.example
 
 The port number is optional; if not specified, it defaults to 8448.
 
-### Using Synapse to Serve the `.well-known/matrix/server` File
+### Using Palpo to Serve the `.well-known/matrix/server` File
 
-If you can route `https://<server_name>` to Synapse (i.e., you only need to change federation traffic from port 8448 to 443), you can configure Synapse to automatically serve the appropriate `.well-known/matrix/server` file. Simply add the following to the `homeserver.yaml` file:
+If you can route `https://<server_name>` to Palpo (i.e., you only need to change federation traffic from port 8448 to 443), you can configure Palpo to automatically serve the appropriate `.well-known/matrix/server` file. Simply configure the `[well_known]` section in your `palpo.toml` file:
 
-```yaml
-serve_server_wellknown: true
+```toml
+[well_known]
+# Server discovery endpoint for federation
+# Format: "hostname:port"
+server = "matrix.example.com:443"
 ```
 
-**Note**: This method only works if `https://<server_name>` is routed to Synapse, so it is not applicable if Synapse is deployed on a subdomain (e.g., `https://synapse.example.com`).
+**Note**: This method only works if `https://<server_name>` is routed to Palpo, so it is not applicable if Palpo is deployed on a subdomain (e.g., `https://palpo.example.com`).
 
 ## SRV DNS Record Delegation
 
@@ -48,7 +51,7 @@ Delegation can also be achieved via SRV DNS records, but this method is generall
 
 It's important to note that server delegation is only used for server-to-server communication, so SRV DNS records cannot cover client-server communication scenarios. This means that global client settings (such as Jitsi endpoints, default room encryption, etc.) still need to be implemented via files under the `https://<server_name>/.well-known/` path. If you use SRV DNS delegation to avoid serving this file, you will not be able to globally change client defaults and will have to configure them individually on each client.
 
-If necessary, you can refer to the [Matrix specification](https://matrix.org/docs/spec/server_server/latest#resolving-server-names) for SRV record format and usage.
+If necessary, refer to the [Matrix specification](https://matrix.org/docs/spec/server_server/latest#resolving-server-names) for the SRV record format and how Matrix servers use it.
 
 ## Delegation FAQ
 

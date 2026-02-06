@@ -4,7 +4,7 @@
 默认情况下，其他 homeserver 会尝试通过 `server_name` 配置的域名及 8448 端口访问你的服务器。`server_name` 会出现在用户 ID 的结尾，用于告知其他 homeserver 如何找到你的服务器。例如，若将 `server_name` 设置为 `example.com`（此时用户 ID 形如 `@user:example.com`），其他服务器将尝试连接 `https://example.com:8448/`。
 
 委托（Delegation）是 Matrix 的一项特性，允许 homeserver 管理员保留 `example.com` 作为 `server_name`，使所有用户 ID 和房间别名保持 `*:example.com` 格式，同时将联邦流量路由到其他服务器或端口（如 `synapse.example.com:443`）。
-
+https://github.com/palpo-im/website/pull/5/conflict?name=docs%252Fzh-hans%252Fguide%252Fconfiguration%252Fdelegation.md&ancestor_oid=b235bfb84ed795cb7e467e89d7c436431e3c7ced&base_oid=588d6d14e80a949544ce8dc17d53888adb9c8e9d&head_oid=12413ee370ba7c5b1c21a1d254327eadaa10d4a7
 ## .well-known 委托
 
 使用此方法需能配置 `https://<server_name>` 服务器，在 `https://<server_name>/.well-known/matrix/server` 路径下提供服务发现文件。
@@ -33,15 +33,18 @@
 
 端口号可选，未指定时默认为 8448。
 
-### 使用 Synapse 提供 `.well-known/matrix/server` 文件
+### 使用 Palpo 提供 `.well-known/matrix/server` 文件
 
-若能将 `https://<server_name>` 路由到 Synapse（即只需将联邦流量端口从 8448 改为 443），可通过配置 Synapse 自动提供 `.well-known/matrix/server` 文件。在 `homeserver.yaml` 文件中添加：
+如果你能将 `https://<server_name>` 路由到 Palpo（即只需将联邦流量从 8448 改为 443 端口），可以通过配置 Palpo 来自动提供合适的 `.well-known/matrix/server` 文件。只需在 `palpo.toml` 文件中配置 `[well_known]` 部分：
 
-```yaml
-serve_server_wellknown: true
+```toml
+[well_known]
+# 联邦的服务器发现端点
+# 格式: "hostname:port"
+server = "matrix.example.com:443"
 ```
 
-**注意**：此方法仅在 `https://<server_name>` 路由到 Synapse 时有效。若 Synapse 部署在子域（如 `https://synapse.example.com`），则不适用。
+**注意**：此方法仅在 `https://<server_name>` 路由到 Palpo 时有效，因此如果 Palpo 部署在子域（如 `https://palpo.example.com`）则不适用。
 
 ## SRV DNS 记录委托
 
@@ -49,7 +52,7 @@ serve_server_wellknown: true
 
 需注意，服务器委托仅用于服务器间通信，因此 SRV DNS 记录无法覆盖客户端-服务器通信场景。这意味着全局客户端设置（如 Jitsi 端点、默认房间加密等）仍需通过 `https://<server_name>/.well-known/` 路径下的文件实现。若使用 SRV DNS 委托以避免提供该文件，则无法全局更改客户端默认值，只能在每个客户端单独配置。
 
-如确有需要，可参考 [Matrix 规范](https://matrix.org/docs/spec/server_server/latest#resolving-server-names) 了解 SRV 记录格式及使用方式。
+如确有需要，可参考 [Matrix 规范](https://matrix.org/docs/spec/server_server/latest#resolving-server-names) 获取 SRV 记录格式及 Matrix 服务器的使用方式。
 
 ## 委托常见问题
 

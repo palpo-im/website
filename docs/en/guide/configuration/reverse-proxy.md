@@ -16,12 +16,23 @@ Assuming we expect clients to connect to our server at https://matrix.example.co
 
 The HTTP configuration needs to be updated so that Palpo correctly logs client IP addresses and generates redirect URLs when behind a reverse proxy.
 
-Set the following in the port 8008 section of `homeserver.yaml`, and consider configuring the server to listen only to traffic on localhost. (Do not change this when using containerized Synapse, as it would prevent it from responding to proxy traffic.)
+Set the following in your `palpo.toml` configuration file:
 
-```yaml
-x_forwarded: true
-bind_addresses: ['127.0.0.1']
+```toml
+# Local address the server listens on
+# Use 127.0.0.1 to only accept connections from localhost (recommended when using a reverse proxy)
+listen_addr = "127.0.0.1:8008"
 ```
 
-Alternatively, you can also set `request_id_header` so that the server extracts and reuses the same request ID format being used by the reverse proxy.
+When using a reverse proxy, you should also configure the `[well_known]` section to ensure clients and federation servers can discover your homeserver correctly:
+
+```toml
+[well_known]
+# URL that clients will use to connect (your public-facing address)
+client = "https://matrix.example.com"
+# Address for federation (other Matrix servers)
+server = "matrix.example.com:443"
+```
+
+Note: If you are running Palpo in a container, keep `listen_addr` set to `0.0.0.0:8008` to allow the reverse proxy to reach Palpo within the container network.
 {/* 本行由工具自动生成,原文哈希值:c32173f0a942657ba12cc2494100fb34 */}
