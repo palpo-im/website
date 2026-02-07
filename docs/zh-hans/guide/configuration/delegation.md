@@ -4,7 +4,7 @@
 默认情况下，其他 homeserver 会尝试通过 `server_name` 配置的域名及 8448 端口访问你的服务器。`server_name` 会出现在用户 ID 的结尾，用于告知其他 homeserver 如何找到你的服务器。例如，若将 `server_name` 设置为 `example.com`（此时用户 ID 形如 `@user:example.com`），其他服务器将尝试连接 `https://example.com:8448/`。
 
 委托（Delegation）是 Matrix 的一项特性，允许 homeserver 管理员保留 `example.com` 作为 `server_name`，使所有用户 ID 和房间别名保持 `*:example.com` 格式，同时将联邦流量路由到其他服务器或端口（如 `synapse.example.com:443`）。
-https://github.com/palpo-im/website/pull/5/conflict?name=docs%252Fzh-hans%252Fguide%252Fconfiguration%252Fdelegation.md&ancestor_oid=b235bfb84ed795cb7e467e89d7c436431e3c7ced&base_oid=588d6d14e80a949544ce8dc17d53888adb9c8e9d&head_oid=12413ee370ba7c5b1c21a1d254327eadaa10d4a7
+
 ## .well-known 委托
 
 使用此方法需能配置 `https://<server_name>` 服务器，在 `https://<server_name>/.well-known/matrix/server` 路径下提供服务发现文件。
