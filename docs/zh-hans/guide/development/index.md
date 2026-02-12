@@ -7,8 +7,8 @@
 - [系统要求](#系统要求 "系统要求")
 - [macOS/Linux 构建](#macoslinux-构建 "macOS/Linux 构建")
 - [Windows 构建](#windows-构建 "Windows 构建")
-- [Docker 构建](#docker-构建 "Docker 构建")
-- [数据库设置和迁移](#数据库设置和迁移 "数据库设置和迁移")
+- [Docker 开发环境构建](#Docker-开发环境构建 "Docker 开发环境构建")
+- [数据库配置](#数据库配置 "数据库配置")
 - [开发环境设置](#开发环境设置 "开发环境设置")
 
 ## 系统要求
@@ -17,7 +17,7 @@
 - [Rust](https://www.rust-lang.org/) 1.70+ (推荐使用最新稳定版)
 - [PostgreSQL](https://www.postgresql.org/) 12+
 - [Git](https://git-scm.com/)
-- [Diesel CLI](https://diesel.rs/guides/getting-started) (用于数据库迁移)
+- [Diesel CLI](https://diesel.rs/guides/getting-started) (可选，用于手动数据库迁移)
 
 ### 平台特定要求
 - **Linux**: `libclang-dev`, `libpq-dev`, `cmake`
@@ -77,7 +77,7 @@ sudo dnf install -y gcc gcc-c++ cmake postgresql-devel clang-devel
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source ~/.cargo/env
 
-# 安装 Diesel CLI (PostgreSQL 支持)
+# (可选）安装 Diesel CLI (PostgreSQL 支持)
 cargo install diesel_cli --no-default-features --features postgres
 ```
 
@@ -90,13 +90,10 @@ cargo install diesel_cli --no-default-features --features postgres
 # 克隆项目
 git clone https://github.com/palpo/palpo.git
 cd palpo
-
-# 构建项目
-cargo build --release
-
-# 构建完成后，可执行文件位于
-./target/release/palpo
 ```
+接下来：
+数据库配置: [数据库配置](#数据库配置 "数据库配置")
+开发环境的设置：[开发环境设置](#开发环境设置 "开发环境设置")
 
 ## Windows 构建
 
@@ -118,7 +115,7 @@ choco install rust postgresql cmake git
 - [PostgreSQL Windows 安装指南](https://www.postgresql.org/download/windows/)
 - [Rust Windows 安装指南](https://forge.rust-lang.org/infra/channel-layout.html#windows)
 
-### 2. 安装 Diesel CLI
+### 2. 安装 Diesel CLI （可选）
 ```powershell
 # 安装 Diesel CLI
 cargo install diesel_cli --no-default-features --features postgres
@@ -136,15 +133,25 @@ $env:PATH += ";C:\Program Files\CMake\bin"
 # 克隆项目
 git clone https://github.com/palpo/palpo.git
 cd palpo
-
-# 构建项目
-cargo build --release
-
-# 可执行文件位于
-.\target\release\palpo.exe
 ```
 
-## 数据库设置和迁移
+接下来：
+数据库配置: [数据库配置](#数据库配置 "数据库配置")
+开发环境的设置：[开发环境设置](#开发环境设置 "开发环境设置")
+
+
+### 5. Windows WSL 构建 (可选)
+
+推荐在 Windows 系统中使用 WSL 环境来开发。WSL 是 Windows Subsystem for Linux，允许在 Windows 上运行 Linux 命令行工具。WSL 的安装教程可以参考官方指导： [WSL](https://docs.microsoft.com/zh-cn/windows/wsl/install) 的安装和配置。
+
+可以选择你熟悉的 Linux 发行版，如Debian 或 Ubuntu 作为 WSL 的子系统。按照上一章节中 Linux 开发配置进行配置即可。
+
+此外，你也可使用 WSL 交叉编译构建 Windows 系统的可执行文件，参考：[WSL 环境下交叉编译与安装](https://palpo.im/zh-hans/guide/installation/windows.html#wsl-%E7%8E%AF%E5%A2%83%E4%B8%8B%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E4%B8%8E%E5%AE%89%E8%A3%85)
+
+开发环境的设置参考：[开发环境设置](#开发环境设置 "开发环境设置")
+
+## 数据库配置
+
 
 ### 1. 创建数据库和用户
 
@@ -155,7 +162,9 @@ sudo systemctl start postgresql  # Linux
 brew services start postgresql   # macOS
 
 # 创建数据库和用户
-sudo -u postgres psql
+sudo -u postgres psql -c "CREATE USER palpo_dev WITH PASSWORD 'your_password';"
+sudo -u postgres psql -c "CREATE DATABASE palpo_dev OWNER palpo_dev;"
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE palpo_dev TO palpo_dev;"
 ```
 
 #### Windows
@@ -198,7 +207,10 @@ export DATABASE_URL="postgres://palpo:your_password@localhost:5432/palpo"
 echo "DATABASE_URL=postgres://palpo:your_password@localhost:5432/palpo" > .env
 ```
 
-### 3. 运行数据库迁移
+### 3. 运行数据库迁移(可选)
+
+当前 Palpo 已经实现自动化迁移，无需手动执行迁移命令。
+如果需要手动执行迁移，请执行以下命令。
 
 ```bash
 # 进入 data crate 目录
@@ -211,7 +223,7 @@ diesel migration run
 diesel migration list
 ```
 
-### 4. 迁移管理命令
+### 4. 迁移管理命令（可选）
 
 ```bash
 # 查看迁移状态
@@ -252,29 +264,73 @@ psql -U palpo -d palpo -h localhost
 \q
 ```
 
-## Docker 构建
+## Docker 开发环境构建
 
-### 1. 使用预构建镜像 (推荐)
+### 1. 构建Palpo容器镜像
+
+推荐使用 Rust 开发镜像构建 Palpo。参考配置文件：[Dockerfile](https://github.com/palpo-im/palpo/blob/main/build/docker/Dockerfile.palpo)
+
+```Dockerfile
+FROM rust:bookworm AS builder
+
+WORKDIR /work
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libclang-dev libpq-dev cmake postgresql postgresql-contrib
+
+COPY Cargo.toml Cargo.toml
+COPY crates crates
+RUN cargo build --release
+
+FROM debian:bookworm
+
+WORKDIR /var/palpo
+
+COPY --from=builder /work/target/release/palpo /var/palpo/palpo
+# COPY crates/server/palpo-example.toml /var/palpo/palpo.toml
+
+RUN apt-get update && apt-get install -y debian-keyring \
+    debian-archive-keyring apt-transport-https ca-certificates \
+    libpq-dev &&\
+    mkdir -p /var/palpo/media /var/palpo/certs /var/palpo/acme
+
+ENV PALPO_CONFIG=/var/palpo/palpo.toml
+ENV RUST_LOG="palpo=warn,palpo_core=error,salvo=error"
+ENV LOG_FORMAT=json
+
+EXPOSE 8008 8448
+
+CMD /var/palpo/palpo
+```
+
+将 Dockerfile 保存为 `Dockerfile.palpo`，单独放在某个目录下，并运行以下命令构建镜像：
+
 ```bash
-# 克隆项目获取配置文件
-git clone https://github.com/palpo/palpo.git
-cd palpo/deploy/docker
+docker build -t palpo-dev -f Dockerfile.palpo .
+```
+可以通过命令查看构建好的镜像：
+```bash
+docker images | grep palpo-dev
+```
+使用 Docker Compose 运行并测试镜像，配置可以参考：[Docker Compose 配置](https://github.com/palpo-im/palpo/blob/main/deploy/docker/compose.yml)。其中的 palpo image 配置为本地的 palpo-dev 镜像。
 
+在启动测试前，记得要编辑配置文件：
+```bash
 # 编辑配置文件
 cp palpo.toml.example palpo.toml
 # 编辑 palpo.toml 设置你的服务器名称和数据库连接
-
-# 启动服务 (包含自动数据库迁移)
-docker compose up -d
 ```
+
+启动服务 (包含自动数据库迁移)：`docker compose up -d`。
+
 
 更多信息请参考：
 - [Docker 官方文档](https://docs.docker.com/)
 - [Docker Compose 文档](https://docs.docker.com/compose/)
 
-### 2. Docker 环境数据库迁移
+### 2. Docker 环境数据库迁移（可选）
 
-Docker 环境中的数据库迁移会自动执行，但你也可以手动运行：
+Docker 环境中的数据库迁移会自动执行，但你也可以手动运行:
 
 ```bash
 # 查看迁移状态
@@ -287,49 +343,16 @@ docker compose exec palpo diesel migration run
 docker compose exec palpo bash
 ```
 
-### 3. Docker Compose 配置示例
-
-```yaml
-version: '3.8'
-
-services:
-  postgres:
-    image: postgres:16
-    environment:
-      POSTGRES_USER: palpo
-      POSTGRES_PASSWORD: changeme
-      POSTGRES_DB: palpo
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U palpo"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  palpo:
-    image: palpo:latest
-    ports:
-      - "8008:8008"
-      - "8448:8448"
-    environment:
-      DATABASE_URL: "postgres://palpo:changeme@postgres:5432/palpo"
-      PALPO_CONFIG: '/var/palpo/palpo.toml'
-    volumes:
-      - ./palpo.toml:/var/palpo/palpo.toml
-      - palpo_media:/var/palpo/media
-    depends_on:
-      postgres:
-        condition: service_healthy
-
-volumes:
-  postgres_data:
-  palpo_media:
-```
 
 ## 开发环境设置
 
 ### 1. 安装开发工具
+
+- rustfmt 是 Rust 的代码格式化工具
+- clippy 是代码分析工具。
+- cargo-watch 是 cargo 的监视工具，用于自动重载。
+- cargo-edit 是 cargo 的依赖管理工具，用于添加依赖。
+
 ```bash
 # 安装 Rust 开发工具
 rustup component add rustfmt clippy
@@ -350,7 +373,7 @@ createdb palpo_dev
 # 设置开发环境变量
 export DATABASE_URL="postgres://palpo:your_password@localhost:5432/palpo_dev"
 
-# 运行迁移
+# 运行迁移 (可选)
 cd crates/data
 diesel migration run
 ```
@@ -417,7 +440,7 @@ psql $DATABASE_URL -c "SELECT version();"
 diesel migration list
 
 # 重置数据库 (谨慎使用)
-dropdb palpo && createdb palpo
+dropdb palpo_dev && createdb palpo_dev
 diesel migration run
 ```
 
