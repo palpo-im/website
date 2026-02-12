@@ -4,12 +4,12 @@ This document provides detailed instructions for building the Palpo Matrix serve
 
 ## Table of Contents
 
-- [System Requirements](#system-requirements)
-- [macOS/Linux Build](#macoslinux-build)
-- [Windows Build](#windows-build)
-- [Docker Build](#docker-build)
-- [Database Setup and Migration](#database-setup-and-migration)
-- [Development Environment Setup](#development-environment-setup)
+- [System Requirements](#system-requirements "System Requirements")
+- [macOS/Linux Build](#macoslinux-build "macOS/Linux Build")
+- [Windows Build](#windows-build "Windows Build")
+- [Docker Development Environment](#docker-development-environment "Docker Development Environment")
+- [Database Configuration](#database-configuration "Database Configuration")
+- [Development Environment Setup](#development-environment-setup "Development Environment Setup")
 
 ## System Requirements
 
@@ -17,7 +17,7 @@ This document provides detailed instructions for building the Palpo Matrix serve
 - [Rust](https://www.rust-lang.org/) 1.70+ (latest stable version recommended)
 - [PostgreSQL](https://www.postgresql.org/) 12+
 - [Git](https://git-scm.com/)
-- [Diesel CLI](https://diesel.rs/guides/getting-started) (for database migrations)
+- [Diesel CLI](https://diesel.rs/guides/getting-started) (optional, for manual database migrations)
 
 ### Platform-Specific Requirements
 - **Linux**: `libclang-dev`, `libpq-dev`, `cmake`
@@ -37,7 +37,7 @@ This document provides detailed instructions for building the Palpo Matrix serve
 brew install postgresql cmake
 ```
 
-For more information, refer to:
+Additional resources:
 - [Homebrew Official Documentation](https://brew.sh/)
 - [PostgreSQL macOS Installation Guide](https://www.postgresql.org/download/macosx/)
 
@@ -54,7 +54,7 @@ sudo apt-get install -y \
     postgresql-contrib
 ```
 
-For more information, refer to:
+See also:
 - [PostgreSQL Ubuntu Installation Guide](https://www.postgresql.org/download/linux/ubuntu/)
 - [Ubuntu Development Tools Installation](https://ubuntu.com/server/docs/programming-c)
 
@@ -67,7 +67,7 @@ sudo yum install -y gcc gcc-c++ cmake postgresql-devel clang-devel
 sudo dnf install -y gcc gcc-c++ cmake postgresql-devel clang-devel
 ```
 
-For more information, refer to:
+Learn more:
 - [PostgreSQL Red Hat Installation Guide](https://www.postgresql.org/download/linux/redhat/)
 - [Fedora Development Tools](https://docs.fedoraproject.org/en-US/quick-docs/installing-plugins-for-playing-movies-and-music/)
 
@@ -77,26 +77,23 @@ For more information, refer to:
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source ~/.cargo/env
 
-# Install Diesel CLI (with PostgreSQL support)
+# (Optional) Install Diesel CLI (PostgreSQL support)
 cargo install diesel_cli --no-default-features --features postgres
 ```
 
-For more information, refer to:
+Additional resources:
 - [Rust Official Installation Guide](https://www.rust-lang.org/tools/install)
 - [Diesel CLI Documentation](https://diesel.rs/guides/getting-started)
 
-### 3. Clone and Build the Project
+### 3. Clone and Build Project
 ```bash
-# Clone the project
+# Clone project
 git clone https://github.com/palpo/palpo.git
 cd palpo
-
-# Build the project
-cargo build --release
-
-# After building, the executable is located at
-./target/release/palpo
 ```
+Next:
+Database Configuration: [Database Configuration](#database-configuration "Database Configuration")
+Development Environment Setup: [Development Environment Setup](#development-environment-setup "Development Environment Setup")
 
 ## Windows Build
 
@@ -113,12 +110,12 @@ iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/in
 choco install rust postgresql cmake git
 ```
 
-For more information, refer to:
+See also:
 - [Chocolatey Official Documentation](https://chocolatey.org/install)
 - [PostgreSQL Windows Installation Guide](https://www.postgresql.org/download/windows/)
 - [Rust Windows Installation Guide](https://forge.rust-lang.org/infra/channel-layout.html#windows)
 
-### 2. Install Diesel CLI
+### 2. Install Diesel CLI (Optional)
 ```powershell
 # Install Diesel CLI
 cargo install diesel_cli --no-default-features --features postgres
@@ -131,20 +128,30 @@ $env:PATH += ";C:\Program Files\PostgreSQL\15\bin"
 $env:PATH += ";C:\Program Files\CMake\bin"
 ```
 
-### 4. Build the Project
+### 4. Build Project
 ```powershell
-# Clone the project
+# Clone project
 git clone https://github.com/palpo/palpo.git
 cd palpo
-
-# Build the project
-cargo build --release
-
-# The executable is located at
-.\target\release\palpo.exe
 ```
 
-## Database Setup and Migration
+Next:
+Database Configuration: [Database Configuration](#database-configuration "Database Configuration")
+Development Environment Setup: [Development Environment Setup](#development-environment-setup "Development Environment Setup")
+
+
+### 5. Windows WSL Build (Optional)
+
+We recommend using the WSL environment for development on Windows systems. WSL (Windows Subsystem for Linux) allows you to run Linux command-line tools on Windows. For installation instructions, see the official guide: [WSL Installation and Configuration](https://docs.microsoft.com/en-us/windows/wsl/install).
+
+Choose a Linux distribution you're familiar with, such as Debian or Ubuntu, as your WSL subsystem. Then follow the Linux development configuration from the previous section.
+
+You can also use WSL to cross-compile Windows executable files. See: [Cross-compilation and Installation in WSL Environment](https://palpo.im/en/guide/installation/windows.html#wsl-cross-compilation-and-installation)
+
+Development Environment Setup: [Development Environment Setup](#development-environment-setup "Development Environment Setup")
+
+## Database Configuration
+
 
 ### 1. Create Database and User
 
@@ -155,7 +162,9 @@ sudo systemctl start postgresql  # Linux
 brew services start postgresql   # macOS
 
 # Create database and user
-sudo -u postgres psql
+sudo -u postgres psql -c "CREATE USER palpo_dev WITH PASSWORD 'your_password';"
+sudo -u postgres psql -c "CREATE DATABASE palpo_dev OWNER palpo_dev;"
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE palpo_dev TO palpo_dev;"
 ```
 
 #### Windows
@@ -182,7 +191,7 @@ GRANT ALL PRIVILEGES ON DATABASE palpo TO palpo;
 \q
 ```
 
-For more information, refer to:
+Reference:
 - [PostgreSQL User Management Documentation](https://www.postgresql.org/docs/current/user-manag.html)
 - [PostgreSQL Database Creation Documentation](https://www.postgresql.org/docs/current/manage-ag-createdb.html)
 
@@ -198,20 +207,23 @@ export DATABASE_URL="postgres://palpo:your_password@localhost:5432/palpo"
 echo "DATABASE_URL=postgres://palpo:your_password@localhost:5432/palpo" > .env
 ```
 
-### 3. Run Database Migrations
+### 3. Run Database Migrations (Optional)
+
+Palpo now supports automated migrations, so manual migration commands are usually not required.
+If you need to run migrations manually, execute the following commands.
 
 ```bash
 # Navigate to data crate directory
 cd crates/data
 
-# Run migrations (creates all tables and indexes)
+# Run migrations (create all tables and indexes)
 diesel migration run
 
 # Verify migration status
 diesel migration list
 ```
 
-### 4. Migration Management Commands
+### 4. Migration Management Commands (Optional)
 
 ```bash
 # Check migration status
@@ -227,7 +239,7 @@ diesel migration redo
 diesel migration generate migration_name
 ```
 
-For more information, refer to:
+Learn more:
 - [Diesel Migration Guide](https://diesel.rs/guides/migration)
 - [PostgreSQL Connection String Format](https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING)
 
@@ -252,29 +264,73 @@ psql -U palpo -d palpo -h localhost
 \q
 ```
 
-## Docker Build
+## Docker Development Environment
 
-### 1. Use Pre-built Image (Recommended)
-```bash
-# Clone project to get configuration files
-git clone https://github.com/palpo/palpo.git
-cd palpo/deploy/docker
+### 1. Build Palpo Container Image
 
-# Edit configuration files
-cp palpo.toml.example palpo.toml
-# Edit palpo.toml to set your server name and database connection
+We recommend using the official Rust Docker image to build Palpo. Reference configuration: [Dockerfile](https://github.com/palpo-im/palpo/blob/main/build/docker/Dockerfile.palpo)
 
-# Start service (includes automatic database migration)
-docker compose up -d
+```Dockerfile
+FROM rust:bookworm AS builder
+
+WORKDIR /work
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libclang-dev libpq-dev cmake postgresql postgresql-contrib
+
+COPY Cargo.toml Cargo.toml
+COPY crates crates
+RUN cargo build --release
+
+FROM debian:bookworm
+
+WORKDIR /var/palpo
+
+COPY --from=builder /work/target/release/palpo /var/palpo/palpo
+# COPY crates/server/palpo-example.toml /var/palpo/palpo.toml
+
+RUN apt-get update && apt-get install -y debian-keyring \
+    debian-archive-keyring apt-transport-https ca-certificates \
+    libpq-dev &&\
+    mkdir -p /var/palpo/media /var/palpo/certs /var/palpo/acme
+
+ENV PALPO_CONFIG=/var/palpo/palpo.toml
+ENV RUST_LOG="palpo=warn,palpo_core=error,salvo=error"
+ENV LOG_FORMAT=json
+
+EXPOSE 8008 8448
+
+CMD /var/palpo/palpo
 ```
 
-For more information, refer to:
+Save the Dockerfile as `Dockerfile.palpo`, place it in a separate directory, and build the image:
+
+```bash
+docker build -t palpo-dev -f Dockerfile.palpo .
+```
+Verify the built image:
+```bash
+docker images | grep palpo-dev
+```
+To run and test the image using Docker Compose, see: [Docker Compose Configuration](https://github.com/palpo-im/palpo/blob/main/deploy/docker/compose.yml). Configure the palpo image to use your local palpo-dev image.
+
+Before starting, edit the configuration file:
+```bash
+# Copy and edit configuration file
+cp palpo.toml.example palpo.toml
+# Edit palpo.toml to set your server name and database connection
+```
+
+Start services (includes automatic database migration): `docker compose up -d`.
+
+
+Additional resources:
 - [Docker Official Documentation](https://docs.docker.com/)
 - [Docker Compose Documentation](https://docs.docker.com/compose/)
 
-### 2. Database Migration in Docker Environment
+### 2. Docker Environment Database Migrations (Optional)
 
-Database migrations in Docker environment are executed automatically, but you can also run them manually:
+Database migrations in the Docker environment run automatically, but you can execute them manually if needed:
 
 ```bash
 # Check migration status
@@ -287,49 +343,16 @@ docker compose exec palpo diesel migration run
 docker compose exec palpo bash
 ```
 
-### 3. Docker Compose Configuration Example
-
-```yaml
-version: '3.8'
-
-services:
-  postgres:
-    image: postgres:16
-    environment:
-      POSTGRES_USER: palpo
-      POSTGRES_PASSWORD: changeme
-      POSTGRES_DB: palpo
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U palpo"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  palpo:
-    image: palpo:latest
-    ports:
-      - "8008:8008"
-      - "8448:8448"
-    environment:
-      DATABASE_URL: "postgres://palpo:changeme@postgres:5432/palpo"
-      PALPO_CONFIG: '/var/palpo/palpo.toml'
-    volumes:
-      - ./palpo.toml:/var/palpo/palpo.toml
-      - palpo_media:/var/palpo/media
-    depends_on:
-      postgres:
-        condition: service_healthy
-
-volumes:
-  postgres_data:
-  palpo_media:
-```
 
 ## Development Environment Setup
 
 ### 1. Install Development Tools
+
+- rustfmt is Rust's code formatting tool.
+- clippy is a code analysis tool.
+- cargo-watch is a cargo watch tool for auto-reloading.
+- cargo-edit is a cargo dependency management tool for adding dependencies.
+
 ```bash
 # Install Rust development tools
 rustup component add rustfmt clippy
@@ -338,7 +361,7 @@ rustup component add rustfmt clippy
 cargo install cargo-watch cargo-edit
 ```
 
-For more information, refer to:
+Reference:
 - [Rustup Documentation](https://rust-lang.github.io/rustup/)
 - [Cargo Tools Documentation](https://doc.rust-lang.org/cargo/)
 
@@ -350,7 +373,7 @@ createdb palpo_dev
 # Set development environment variables
 export DATABASE_URL="postgres://palpo:your_password@localhost:5432/palpo_dev"
 
-# Run migrations
+# Run migrations (optional)
 cd crates/data
 diesel migration run
 ```
@@ -371,7 +394,7 @@ cargo watch -x 'run'
 ```
 
 ### 4. Verify Server Operation
-After successful startup, use the following commands to test if the server is running properly:
+After successful startup, test if the server is running properly:
 
 ```bash
 # Check server version information
@@ -384,9 +407,9 @@ curl http://yourservername:6006/_matrix/client/versions
 }
 ```
 
-If the above JSON data is returned, it indicates that the Palpo server has successfully started and is running normally.
+If you receive the above JSON response, the Palpo server is running successfully.
 
-For more information about Matrix API, refer to:
+Learn more about the Matrix API:
 - [Matrix Client-Server API Specification](https://spec.matrix.org/latest/client-server-api/)
 - [Matrix Server Discovery Specification](https://spec.matrix.org/latest/server-server-api/#server-discovery)
 
@@ -402,7 +425,7 @@ Palpo uses the following main data tables:
 - **Statistics-related**: `stats_user_daily_visits`, `stats_monthly_active_users`, `stats_room_currents`
 - **Others**: `threepid_*`, `user_pushers`, `server_signing_keys`
 
-Detailed structure of all tables can be viewed in the `crates/data/migrations/` directory.
+View detailed table structures in the `crates/data/migrations/` directory.
 
 ## Troubleshooting
 
@@ -417,7 +440,7 @@ psql $DATABASE_URL -c "SELECT version();"
 diesel migration list
 
 # Reset database (use with caution)
-dropdb palpo && createdb palpo
+dropdb palpo_dev && createdb palpo_dev
 diesel migration run
 ```
 
@@ -439,7 +462,7 @@ sudo systemctl status postgresql  # Linux
 brew services list | grep postgres  # macOS
 ```
 
-For more troubleshooting information, refer to:
+Additional troubleshooting resources:
 - [PostgreSQL Troubleshooting Documentation](https://www.postgresql.org/docs/current/troubleshooting.html)
 - [Diesel Troubleshooting Guide](https://diesel.rs/guides/troubleshooting)
 
@@ -459,7 +482,6 @@ RUST_LOG=debug ./target/release/palpo
 RUST_LOG=diesel=debug ./target/release/palpo
 ```
 
-For more debugging information, refer to:
+Learn more about debugging:
 - [Rust Log Configuration Documentation](https://docs.rs/env_logger/latest/env_logger/)
 - [Tracing Documentation](https://docs.rs/tracing/latest/tracing/)
-{/* 本行由工具自动生成,原文哈希值:d9a71879ae92864a955a7e949cf31e01 */}
