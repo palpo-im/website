@@ -270,7 +270,7 @@ psql -U palpo -d palpo -h localhost
 
 推荐使用 Rust 开发镜像构建 Palpo。参考配置文件：[Dockerfile](https://github.com/palpo-im/palpo/blob/main/build/docker/Dockerfile.palpo)
 
-```Dockerfile
+```
 FROM rust:bookworm AS builder
 
 WORKDIR /work
