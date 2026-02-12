@@ -176,7 +176,7 @@ cargo test test_name
 
 ### Complement 测试
 
-我们使用 [Complement](https://github.com/matrix-org/complement) 进行 Matrix 规范合规性测试。详见 [tests/README.md](tests/README.md)。
+我们使用 [Complement](https://github.com/matrix-org/complement) 进行 Matrix 规范合规性测试。详见 [tests/README.md](https://github.com/palpo-im/palpo/blob/main/tests/README.md)。
 
 ### 编写测试
 
@@ -235,7 +235,7 @@ typos
 
 ### Bug 报告
 
-使用 [Bug 报告模板](.github/workflows/ISSUE_TEMPLATE/BUG_REPORT.md) 并包含：
+使用 [Bug 报告模板](https://github.com/palpo-im/palpo/blob/main/.github/workflows/ISSUE_TEMPLATE/BUG_REPORT.md) 并包含：
 
 - Palpo 版本或 git SHA
 - 是否在 Docker 中运行
@@ -245,7 +245,7 @@ typos
 
 ### 功能请求
 
-使用[功能请求模板](.github/workflows/ISSUE_TEMPLATE/FEATURE_REQUEST.md) 并：
+使用 [功能请求模板](https://github.com/palpo-im/palpo/blob/main/.github/workflows/ISSUE_TEMPLATE/FEATURE_REQUEST.md) 并：
 
 - 清晰描述功能
 - 说明使用场景

@@ -176,7 +176,7 @@ cargo test test_name
 
 ### Complement Testing
 
-We use [Complement](https://github.com/matrix-org/complement) for Matrix specification compliance testing. See the [tests/README.md](tests/README.md) for details.
+We use [Complement](https://github.com/matrix-org/complement) for Matrix specification compliance testing. See the [tests/README.md](https://github.com/palpo-im/palpo/blob/main/tests/README.md) for details.
 
 ### Writing Tests
 
@@ -235,7 +235,7 @@ Use a clear, descriptive title:
 
 ### Bug Reports
 
-Use the [bug report template](.github/workflows/ISSUE_TEMPLATE/BUG_REPORT.md) and include:
+Use the [bug report template](https://github.com/palpo-im/palpo/blob/main/.github/workflows/ISSUE_TEMPLATE/BUG_REPORT.md) and include:
 
 - Palpo version or git SHA
 - Whether you're running in Docker
@@ -245,7 +245,7 @@ Use the [bug report template](.github/workflows/ISSUE_TEMPLATE/BUG_REPORT.md) an
 
 ### Feature Requests
 
-Use the [feature request template](.github/workflows/ISSUE_TEMPLATE/FEATURE_REQUEST.md) and:
+Use the [feature request template](https://github.com/palpo-im/palpo/blob/main/.github/workflows/ISSUE_TEMPLATE/FEATURE_REQUEST.md) and:
 
 - Describe the feature clearly
 - Explain the use case
