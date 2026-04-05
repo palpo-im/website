@@ -39,8 +39,27 @@ Docker 可以让 Palpo 的安装变得简单，推荐使用 Docker 方式安装�
 docker compose up -d
 ```
 
+> **注意：** 您可能会遇到 `Error response from daemon: Get "https://registry-1.docker.io/v2/": unauthorized: incorrect username or password` 错误，请按照以下 2 个步骤解决：
+>
+>步骤 1：生成 GitHub Token
+>
+>访问 GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
+>勾选 read:packages 权限
+>
+>步骤 2：登录 ghcr.io
+>
+>```bash
+>export CR_PAT=你的github_token
+>echo $CR_PAT | docker login ghcr.io -u 你的github用户名 --password-stdin
+>```
+> 然后再次运行
+>
+>```bash
+>docker compose up -d
+>```
+
 打开浏览器，输入你设置的服务地址，如果一切设置正确，则页面会显示：`Hello Palpo!`。
-r
+
 恭喜你，服务器已经正常工作。你可以选择任意你喜欢的 Matrix 客户端 (比如：[Element](https://app.element.io/), [Cinny](https://app.cinny.in/), [Robrix](https://github.com/project-robius/robrix)) 连接当前服务器。
 
 你可以从 Matrix 网站找到更多的[客户端列表](https://matrix.org/ecosystem/clients/)。
@@ -59,9 +78,9 @@ r
 
 ```bash
 docker run -d -p 8448:8448 -p 8008:8008 \
-    - palpo.toml:/var/palpo/palpo.toml \
-    -v data/media:/var/palpo/media \
-    --name palpo
+    -v palpo.toml:/var/palpo/palpo.toml \
+    -v ./data/media:/var/palpo/media \
+    --name palpo palpo/palpo:latest
 ```
 
 或者您可以使用 `docker compose`。

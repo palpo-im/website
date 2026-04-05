@@ -57,6 +57,15 @@ Edit `palpo.toml` according to your environment and database settings. At minimu
 
 Replace `your.domain.com` and `your_secure_password` with your actual domain and password.
 
+For local testing, set `server_name` to `localhost:port`, for example `localhost:8008`. Also configure the `well_known` section to specify the client connection address:
+
+```toml
+[well_known]
+client = "http://127.0.0.1:8008"
+```
+
+If using Proxy, make sure to configure the correct `client` address to ensure external accessibility.
+
 For more advanced configurations, please refer to the [Configuration Page](../configuration/index.md).
 
 ## Running Palpo

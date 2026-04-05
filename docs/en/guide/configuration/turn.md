@@ -24,8 +24,8 @@ For example, the following is a relevant configuration snippet from `matrix.org`
 
 ```toml
 [turn]
-shared_secret = "n0t4ctuAllymatr1Xd0TorgSshar3d5ecret4obvIousreAsons"
-user_lifetime = 86400000
+secret = "n0t4ctuAllymatr1Xd0TorgSshar3d5ecret4obvIousreAsons"
+ttl = 86400
 allow_guests = true
 uris = ["turn:turn.matrix.org?transport=udp", "turn:turn.matrix.org?transport=tcp"]
 ```
