@@ -35,9 +35,17 @@ Media still requires various improvements, but Palpo implements media deletion t
 - Deleting a list of MXC URIs
 - File system metadata via file creation time (`btime`) or file modification time (`mtime`) to delete remote media from the past `N` seconds/minutes
 
-For more information, refer to the `!admin media` command. All media in Palpo is stored in `$DATABASE_DIR/media`. This will be configurable soon.
+For more information, refer to the `!admin media` command.
+
+### Storage Backends
+
+Palpo supports two storage backends for media via [Apache OpenDAL](https://opendal.apache.org/):
+
+- **Local filesystem** (default) — media stored under the `space_path` directory
+- **S3-compatible storage** — works with AWS S3, Cloudflare R2, MinIO, Backblaze B2, and any S3-compatible service
+
+See the [Storage Configuration](/guide/configuration/#storage-configuration) section for setup details.
 
 If you find yourself needing extensive fine-grained control over media, we recommend checking out [Matrix Media Repo](https://github.com/t2bot/matrix-media-repo). Palpo plans to implement various utilities for media, but MMR is dedicated to extensive media management.
 
-Built-in S3 support is also planned, but currently using an "S3 filesystem" on `media/` works. Palpo also sends a 1-year `Cache-Control` header with immutable for all media requests (downloads and thumbnails) to reduce unnecessary media requests from browsers, decrease bandwidth usage, and lower load.
-{/* 本行由工具自动生成,原文哈希值:64494666d29f2fe37d924a6f3c93bfe3 */}
+Palpo sends a 1-year `Cache-Control` header with immutable for all media requests (downloads and thumbnails) to reduce unnecessary media requests from browsers, decrease bandwidth usage, and lower load.

@@ -35,8 +35,17 @@ Palpo 具有以下审核管理命令：
 - 删除 MXC URI 列表
 - 通过文件创建时间 (`btime`) 或文件修改时间 (`mtime`) 的文件系统元数据，删除过去 `N` 秒/分钟内的远程媒体
 
-有关更多信息，请参阅 `!admin media` 命令。Palpo 中的所有媒体都存储在 `$DATABASE_DIR/media`。这将很快可配置。
+有关更多信息，请参阅 `!admin media` 命令。
 
-如果您发现自己需要对媒体进行广泛的精细控制，我们建议您查看 [Matrix Media Repo](https://github.com/t2bot/matrix-media-repo)。Palpo 打算为媒体实现各种实用程序，但 MMR 致力于广泛的媒体管理。
+### 存储后端
 
-内置 S3 支持也已计划，但目前在 `media/` 上使用“S3 文件系统”有效。Palpo 还会为所有媒体请求（下载和缩略图）发送 1 年的 `Cache-Control` 标头和不可变，以减少浏览器不必要的媒体请求，减少带宽使用，并减少负载。
+Palpo 通过 [Apache OpenDAL](https://opendal.apache.org/) 支持两种媒体存储后端：
+
+- **本地文件系统**（默认）— 媒体文件存储在 `space_path` 目录下
+- **S3 兼容存储** — 支持 AWS S3、Cloudflare R2、MinIO、Backblaze B2 及任何 S3 兼容服务
+
+详细配置请参阅[存储配置](/zh-hans/guide/configuration/#存储配置)章节。
+
+如果您需要对媒体进行广泛的精细控制，我们建议您查看 [Matrix Media Repo](https://github.com/t2bot/matrix-media-repo)。Palpo 打算为媒体实现各种实用程序，但 MMR 致力于广泛的媒体管理。
+
+Palpo 会为所有媒体请求（下载和缩略图）发送 1 年的 `Cache-Control` 标头（immutable），以减少浏览器不必要的媒体请求，减少带宽使用，并降低负载。
