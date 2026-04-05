@@ -104,7 +104,11 @@ access_key_id = "YOUR_ACCESS_KEY"
 secret_access_key = "YOUR_SECRET_KEY"
 prefix = "media/"                 # 默认值: "media/"
 path_style = false                # 默认值: false，MinIO 需设为 true
+redirect = true                   # 默认值: true，将客户端重定向到 S3 预签名 URL
+presign_expiry = 300              # 默认值: 300（5 分钟）
 ```
+
+启用 `redirect`（默认开启）后，媒体下载请求会返回 `302` 重定向到有时效限制的 S3 预签名 URL。客户端直接从 S3 下载，**节省服务器带宽并降低延迟**。预签名 URL 仅对单个文件有效，`presign_expiry` 秒后过期。设置 `redirect = false` 可改为通过 Palpo 服务器代理所有媒体。
 
 #### 配置参考
 
@@ -127,6 +131,8 @@ path_style = false                # 默认值: false，MinIO 需设为 true
 | `storage.secret_access_key` | string | — | 访问密钥 |
 | `storage.prefix` | string | `"media/"` | 存储桶内的对象键前缀 |
 | `storage.path_style` | boolean | `false` | 启用路径风格访问（MinIO 需要启用） |
+| `storage.redirect` | boolean | `true` | 将客户端重定向到 S3 预签名 URL 下载 |
+| `storage.presign_expiry` | integer | `300` | 预签名 URL 有效期（秒） |
 
 #### 常见云服务商配置示例
 
