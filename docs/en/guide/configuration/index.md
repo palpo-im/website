@@ -104,7 +104,11 @@ access_key_id = "YOUR_ACCESS_KEY"
 secret_access_key = "YOUR_SECRET_KEY"
 prefix = "media/"                 # default: "media/"
 path_style = false                # default: false, set to true for MinIO
+redirect = true                   # default: true, redirect clients to presigned S3 URLs
+presign_expiry = 300              # default: 300 (5 minutes)
 ```
+
+When `redirect` is enabled (the default), media download requests return a `302` redirect to a time-limited presigned S3 URL. Clients download directly from S3, which **saves server bandwidth and reduces latency**. The presigned URL is scoped to a single object and expires after `presign_expiry` seconds. Set `redirect = false` to proxy all media through the Palpo server instead.
 
 #### Configuration Reference
 
@@ -127,6 +131,8 @@ path_style = false                # default: false, set to true for MinIO
 | `storage.secret_access_key` | string | — | Secret access key |
 | `storage.prefix` | string | `"media/"` | Object key prefix in the bucket |
 | `storage.path_style` | boolean | `false` | Enable path-style access (required for MinIO) |
+| `storage.redirect` | boolean | `true` | Redirect clients to presigned S3 URLs for downloads |
+| `storage.presign_expiry` | integer | `300` | Presigned URL expiry in seconds |
 
 #### Examples for Popular Providers
 
