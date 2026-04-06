@@ -5,7 +5,7 @@ If you are deploying Palpo for the first time, follow the steps below to set up 
 ## Prerequisites
 
 - A 64-bit Linux, macOS, or Windows server with at least 2 vCPUs and 4 GB RAM recommended.
-- PostgreSQL 14 or later. See the [PostgreSQL Guide](./installation/postgres.md) for installation instructions.
+- PostgreSQL 17 or later. See the [PostgreSQL Guide](./installation/postgres.md) for installation instructions.
 - A publicly accessible domain name, and optionally a reverse proxy (Caddy, Traefik, Nginx, etc.).
 - Docker installed (recommended) or a shell environment capable of running the Palpo executable.
 

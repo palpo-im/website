@@ -97,16 +97,14 @@ createdb mydatabase
 创建 `docker-compose.yml` 文件：
 
 ```yaml
-version: '3.8'
-
 services:
   postgres:
-    image: postgres:15
+    image: postgres:17
     container_name: palpo-postgres
     restart: unless-stopped
     environment:
       POSTGRES_DB: palpo
-      POSTGRES_USER: palpo_user
+      POSTGRES_USER: palpo
       POSTGRES_PASSWORD: your_secure_password
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
@@ -130,16 +128,14 @@ networks:
 对于数据库管理，您还可以包含 pgAdmin：
 
 ```yaml
-version: '3.8'
-
 services:
   postgres:
-    image: postgres:15
+    image: postgres:17
     container_name: palpo-postgres
     restart: unless-stopped
     environment:
       POSTGRES_DB: palpo
-      POSTGRES_USER: palpo_user
+      POSTGRES_USER: palpo
       POSTGRES_PASSWORD: your_secure_password
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
@@ -178,19 +174,19 @@ networks:
 
 ```bash
 # 启动服务
-docker-compose up -d
+docker compose up -d
 
 # 检查服务状态
-docker-compose ps
+docker compose ps
 
 # 查看日志
-docker-compose logs postgres
+docker compose logs postgres
 
 # 停止服务
-docker-compose down
+docker compose down
 
 # 停止并删除卷（⚠️ 这将删除所有数据）
-docker-compose down -v
+docker compose down -v
 ```
 
 ## 安装后设置
@@ -201,14 +197,14 @@ docker-compose down -v
 
 ```sql
 CREATE DATABASE palpo;
-CREATE USER palpo_user WITH PASSWORD 'your_secure_password';
-GRANT ALL PRIVILEGES ON DATABASE palpo TO palpo_user;
+CREATE USER palpo WITH PASSWORD 'your_secure_password';
+GRANT ALL PRIVILEGES ON DATABASE palpo TO palpo;
 ```
 
 1. **在 palpo 应用程序配置文件中配置连接设置**，使用适当的数据库 URL：
 
 ```
-postgresql://palpo_user:your_secure_password@localhost:5432/palpo
+postgresql://palpo:your_secure_password@localhost:5432/palpo
 ```
 
 1. **测试连接**以确保一切正常工作。

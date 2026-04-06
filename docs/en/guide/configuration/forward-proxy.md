@@ -32,9 +32,7 @@ The following scenarios **will use** the proxy:
 
 - Push operations
 - URL previews
-- Remote statistics (phone-home stats)
 - reCAPTCHA verification
-- CAS authentication validation
 - OpenID Connect
 - Outbound federation
 - Federation (checking public key revocation)
@@ -45,9 +43,7 @@ The following scenarios **will not use** the proxy:
 
 - Application Services
 - Identity servers
-- In worker configurations:
-  - Connections between workers
-  - Connections from workers to Redis
+- Internal service-to-service connections (if applicable)
 
 ## Troubleshooting
 

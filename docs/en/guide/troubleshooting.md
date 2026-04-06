@@ -2,9 +2,7 @@
 
 > ## Docker Users ⚠️
 >
-> Docker provides a very poor user experience. Therefore, a large number of issues or support requests are actually Docker support, not palpo support. We also cannot document the ever-growing list of Docker issues here.
->
-> If you intend to seek support and are using Docker, **please** double and triple-check that your issue is **not** due to a misconfiguration of your Docker setup.
+> Many support requests are actually caused by Docker networking or DNS misconfiguration rather than Palpo itself. If you're using Docker, please verify your Docker setup (networking, DNS resolution, port mappings) before reporting issues.
 >
 > If there is something like a Compose file issue or a Dockerhub image issue, it's still okay to mention it, as long as it's something we can fix.
 
@@ -31,7 +29,7 @@ This is **not** a Palpo issue; it is purely a Docker issue. It is not suitable f
 
 If you receive many "DNS no available connections" error logs, this is because your DNS servers (the servers in `/etc/resolv.conf`) are overloaded and cannot handle typical Matrix federation traffic. Some users report that upstream servers also rate-limit them when they receive this error (e.g., popular upstreams like Google DNS).
 
-Matrix federation is very heavy and sends a large number of DNS requests. Unfortunately, this is by design and gets worse with more servers/target resolution steps. Synapse also expects a very perfect DNS setup.
+Matrix federation is very heavy and sends a large number of DNS requests. Unfortunately, this is by design and gets worse with more servers/target resolution steps. Matrix federation also expects a very reliable DNS setup.
 
 There are ways to reduce the number of DNS queries, but ultimately the best solution is to self-host a high-quality caching DNS server like [Unbound][unbound-arch] without any upstream resolvers and without DNSSEC validation enabled.
 

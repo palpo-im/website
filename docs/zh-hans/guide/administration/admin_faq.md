@@ -182,9 +182,8 @@ server list-features --enabled
 
 在配置中添加：
 ```toml
-[registration]
-enable = true
-token_required = true
+allow_registration = true
+registration_token = "your-secret-token"
 ```
 
 然后通过 Admin API 创建令牌：
@@ -198,8 +197,7 @@ curl -X POST "https://your-server/_synapse/admin/v1/registration_tokens/new" \
 ### 如何禁用开放注册？
 
 ```toml
-[registration]
-enable = false
+allow_registration = false
 ```
 
 或要求使用令牌（见上文）。

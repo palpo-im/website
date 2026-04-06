@@ -182,9 +182,8 @@ server list-features --enabled
 
 Add to your configuration:
 ```toml
-[registration]
-enable = true
-token_required = true
+allow_registration = true
+registration_token = "your-secret-token"
 ```
 
 Then create tokens via the Admin API:
@@ -198,8 +197,7 @@ curl -X POST "https://your-server/_synapse/admin/v1/registration_tokens/new" \
 ### How do I disable open registration?
 
 ```toml
-[registration]
-enable = false
+allow_registration = false
 ```
 
 Or require tokens (see above).

@@ -24,8 +24,8 @@
 
 ### 环境要求
 
-- **Rust 1.92+** - 通过 [rustup](https://rustup.rs/) 安装
-- **PostgreSQL 18+** - 数据库后端
+- **Rust 1.94+** - 通过 [rustup](https://rustup.rs/) 安装
+- **PostgreSQL 17+** - 数据库后端
 - **系统依赖** (Linux)：
   ```bash
   sudo apt install -y libclang-dev libpq-dev cmake
@@ -235,7 +235,7 @@ typos
 
 ### Bug 报告
 
-使用 [Bug 报告模板](https://github.com/palpo-im/palpo/blob/main/.github/workflows/ISSUE_TEMPLATE/BUG_REPORT.md) 并包含：
+使用 [Bug 报告模板](https://github.com/palpo-im/palpo/blob/main/.github/ISSUE_TEMPLATE/BUG_REPORT.md) 并包含：
 
 - Palpo 版本或 git SHA
 - 是否在 Docker 中运行
@@ -245,7 +245,7 @@ typos
 
 ### 功能请求
 
-使用 [功能请求模板](https://github.com/palpo-im/palpo/blob/main/.github/workflows/ISSUE_TEMPLATE/FEATURE_REQUEST.md) 并：
+使用 [功能请求模板](https://github.com/palpo-im/palpo/blob/main/.github/ISSUE_TEMPLATE/FEATURE_REQUEST.md) 并：
 
 - 清晰描述功能
 - 说明使用场景

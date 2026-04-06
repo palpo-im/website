@@ -14,8 +14,8 @@ This document provides detailed instructions for building the Palpo Matrix serve
 ## System Requirements
 
 ### Basic Requirements
-- [Rust](https://www.rust-lang.org/) 1.70+ (latest stable version recommended)
-- [PostgreSQL](https://www.postgresql.org/) 12+
+- [Rust](https://www.rust-lang.org/) 1.94+ (latest stable version recommended)
+- [PostgreSQL](https://www.postgresql.org/) 17+
 - [Git](https://git-scm.com/)
 - [Diesel CLI](https://diesel.rs/guides/getting-started) (optional, for manual database migrations)
 
@@ -88,7 +88,7 @@ Additional resources:
 ### 3. Clone and Build Project
 ```bash
 # Clone project
-git clone https://github.com/palpo/palpo.git
+git clone https://github.com/palpo-im/palpo.git
 cd palpo
 ```
 Next:
@@ -131,7 +131,7 @@ $env:PATH += ";C:\Program Files\CMake\bin"
 ### 4. Build Project
 ```powershell
 # Clone project
-git clone https://github.com/palpo/palpo.git
+git clone https://github.com/palpo-im/palpo.git
 cd palpo
 ```
 

@@ -24,8 +24,8 @@ Before contributing, please:
 
 ### Prerequisites
 
-- **Rust 1.92+** - Install via [rustup](https://rustup.rs/)
-- **PostgreSQL 18+** - Required for the database backend
+- **Rust 1.94+** - Install via [rustup](https://rustup.rs/)
+- **PostgreSQL 17+** - Required for the database backend
 - **System dependencies** (Linux):
   ```bash
   sudo apt install -y libclang-dev libpq-dev cmake
@@ -235,7 +235,7 @@ Use a clear, descriptive title:
 
 ### Bug Reports
 
-Use the [bug report template](https://github.com/palpo-im/palpo/blob/main/.github/workflows/ISSUE_TEMPLATE/BUG_REPORT.md) and include:
+Use the [bug report template](https://github.com/palpo-im/palpo/blob/main/.github/ISSUE_TEMPLATE/BUG_REPORT.md) and include:
 
 - Palpo version or git SHA
 - Whether you're running in Docker
@@ -245,7 +245,7 @@ Use the [bug report template](https://github.com/palpo-im/palpo/blob/main/.githu
 
 ### Feature Requests
 
-Use the [feature request template](https://github.com/palpo-im/palpo/blob/main/.github/workflows/ISSUE_TEMPLATE/FEATURE_REQUEST.md) and:
+Use the [feature request template](https://github.com/palpo-im/palpo/blob/main/.github/ISSUE_TEMPLATE/FEATURE_REQUEST.md) and:
 
 - Describe the feature clearly
 - Explain the use case

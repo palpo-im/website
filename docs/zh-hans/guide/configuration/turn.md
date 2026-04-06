@@ -32,13 +32,9 @@ uris = ["turn:turn.matrix.org?transport=udp", "turn:turn.matrix.org?transport=tc
 
 更新 homeserver 配置后，需重启 palpo：
 
-- 如果你用 synctl：
-  ```sh
-  synctl restart
-  ```
 - 如果你用 systemd：
   ```sh
-  systemctl restart matrix-palpo.service
+  systemctl restart palpo.service
   ```
 - 如果你用 docker compose：
   ```sh

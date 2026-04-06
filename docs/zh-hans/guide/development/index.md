@@ -14,8 +14,8 @@
 ## 系统要求
 
 ### 基础要求
-- [Rust](https://www.rust-lang.org/) 1.70+ (推荐使用最新稳定版)
-- [PostgreSQL](https://www.postgresql.org/) 12+
+- [Rust](https://www.rust-lang.org/) 1.94+ (推荐使用最新稳定版)
+- [PostgreSQL](https://www.postgresql.org/) 17+
 - [Git](https://git-scm.com/)
 - [Diesel CLI](https://diesel.rs/guides/getting-started) (可选，用于手动数据库迁移)
 
@@ -88,7 +88,7 @@ cargo install diesel_cli --no-default-features --features postgres
 ### 3. 克隆并构建项目
 ```bash
 # 克隆项目
-git clone https://github.com/palpo/palpo.git
+git clone https://github.com/palpo-im/palpo.git
 cd palpo
 ```
 接下来：
@@ -131,7 +131,7 @@ $env:PATH += ";C:\Program Files\CMake\bin"
 ### 4. 构建项目
 ```powershell
 # 克隆项目
-git clone https://github.com/palpo/palpo.git
+git clone https://github.com/palpo-im/palpo.git
 cd palpo
 ```
 

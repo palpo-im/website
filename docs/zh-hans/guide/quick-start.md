@@ -5,7 +5,7 @@
 ## 必备条件
 
 - 一台 64 位的 Linux、macOS 或 Windows 服务器，建议至少 2 vCPU / 4 GB RAM。
-- PostgreSQL 14 及以上版本。安装方法见 [PostgreSQL 指南](./installation/postgres.md)。
+- PostgreSQL 17 及以上版本。安装方法见 [PostgreSQL 指南](./installation/postgres.md)。
 - 一个可被公网访问的域名，以及可选的反向代理（Caddy、Traefik、Nginx 等）。
 - 已安装 Docker（推荐）或可以运行 Palpo 可执行文件的 shell 环境。
 

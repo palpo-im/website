@@ -43,7 +43,7 @@ server = "matrix.example.com:443"
 Note: If you are running Palpo in a container, keep `listen_addr` set to `0.0.0.0:8008` to allow the reverse proxy to access Palpo within the container network.
 
 
-**Important**: It is recommended to set the server to only listen on localhost traffic. However, please note that if using containerized Synapse, do not make this change as it will prevent it from responding to proxy traffic.
+**Important**: It is recommended to set the server to only listen on localhost traffic. However, please note that if using containerized Palpo, do not make this change as it will prevent it from responding to proxy traffic.
 
 Alternatively, you can also configure: request_id_header, so that the server extracts and reuses the same request ID format used by the reverse proxy.
 

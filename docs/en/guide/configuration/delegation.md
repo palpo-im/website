@@ -59,11 +59,11 @@ If necessary, refer to the [Matrix specification](https://matrix.org/docs/spec/s
 
 If your homeserver API is accessible via the domain pointed to by `server_name` on the default federation port (8448), no delegation configuration is required.
 
-For example: Register `example.com` and point its DNS A record to a server, install Synapse on that host, set `server_name` to `example.com`, and configure a reverse proxy to forward requests on port 8448 and provide TLS certificates for `example.com`. In this case, no additional delegation configuration is needed.
+For example: Register `example.com` and point its DNS A record to a server, install Palpo on that host, set `server_name` to `example.com`, and configure a reverse proxy to forward requests on port 8448 and provide TLS certificates for `example.com`. In this case, no additional delegation configuration is needed.
 
 **However**, if your homeserver API is not accessible via the domain pointed to by `server_name` on port 8448, you will need delegation to inform other servers how to locate your homeserver.
 
 ### Should federation traffic use a reverse proxy?
 
-Generally, using a reverse proxy for both federation and client traffic is a wise choice, as it allows Synapse to avoid handling TLS traffic directly. For information on setting up a reverse proxy, please refer to the [reverse proxy documentation](reverse-proxy.md).
+Generally, using a reverse proxy for both federation and client traffic is a wise choice, as it allows Palpo to avoid handling TLS traffic directly. For information on setting up a reverse proxy, please refer to the [reverse proxy documentation](reverse-proxy.md).
 {/* 本行由工具自动生成,原文哈希值:370a574b877253d4bc8833bbd7b23c61 */}

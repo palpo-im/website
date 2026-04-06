@@ -67,13 +67,13 @@ If you want to run Palpo directly from its OCI image, you can find it in the fol
 | Registry | Image | Size | Remarks |
 |---|---|---|---|
 | GitHub Registry | [ghcr.io/palpo-im/palpo:latest][gh] | ![Image Size][shield-latest] | Stable latest tagged image. |
-| Docker Hub | [docker.io/ghcr.io/palpo-im/palpo:latest][dh] | ![Image Size][shield-latest] | Stable latest tagged image. |
+| Docker Hub | [docker.io/palpo/palpo:latest][dh] | ![Image Size][shield-latest] | Stable latest tagged image. |
 
 Once you have the image, you can simply run the following command:
 
 ```bash
 docker run -d -p 8448:8448 -p 8008:8008 \
-    -v palpo.toml:/var/palpo/palpo.toml \
+    -v ./palpo.toml:/var/palpo/palpo.toml \
     -v ./data/media:/var/palpo/media \
     --name palpo palpo/palpo:latest
 ```

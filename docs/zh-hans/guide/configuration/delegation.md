@@ -60,10 +60,10 @@ server = "matrix.example.com:443"
 
 若 homeserver API 能通过 `server_name` 指向的域名和默认联邦端口（8448）访问，则无需委托配置。
 
-例如：注册 `example.com` 并将其 DNS A 记录指向一台服务器，在该主机上安装 Synapse，`server_name` 设为 `example.com`，并配置反向代理将 8448 端口请求转发并为 `example.com` 提供 TLS 证书，此时无需额外委托配置。
+例如：注册 `example.com` 并将其 DNS A 记录指向一台服务器，在该主机上安装 Palpo，`server_name` 设为 `example.com`，并配置反向代理将 8448 端口请求转发并为 `example.com` 提供 TLS 证书，此时无需额外委托配置。
 
 **但若** homeserver API 无法通过 `server_name` 指向的域名和 8448 端口访问，则需通过委托让其他服务器知道如何找到你的 homeserver。
 
 ### 联邦流量是否应使用反向代理？
 
-通常，联邦和客户端流量都使用反向代理是明智的选择，这样可让 Synapse 无需直接处理 TLS 流量。关于如何设置反向代理，请参阅[反向代理文档](reverse-proxy.md)。
+通常，联邦和客户端流量都使用反向代理是明智的选择，这样可让 Palpo 无需直接处理 TLS 流量。关于如何设置反向代理，请参阅[反向代理文档](reverse-proxy.md)。
