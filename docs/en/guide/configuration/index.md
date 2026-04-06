@@ -508,6 +508,63 @@ require_auth_for_profile_requests = false
 # emergency_password = "your-emergency-password"
 ```
 
+### Rate Limiting
+
+Palpo uses per-IP [token-bucket](https://en.wikipedia.org/wiki/Token_bucket) rate limiting to protect sensitive endpoints from brute-force and abuse. Each category maintains its own counter, so login attempts do not consume registration budget.
+
+- **`per_second`** — tokens refilled per second (controls sustained rate).
+- **`burst`** — maximum tokens that can accumulate (controls burst capacity).
+
+Set `per_second` to `0` to disable a specific rate limiter entirely.
+
+```toml
+# Login endpoints (/login, /login/get_token)
+# Default: ~1 login per 5 minutes, burst of 5
+[rc_login]
+per_second = 0.003
+burst = 5
+
+# Registration endpoints (/register)
+# Default: ~1 per 6 seconds, burst of 3
+[rc_registration]
+per_second = 0.17
+burst = 3
+
+# Password change and account deactivation
+# Default: ~1 per 6 seconds, burst of 3
+[rc_password]
+per_second = 0.17
+burst = 3
+
+# General API endpoints (media, profile, rooms, etc.)
+# Default: 10 per second, burst of 50
+[rc_message]
+per_second = 10.0
+burst = 50
+```
+
+:::tip
+For testing environments (e.g. Complement), you can effectively disable all rate limiting by setting very high values:
+
+```toml
+[rc_login]
+per_second = 9999.0
+burst = 9999
+
+[rc_registration]
+per_second = 9999.0
+burst = 9999
+
+[rc_password]
+per_second = 9999.0
+burst = 9999
+
+[rc_message]
+per_second = 9999.0
+burst = 9999
+```
+:::
+
 ### Trusted Servers
 
 Configure trusted key servers for federation:
