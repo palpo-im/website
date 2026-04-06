@@ -210,4 +210,3 @@ postgresql://palpo:your_secure_password@localhost:5432/palpo
 3. **Test connection** to ensure everything works properly.
 
 After installing and configuring PostgreSQL, you're ready to set up palpo. Make sure to update your application's database configuration with the correct connection details before proceeding with application setup.
-{/* 本行由工具自动生成,原文哈希值:a517ef902d1e82c158060f7e5f040af7 */}

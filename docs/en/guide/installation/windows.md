@@ -2,20 +2,7 @@
 
 ## Installing PostgreSQL
 
-Please refer to the [PostgreSQL Installation Guide](./postgres.md) to install and configure PostgreSQL.
-
-After installation, create a database user and database for Palpo:
-
-1. Open "SQL Shell (psql)" from the Start Menu, or run `psql -U postgres` in the terminal.Enter the password configured during installation as prompted. If you encounter an error message like "command not found," please check if the installation path of PostgreSQL is included in the Windows environment variable PATH.
-2. Execute the following in the psql shell:
-
-    ```sql
-    CREATE USER palpo WITH PASSWORD 'your_secure_password';
-    CREATE DATABASE palpo OWNER palpo;
-    \q
-    ```
-
-Replace `'your_secure_password'` with a strong password. This creates a PostgreSQL user and database named `palpo`, and sets the user as the database owner.
+Please refer to the [PostgreSQL Installation Guide](./postgres.md) to install PostgreSQL and create the `palpo` database and user. On Windows, download the installer from [postgresql.org](https://www.postgresql.org/download/windows/) and ensure the installation path is included in the `PATH` environment variable.
 
 ## Downloading Palpo Release
 
@@ -245,4 +232,3 @@ sc create Palpo binPath= "C:\\path\\to\\palpo.exe" start= auto
 Replace `C:\\path\\to\\palpo.exe` with the actual path to the Palpo executable.
 
 Palpo will now start automatically on boot.
-{/* 本行由工具自动生成,原文哈希值:8d6bf9b2dacdf6172cb54f60a30db81d */}

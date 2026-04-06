@@ -4,22 +4,32 @@ Palpo is a high-performance, scalable implementation of a Matrix Homeserver.
 
 ## What is Matrix?
 
-Matrix is an open network for secure, decentralized real-time communication. It enables users to chat, make voice and video calls through various clients, and supports end-to-end encryption.
+Matrix is an open standard and protocol for secure, decentralized real-time communication. It provides a federated network where users on different servers can seamlessly chat, make voice and video calls, and share files — all with strong end-to-end encryption. Think of it as an open alternative to proprietary messaging platforms.
 
-## Features of Palpo
+Key features of the Matrix protocol:
 
-*   **High Performance**: Palpo is designed to deliver exceptional performance, capable of handling large numbers of users and messages.
-*   **Scalable**: Its modular architecture makes it easy to extend and add new features.
-*   **Secure**: Supports end-to-end encryption to ensure the security of your communications.
-*   **Easy Deployment**: Offers multiple deployment options, including Docker, Kubernetes, and more.
+- **Decentralized** — No single point of control; anyone can run their own server and still communicate with the wider network.
+- **End-to-End Encryption** — Private conversations stay private, secured by the Olm/Megolm cryptographic protocols.
+- **Interoperability** — Bridges allow Matrix users to communicate with users on other platforms such as Slack, Discord, and IRC.
 
-## How to Deploy Your Own Palpo?
+For a deeper dive into the protocol, visit [matrix.org](https://matrix.org/).
 
-- [Deployment Options](installation.md)
+## Why Choose Palpo?
 
-If you wish to connect application services to Palpo, please refer to the [Application Services Documentation](appservices.md).
+- **Built with Rust** — Palpo is written in Rust, providing memory safety, high concurrency, and excellent runtime performance without the overhead of a garbage collector.
+- **High Performance** — Designed to handle large numbers of users and messages with minimal resource consumption.
+- **Scalable** — A modular architecture makes it easy to extend and add new features as your needs grow.
+- **Secure** — Full support for end-to-end encryption to keep your communications safe.
+- **Easy Deployment** — Multiple deployment options including Docker, Kubernetes, and standalone binaries.
 
-## How to Contribute?
+## Is Palpo Right for You?
 
-Please see the [Contributor Guide](contributing.md).
-{/* 本行由工具自动生成,原文哈希值:add9ddb118a96f92a786e968fda33de1 */}
+Palpo is a good fit if you want:
+
+- A lightweight, resource-efficient Matrix homeserver for personal use or small-to-medium communities.
+- A Rust-based server with strong performance characteristics.
+- Simple deployment and low operational overhead.
+
+If you need a battle-tested server with the widest ecosystem support, you may also want to evaluate [Synapse](https://github.com/element-hq/synapse) (the reference Python implementation) or [Dendrite](https://github.com/element-hq/dendrite) (written in Go).
+
+Ready to get started? Head to the [Quick Start](./quick-start.md) guide.

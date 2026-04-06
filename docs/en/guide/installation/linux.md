@@ -2,20 +2,7 @@
 
 ## Installing PostgreSQL
 
-Please refer to the [PostgreSQL Installation Guide](./postgres.md) to install and configure PostgreSQL.
-
-After installation, create a database user and database for Palpo:
-
-```bash
-# Switch to the postgres user
-sudo -u postgres psql
-
-# Execute in the psql shell:
-CREATE USER palpo WITH PASSWORD 'your_secure_password';
-CREATE DATABASE palpo OWNER palpo;
-```
-
-Replace `'your_secure_password'` with a strong password. This will create a PostgreSQL user and database named `palpo`, and set the user as the database owner.
+Please refer to the [PostgreSQL Installation Guide](./postgres.md) to install PostgreSQL and create the `palpo` database and user.
 
 ## Downloading Palpo Release
 
@@ -93,4 +80,3 @@ To automatically start Palpo on boot, you can create a systemd service file:
     ```
 
 Palpo will now start automatically on boot.
-{/* 本行由工具自动生成,原文哈希值:1aa1fcad7cf160df6695b28d5a649411 */}

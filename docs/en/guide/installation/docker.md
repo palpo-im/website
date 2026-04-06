@@ -37,22 +37,22 @@ Rename the downloaded compose.*.yml file to compose.yml, then run the following 
 docker compose up -d
 ```
 
-> **Note:** You may encounter the error `Error response from daemon: Get "https://registry-1.docker.io/v2/": unauthorized: incorrect username or password`. Follow these 2 steps to resolve it:
->
-> Step 1: Generate a GitHub Token
-> Visit GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
-Check the `read:packages` permission.
->
-> Step 2: Login to ghcr.io
->```bash
->export CR_PAT=your_github_token
->echo $CR_PAT | docker login ghcr.io -u your_github_username --password-stdin
->```
-> and then to compose up again:
->
->```bash
->docker compose up -d
->```
+<details>
+<summary>Troubleshooting: GHCR authentication error</summary>
+
+If you encounter `Error response from daemon: Get "https://registry-1.docker.io/v2/": unauthorized: incorrect username or password`, follow these steps:
+
+**Step 1**: Generate a GitHub Token — Visit GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic). Check the `read:packages` permission.
+
+**Step 2**: Login to ghcr.io
+```bash
+export CR_PAT=your_github_token
+echo $CR_PAT | docker login ghcr.io -u your_github_username --password-stdin
+```
+
+Then run `docker compose up -d` again.
+
+</details>
 
 Open your browser and enter the service address you set. If everything is configured correctly, the page will display: `Hello Palpo!`.
 
@@ -88,4 +88,3 @@ If you only want to test Palpo temporarily, you can use the `--rm` flag, which w
 [dh]: https://hub.docker.com/r/palpo/palpo
 [gh]: https://github.com/palpo-im/palpo/pkgs/container/palpo
 [shield-latest]: https://img.shields.io/docker/image-size/palpo/palpo/latest
-{/* 本行由工具自动生成,原文哈希值:0eff992f80c99c7b28dfeb1f555f6dd4 */}

@@ -2,20 +2,7 @@
 
 ## 安装 PostgreSQL
 
-请参考 [PostgreSQL 安装指南](./postgres.md) 安装并配置 PostgreSQL。
-
-安装完成后，为 Palpo 创建数据库用户和数据库：
-
-```bash
-# 切换到 postgres 用户
-sudo -u postgres psql
-
-# 在 psql shell 中执行：
-CREATE USER palpo WITH PASSWORD 'your_secure_password';
-CREATE DATABASE palpo OWNER palpo;
-```
-
-将 `'your_secure_password'` 替换为强密码。这会创建名为 `palpo` 的 PostgreSQL 用户和数据库，并将该用户设为数据库所有者。
+请参考 [PostgreSQL 安装指南](./postgres.md) 安装 PostgreSQL 并创建 `palpo` 数据库和用户。
 
 ## 下载 Palpo 发行版
 

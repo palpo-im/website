@@ -2,20 +2,7 @@
 
 ## 安装 PostgreSQL
 
-请参考 [PostgreSQL 安装指南](./postgres.md) 安装并配置 PostgreSQL。
-
-安装完成后，为 Palpo 创建数据库用户和数据库：
-
-1. 从开始菜单打开 "SQL Shell (psql)"，或在终端运行 `psql -U postgres`。按照提示输入安装过程中配置的密码。如果遇到"命令无法找到"类似的报错提示，请查询Windows的环境变量PATH中是否包括了PostgreSQL的安装路径。
-2. 在 psql shell 中执行：
-
-    ```sql
-    CREATE USER palpo WITH PASSWORD 'your_secure_password';
-    CREATE DATABASE palpo OWNER palpo;
-    \q
-    ```
-
-将 `'your_secure_password'` 替换为强密码。这会创建名为 `palpo` 的 PostgreSQL 用户和数据库，并将该用户设为数据库所有者。
+请参考 [PostgreSQL 安装指南](./postgres.md) 安装 PostgreSQL 并创建 `palpo` 数据库和用户。Windows 上可从 [postgresql.org](https://www.postgresql.org/download/windows/) 下载安装程序，并确保安装路径已加入 `PATH` 环境变量。
 
 ## 安装 Palpo
 

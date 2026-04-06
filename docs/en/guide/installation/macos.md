@@ -2,27 +2,7 @@
 
 ## Installing PostgreSQL
 
-Please refer to the [PostgreSQL Installation Guide](./postgres.md) to install and configure PostgreSQL.
-
-You can install PostgreSQL via Homebrew:
-
-```bash
-brew install postgresql
-```
-
-After installation, create a database user and database for Palpo:
-
-```bash
-# Start the postgresql service
-brew services start postgresql
-psql postgres
-
-# Execute in the psql shell:
-CREATE USER palpo WITH PASSWORD 'your_secure_password';
-CREATE DATABASE palpo OWNER palpo;
-```
-
-Replace `'your_secure_password'` with a strong password. This will create a PostgreSQL user and database named `palpo`, and set the user as the database owner.
+Please refer to the [PostgreSQL Installation Guide](./postgres.md) to install PostgreSQL and create the `palpo` database and user. On macOS, Homebrew (`brew install postgresql`) is the recommended installation method.
 
 ## Downloading Palpo Distribution
 
@@ -112,4 +92,3 @@ To automatically start Palpo on boot, you can create a launchd service:
     ```
 
 Palpo will now start automatically upon login.
-{/* 本行由工具自动生成,原文哈希值:74ae6f66a9f43b899d7aa61cf4e2a720 */}

@@ -1,1 +1,1 @@
-["reverse-proxy", "delegation", "turn", "ldap", "oidc", "jwt"]
+["storage", "database", "federation-config", "security", "media", "advanced", "reverse-proxy", "delegation", "turn", "ldap", "oidc", "jwt", "forward-proxy"]

@@ -55,7 +55,7 @@ Open `palpo.toml` and configure at least the following settings:
 
 - `server_name`: Set to your primary domain, e.g., `example.com`.
 - `[db].url`: Provide the correct PostgreSQL connection string, e.g., `postgresql://palpo:change_me@localhost:5432/palpo`.
-- `listen` section: Ensure ports 8008/8448 and settings like `x_forwarded` and `bind_addresses` match your deployment topology.
+- `listen_addr`: Set the local listen address, e.g., `0.0.0.0:8008`. If you use a reverse proxy, consider binding to `127.0.0.1:8008`.
 
 For additional options (registration policies, media directory, reverse proxy, TURN, etc.), see the [Configuration section](./configuration/index.md).
 
@@ -82,5 +82,11 @@ After completing the basic deployment, it is recommended to:
 - Set up [TURN service](./configuration/turn.md) to enable voice calls.
 - Browse the [Development section](./development/index.md) to learn how to contribute.
 
+## Common Issues
+
+- **Port already in use**: Change `listen_addr` in `palpo.toml` to a different port, e.g., `0.0.0.0:8009`.
+- **Database connection refused**: Verify PostgreSQL is running (`systemctl status postgresql` or `brew services list`), and check that the `[db].url` in `palpo.toml` matches your database credentials.
+- **"Hello Palpo!" not showing**: Ensure the domain or IP you are visiting matches `server_name` in the configuration. If using a reverse proxy, check that requests to `/_matrix` are being forwarded correctly.
+- **Registration fails**: Make sure you are using a client that supports registration tokens (e.g., Element Web). Open registration without tokens is disabled by default for security.
+
 You now have a functional Palpo server ready to invite users and start communicating.
-{/* 本行由工具自动生成,原文哈希值:d2d1763f7f988904c6851e070f837b11 */}

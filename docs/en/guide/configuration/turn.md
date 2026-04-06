@@ -1,5 +1,9 @@
 # Using TURN Servers
 
+:::tip When do you need TURN?
+If your users need to make **voice or video calls** through Matrix clients, you should configure a TURN server. TURN relays media traffic when direct peer-to-peer connections fail due to NAT or firewalls. Without TURN, calls between users on different networks may not connect.
+:::
+
 # Overview
 
 This document describes how to enable VoIP relaying (TURN) on a homeserver.
@@ -218,4 +222,3 @@ Common symptom: Calls between different networks get stuck on "Connecting." Trou
     After modifying the configuration, restart coturn. Remember to revert to the original configuration after testing.
 
 If TURN is configured correctly, the test results should include at least one `relay` entry.
-{/* 本行由工具自动生成,原文哈希值:d7e5c1620cc9f3e43657950742e7996c */}

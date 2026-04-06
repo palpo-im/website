@@ -66,4 +66,3 @@ For example: Register `example.com` and point its DNS A record to a server, inst
 ### Should federation traffic use a reverse proxy?
 
 Generally, using a reverse proxy for both federation and client traffic is a wise choice, as it allows Palpo to avoid handling TLS traffic directly. For information on setting up a reverse proxy, please refer to the [reverse proxy documentation](reverse-proxy.md).
-{/* 本行由工具自动生成,原文哈希值:370a574b877253d4bc8833bbd7b23c61 */}

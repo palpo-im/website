@@ -55,7 +55,7 @@
 
 - `server_name`：设置为你的主域名，例如 `example.com`。
 - `[db].url`：填写正确的 PostgreSQL 连接串，例如 `postgresql://palpo:change_me@localhost:5432/palpo`。
-- `listen` 段落：确认 8008/8448 端口和 `x_forwarded`、`bind_addresses` 等符合你的部署拓扑。
+- `listen_addr`：设置本地监听地址，例如 `0.0.0.0:8008`。如果使用反向代理，建议绑定到 `127.0.0.1:8008`。
 
 更多可选项（注册策略、媒体目录、反向代理、TURN 等）详见 [配置章节](./configuration/index.md)。
 
@@ -81,5 +81,12 @@
 - 为生产环境配置 [反向代理与委托](./configuration/delegation.md)。
 - 配置 [TURN 服务](./configuration/turn.md) 以启用语音通话。
 - 浏览 [开发章节](./development/index.md) 了解如何参与贡献。
+
+## 常见问题
+
+- **端口被占用**：修改 `palpo.toml` 中的 `listen_addr` 为其他端口，如 `0.0.0.0:8009`。
+- **数据库连接失败**：确认 PostgreSQL 正在运行（`systemctl status postgresql` 或 `brew services list`），并检查 `palpo.toml` 中 `[db].url` 是否与数据库凭据匹配。
+- **看不到 "Hello Palpo!"**：确保访问的域名或 IP 与配置中的 `server_name` 一致。如果使用反向代理，检查 `/_matrix` 请求是否被正确转发。
+- **注册失败**：确保使用支持注册令牌的客户端（如 Element Web）。出于安全考虑，默认禁止无令牌的开放注册。
 
 现在你已经拥有一台可用的 Palpo 服务器，可以开始邀请用户进行通信了。

@@ -49,3 +49,107 @@ Palpo 通过 [Apache OpenDAL](https://opendal.apache.org/) 支持两种媒体存
 如果您需要对媒体进行广泛的精细控制，我们建议您查看 [Matrix Media Repo](https://github.com/t2bot/matrix-media-repo)。Palpo 打算为媒体实现各种实用程序，但 MMR 致力于广泛的媒体管理。
 
 Palpo 会为所有媒体请求（下载和缩略图）发送 1 年的 `Cache-Control` 标头（immutable），以减少浏览器不必要的媒体请求，减少带宽使用，并降低负载。
+
+## 升级 Palpo
+
+### Docker
+
+1. 拉取最新镜像：
+   ```bash
+   docker compose pull
+   ```
+2. 重启服务：
+   ```bash
+   docker compose up -d
+   ```
+   数据库迁移会在启动时自动运行。
+
+### 二进制文件
+
+1. 从 [GitHub Releases](https://github.com/palpo-im/palpo/releases) 下载新版本。
+2. 停止正在运行的服务器：
+   ```bash
+   systemctl stop palpo
+   ```
+3. 用新的二进制文件替换旧文件。
+4. 启动服务器：
+   ```bash
+   systemctl start palpo
+   ```
+   数据库迁移会在新版本首次启动时自动运行。
+
+### 升级前注意事项
+
+- 每次升级前**备份您的数据库**。请参阅[备份指南](./administration/backup.md)。
+- 阅读版本发布说明，了解是否有破坏性更改或需要更新的配置。
+- 如果条件允许，请先在测试环境中验证升级。
+
+## 数据库维护
+
+PostgreSQL 需要定期维护以保持最佳性能。
+
+### 常规 VACUUM
+
+PostgreSQL 的 autovacuum 会自动运行，但对于繁忙的服务器，您可能需要定期手动执行 vacuum：
+
+```bash
+# 标准 vacuum（非阻塞）
+sudo -u postgres psql -d palpo -c "VACUUM ANALYZE;"
+
+# 完全 vacuum（需要停机，可回收磁盘空间）
+sudo -u postgres psql -d palpo -c "VACUUM FULL ANALYZE;"
+```
+
+### 重建索引
+
+如果查询性能随时间下降，重建索引可能会有所帮助：
+
+```bash
+sudo -u postgres psql -d palpo -c "REINDEX DATABASE palpo;"
+```
+
+### 监控数据库大小
+
+```bash
+sudo -u postgres psql -d palpo -c "SELECT pg_size_pretty(pg_database_size('palpo'));"
+```
+
+## 日志管理
+
+对于长期运行的 Palpo 服务器，日志轮转可以防止磁盘耗尽。请参阅[监控指南](./administration/monitoring.md)了解 logrotate 配置。
+
+如果通过 systemd 运行，日志由 journald 管理：
+
+```bash
+# 查看最近的日志
+journalctl -u palpo --since "1 hour ago"
+
+# 检查日志磁盘使用情况
+journalctl --disk-usage
+
+# 清理 7 天前的日志
+sudo journalctl --vacuum-time=7d
+```
+
+## TLS 证书续签
+
+如果您直接在 Palpo 中配置了 TLS（而非通过反向代理），则需要在证书过期前进行续签。
+
+### 使用 certbot 获取 Let's Encrypt 证书
+
+```bash
+# 续签证书
+sudo certbot renew
+
+# 重启 Palpo 以加载新证书
+sudo systemctl restart palpo
+```
+
+通过 cron 设置自动续签：
+
+```bash
+# /etc/cron.d/certbot-palpo
+0 3 * * * root certbot renew --quiet --post-hook "systemctl restart palpo"
+```
+
+如果使用反向代理（Caddy、Traefik、Nginx），证书管理由代理处理，无需重启 Palpo。

@@ -50,4 +50,3 @@ The following scenarios **will not use** the proxy:
 If the proxy server uses TLS (HTTPS) and a connection cannot be established, it is often due to a proxy certificate issue. You can temporarily disable certificate validation in Palpo for testing purposes.
 
 **Note**: This operation carries security risks and should only be used for testing!
-{/* 本行由工具自动生成,原文哈希值:78d55887749827f8fe3142bba8acbbee */}
