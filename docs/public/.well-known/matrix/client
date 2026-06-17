@@ -1,0 +1,9 @@
+{
+  "m.homeserver": {
+    "base_url": "https://palpo.palpo.im"
+  },
+  "m.authentication": {
+    "issuer": "https://auth.palpo.im/",
+    "account": "https://auth.palpo.im/account/"
+  }
+}

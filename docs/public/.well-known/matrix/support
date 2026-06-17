@@ -1,0 +1,10 @@
+{
+  "contacts": [
+    {
+      "matrix_id": "@admin:palpo.im",
+      "email_address": "admin@palpo.im",
+      "role": "m.role.admin"
+    }
+  ],
+  "support_page": "https://palpo.im/support"
+}

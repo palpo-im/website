@@ -1,0 +1,7 @@
+# Header rules for Cloudflare Pages / Netlify style static hosts.
+# Matrix well-known files have no extension, so force the JSON content type and
+# the CORS header that browser-based Matrix clients require.
+/.well-known/matrix/*
+  Content-Type: application/json
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=3600
